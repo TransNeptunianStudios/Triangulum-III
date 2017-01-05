@@ -6,8 +6,8 @@
 > git submodule update --init  
 
 2. Prepare the client
-> cd Triangulum-III/client
-> npm install
+> cd Triangulum-III/client  
+> npm install   
 > npm run deploy   
 
 3. Build and run server
