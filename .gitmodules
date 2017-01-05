@@ -1,0 +1,3 @@
+[submodule "server/external/mongoose"]
+	path = server/external/mongoose
+	url = https://github.com/TransNeptunianStudios/mongoose
