@@ -4,12 +4,16 @@ export default class extends Phaser.State {
     init() {}
 
     preload() {
-        this.logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'TNSlogo');
-        this.logo.anchor.set(0.5);
     }
 
     create() {
         console.log("Splash create");
+
+        this.game.camera
+
+        this.logo = this.game.add.sprite(this.game.width/2, this.game.height/2, 'TNSlogo');
+        this.logo.anchor.set(0.5);
+        this.logo.alpha = 0;
 
         var fadeTween = this.game.add.tween(this.logo).to({
             alpha: 1
