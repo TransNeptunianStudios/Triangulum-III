@@ -11,7 +11,6 @@ export default class extends Phaser.State {
     create() {
       console.log("Boot create");
 
-      //this.state.start('Splash')
-      this.state.start('MainMenu')
+      this.state.start('Splash')
     }
 }

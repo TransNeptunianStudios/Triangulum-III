@@ -5,5 +5,10 @@ import Phaser from 'phaser'
 export default class extends Phaser.State {
     init() {}
     preload() {}
-    create() {}
+    create() {
+        console.log("Game create");
+    }
+    update() {
+      
+    }
 }
