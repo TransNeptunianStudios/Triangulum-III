@@ -19,6 +19,8 @@ export default class extends Phaser.State {
 
         // create sprite player, set body
         player = game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
+        player.animations.add('idle', [0, 1]);
+
         this.game.physics.enable(player, Phaser.Physics.ARCADE);
         player.body.collideWorldBounds=true;
 
@@ -26,6 +28,7 @@ export default class extends Phaser.State {
         this.game.camera.follow(player);
     }
     update() {
+      player.animations.play('idle', 10, true);
 
       if (cursors.up.isDown)
       {

@@ -4,12 +4,12 @@ import Phaser from 'phaser'
 export default class extends Phaser.State {
     init() {
       // Html5 sockets
-      var socket= new WebSocket('ws://localhost:8080//loginSocket');
+      var socket= new WebSocket('ws://localhost:8080//');
       socket.onopen= function() {
           socket.send('Far out man');
       };
       socket.onmessage= function(s) {
-          alert('got reply '+s);
+          console.log('Server: '+s.data);
       };
     }
     preload() {}
@@ -17,7 +17,7 @@ export default class extends Phaser.State {
     create() {
         console.log("MainMenu create");
 
-        this.game.add.text(this.game.world.centerX, this.game.world.height * 0.5, "Triangulum III", {
+        this.game.add.text(this.game.width/2, this.game.height/2, "Triangulum III", {
             font: "40px Arial",
             fill: "#FFFFFF"
         }).anchor.set(0.5)
