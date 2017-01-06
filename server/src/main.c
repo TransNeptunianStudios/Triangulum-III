@@ -1,6 +1,7 @@
 
 // std
 #include <stdio.h>
+#include <string.h>
 
 // mongoose
 #include "mongoose.h"
@@ -29,6 +30,7 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
          struct websocket_message* wm = (struct websocket_message*) ev_data;
          struct mg_str s = { (char*) wm->data, wm->size };
          printf("Got: %s\n", s.p);
+
          break;
       }
    case MG_EV_HTTP_REQUEST:
@@ -50,17 +52,17 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
 int main(int argc, char* argv[])
 {
    struct mg_mgr mgr;
-   
+
    struct mg_connection* nc;
 
    mg_mgr_init(&mgr, NULL);
-   
+
    nc = mg_bind(&mgr, "8080", event_handler);
 
    mg_set_protocol_http_websocket(nc);
 
    s_http_server_opts.document_root = "../../client/";
-   
+
    s_http_server_opts.enable_directory_listing = "yes";
 
    printf("Starting web server on port 8080\n");

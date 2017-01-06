@@ -1,11 +1,10 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 
-var player;
-var cursors;
 
 export default class extends Phaser.State {
-    init() {
+    init( player ) {
+      this.player = player;
     }
     preload() {}
     create() {
@@ -17,35 +16,10 @@ export default class extends Phaser.State {
         // simple Physics
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        // create sprite player, set body
-        player = game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
-        player.animations.add('idle', [0, 1]);
-
-        this.game.physics.enable(player, Phaser.Physics.ARCADE);
-        player.body.collideWorldBounds=true;
-
-        cursors = this.game.input.keyboard.createCursorKeys();
-        this.game.camera.follow(player);
+        this.game.add.existing(this.player);
+        this.game.camera.follow(this.player);
     }
     update() {
-      player.animations.play('idle', 10, true);
 
-      if (cursors.up.isDown)
-      {
-          player.y -=4
-      }
-      else if (cursors.down.isDown)
-      {
-          player.y +=4
-      }
-
-      if (cursors.left.isDown)
-      {
-          player.x -=4
-      }
-      else if (cursors.right.isDown)
-      {
-          player.x +=4
-      }
     }
 }

@@ -1,17 +1,10 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
+import Player from '../player.js'
 
 export default class extends Phaser.State {
-    init() {
-      // Html5 sockets
-      var socket= new WebSocket('ws://localhost:8080//');
-      socket.onopen= function() {
-          socket.send('Far out man');
-      };
-      socket.onmessage= function(s) {
-          console.log('Server: '+s.data);
-      };
-    }
+    init() { }
+
     preload() {}
 
     create() {
@@ -22,12 +15,14 @@ export default class extends Phaser.State {
             fill: "#FFFFFF"
         }).anchor.set(0.5)
 
+        this.player = new Player(this.game);
+        this.player.login("Krabban");
         this.game.input.onDown.addOnce(this.startGame, this);
     }
 
     update() {}
 
     startGame() {
-      this.state.start('Game')
+      this.state.start('Game', true, false, this.player)
     }
 }
