@@ -6,6 +6,9 @@
 // mongoose
 #include "mongoose.h"
 
+// parson
+#include "parson.h"
+
 struct mg_serve_http_opts s_http_server_opts;
 
 void event_handler(struct mg_connection* nc, int ev, void* ev_data)
@@ -17,12 +20,25 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
          // New web socket connection
          printf("New web socket connection\n");
 
-         char welcome_msg[] = "Welcome!";
+         char* welcome_msg = NULL;
+        
+         JSON_Value* root = json_value_init_object();
+
+         JSON_Object* root_obj = json_value_get_object(root);
+
+         json_object_set_string(root_obj, "msg", "Welcome!");
+
+         welcome_msg = json_serialize_to_string_pretty(root);
 
          mg_send_websocket_frame(nc,
                                  WEBSOCKET_OP_TEXT,
                                  welcome_msg,
                                  strlen(welcome_msg));
+
+         json_free_serialized_string(welcome_msg);
+
+         json_value_free(root);
+
          break;
       }
    case MG_EV_WEBSOCKET_FRAME:
