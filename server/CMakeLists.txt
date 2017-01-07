@@ -12,4 +12,6 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 add_subdirectory(external/mongoose)
 
-target_link_libraries(${PROJECT_NAME} mongoose)
+add_subdirectory(external/parson)
+
+target_link_libraries(${PROJECT_NAME} mongoose parson)
