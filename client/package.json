@@ -23,7 +23,6 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "@orange-games/phaser-input": "^1.2.6",
     "phaser": "^2.6.2"
   }
 }
