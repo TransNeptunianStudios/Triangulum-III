@@ -21,7 +21,7 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
          printf("New web socket connection\n");
 
          char* welcome_msg = NULL;
-        
+
          JSON_Value* root = json_value_init_object();
 
          JSON_Object* root_obj = json_value_get_object(root);
@@ -43,9 +43,22 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
       }
    case MG_EV_WEBSOCKET_FRAME:
       {
+        JSON_Value *root_value;
+        JSON_Object *playerInputs;
+
+        // Something are a little bit off here... but almost? 
          struct websocket_message* wm = (struct websocket_message*) ev_data;
-         struct mg_str s = { (char*) wm->data, wm->size };
-         printf("Got: %s\n", s.p);
+         const char * data = {(const char *)wm->data};
+         printf("Got string: %s\n", data);
+         //struct mg_str s = {(char *) wm->data, wm->size};
+
+         /* parsing json and validating output */
+         root_value = json_parse_string(data);
+         if(!root_value)
+          printf("root value null");
+
+         playerInputs = json_value_get_object(root_value);
+         printf("Got Json: %s\n", json_object_get_string(playerInputs, "left"));
 
          break;
       }

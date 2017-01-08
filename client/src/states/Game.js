@@ -17,7 +17,7 @@ export default class extends Phaser.State {
     // Open socket
     this.socket = new WebSocket('ws://localhost:8080//');
     this.socket.onopen = function() {
-      this.send('Hi, im a client');
+      this.send('<Client socket opened>');
     };
 
     // add brackground
@@ -51,7 +51,7 @@ export default class extends Phaser.State {
 
     // Only send if input changed
     if ( this.lastInput && !Handy.equalJson(input, this.lastInput))
-      this.socket.send(input)
+      this.socket.send(JSON.stringify(input))
 
     this.lastInput = input
   }
