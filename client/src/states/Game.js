@@ -17,7 +17,8 @@ export default class extends Phaser.State {
     // Open socket
     this.socket = new WebSocket('ws://localhost:8080//');
     this.socket.onopen = function() {
-      this.send('<Client socket opened>');
+      var login = {user : this.username, color : "#AA00BB"}; // cannot acces username from here
+      this.send(JSON.stringify(login));
     };
 
     // add brackground
@@ -42,11 +43,11 @@ export default class extends Phaser.State {
 
     // Gather inputs to json
     var input = {
-      left: this.cursors.left.isDown,
-      right: this.cursors.right.isDown,
-      up: this.cursors.up.isDown,
-      down: this.cursors.down.isDown,
-      fire: false
+      left: this.cursors.left.isDown ? 1 : 0,
+      right: this.cursors.right.isDown ? 1 : 0,
+      up: this.cursors.up.isDown ? 1 : 0,
+      down: this.cursors.down.isDown ? 1 : 0,
+      fire: 0
     }
 
     // Only send if input changed
