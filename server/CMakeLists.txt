@@ -19,4 +19,4 @@ add_subdirectory(external/mongoose)
 
 include_directories(external/json)
 
-target_link_libraries(${PROJECT_NAME} entityx mongoose parson)
+target_link_libraries(${PROJECT_NAME} entityx mongoose)
