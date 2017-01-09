@@ -1,42 +1,31 @@
 
 // std
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
 
-// mongoose
+// external
 #include "mongoose.h"
+#include "nlohmann/json.hpp"
 
-// parson
-#include "parson.h"
+// application
+#include "Game.h"
 
 struct mg_serve_http_opts s_http_server_opts;
 
+using json = nlohmann::json;
+
 void event_handler(struct mg_connection* nc, int ev, void* ev_data) {
-   switch (ev)
-   {
+   switch (ev) {
    case MG_EV_WEBSOCKET_HANDSHAKE_DONE: {
-         // New web socket connection
-         printf("New web socket connection\n");
+         json j;
 
-         char* welcome_msg = NULL;
+         j["msg"] = "Welcome!";
 
-         JSON_Value* root = json_value_init_object();
-
-         JSON_Object* root_obj = json_value_get_object(root);
-
-         json_object_set_string(root_obj, "msg", "Welcome!");
-
-         welcome_msg = json_serialize_to_string_pretty(root);
+         std::string welcome_msg = j.dump(3);
 
          mg_send_websocket_frame(nc,
                                  WEBSOCKET_OP_TEXT,
-                                 welcome_msg,
-                                 strlen(welcome_msg));
-
-         json_free_serialized_string(welcome_msg);
-
-         json_value_free(root);
-
+                                 welcome_msg.c_str(),
+                                 welcome_msg.size());
          break;
       }
    case MG_EV_WEBSOCKET_FRAME: {
@@ -45,18 +34,11 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data) {
 
          const char* data = (const char*) wm->data;
          
-         printf("Got string: %s\n", data);
+         std::cout << "Got string: " << data << "\n";
 
-         /* parsing json and validating output */
-         JSON_Value* root_value = json_parse_string(data);
+         auto j = json::parse(data);
 
-         if (root_value == NULL) {
-            printf("root value null");
-         }
-
-         JSON_Object* player_inputs = json_value_get_object(root_value);
-
-         printf("Got Json: %s\n", json_object_get_string(player_inputs, "left"));
+         std::cout << "JSON size: " << j.size() << "\n";
 
          break;
       }
@@ -66,7 +48,7 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data) {
       }
    case MG_EV_CLOSE: {
          if (nc->flags & MG_F_IS_WEBSOCKET) {
-            printf("Client connection lost\n");
+            std::cout << "Client connection lost\n";
          }
          break;
       }
@@ -89,7 +71,7 @@ int main(int argc, char* argv[])
 
    s_http_server_opts.enable_directory_listing = "yes";
 
-   printf("Starting web server on port 8080\n");
+   std::cout << "Starting web server on port 8080\n";
 
    for (;;) {
       mg_mgr_poll(&mgr, 50);

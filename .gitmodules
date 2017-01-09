@@ -1,6 +1,6 @@
 [submodule "server/external/mongoose"]
 	path = server/external/mongoose
 	url = https://github.com/TransNeptunianStudios/mongoose
-[submodule "server/external/parson"]
-	path = server/external/parson
-	url = https://github.com/TransNeptunianStudios/parson
+[submodule "server/external/entityx"]
+	path = server/external/entityx
+	url = https://github.com/alecthomas/entityx

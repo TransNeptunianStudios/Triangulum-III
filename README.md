@@ -11,7 +11,7 @@
 > npm run deploy   
 
 3. Build and run server
-> cd Triangulum-III/server  
-> mkdir build && cd build  
-> cmake .. && make  
+> export TRIANGULUM_HOME=/path/to/Triangulum-III
+> cd Triangulum-III/server
+> ./build_dbg.sh
 > ./triangulum-server
