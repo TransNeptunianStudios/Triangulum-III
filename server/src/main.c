@@ -11,12 +11,10 @@
 
 struct mg_serve_http_opts s_http_server_opts;
 
-void event_handler(struct mg_connection* nc, int ev, void* ev_data)
-{
+void event_handler(struct mg_connection* nc, int ev, void* ev_data) {
    switch (ev)
    {
-   case MG_EV_WEBSOCKET_HANDSHAKE_DONE:
-      {
+   case MG_EV_WEBSOCKET_HANDSHAKE_DONE: {
          // New web socket connection
          printf("New web socket connection\n");
 
@@ -41,32 +39,33 @@ void event_handler(struct mg_connection* nc, int ev, void* ev_data)
 
          break;
       }
-   case MG_EV_WEBSOCKET_FRAME:
-      {
+   case MG_EV_WEBSOCKET_FRAME: {
         // Something are a little bit off here... but almost?
          struct websocket_message* wm = (struct websocket_message*) ev_data;
-         const char * data = {(const char *)wm->data};
+
+         const char* data = (const char*) wm->data;
+         
          printf("Got string: %s\n", data);
 
          /* parsing json and validating output */
-         JSON_Value *root_value = json_parse_string(data);
-         if(!root_value)
-          printf("root value null");
+         JSON_Value* root_value = json_parse_string(data);
 
-         JSON_Object *playerInputs = json_value_get_object(root_value);
-         printf("Got Json: %s\n", json_object_get_string(playerInputs, "left"));
+         if (root_value == NULL) {
+            printf("root value null");
+         }
+
+         JSON_Object* player_inputs = json_value_get_object(root_value);
+
+         printf("Got Json: %s\n", json_object_get_string(player_inputs, "left"));
 
          break;
       }
-   case MG_EV_HTTP_REQUEST:
-      {
+   case MG_EV_HTTP_REQUEST: {
          mg_serve_http(nc, (struct http_message*)ev_data, s_http_server_opts);
          break;
       }
-   case MG_EV_CLOSE:
-      {
-         if (nc->flags & MG_F_IS_WEBSOCKET)
-         {
+   case MG_EV_CLOSE: {
+         if (nc->flags & MG_F_IS_WEBSOCKET) {
             printf("Client connection lost\n");
          }
          break;
@@ -92,8 +91,7 @@ int main(int argc, char* argv[])
 
    printf("Starting web server on port 8080\n");
 
-   for (;;)
-   {
+   for (;;) {
       mg_mgr_poll(&mgr, 50);
    }
 
