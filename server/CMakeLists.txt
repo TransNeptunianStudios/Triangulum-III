@@ -17,6 +17,6 @@ add_subdirectory(external/entityx)
 
 add_subdirectory(external/mongoose)
 
-include_directories(external/json)
+include_directories(external/entityx external/json)
 
 target_link_libraries(${PROJECT_NAME} entityx mongoose)
