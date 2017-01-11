@@ -9,6 +9,8 @@ set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 set(SOURCE_FILES
     src/Main.cpp
     src/triangulum/Game.cpp
+    src/triangulum/component/PlayerInfo.cpp
+    src/triangulum/system/ConnectionSystem.cpp
     src/triangulum/system/InputSystem.cpp
     src/triangulum/web/WebServer.cpp
 )
@@ -19,8 +21,8 @@ add_subdirectory(external/entityx)
 
 add_subdirectory(external/mongoose)
 
-include_directories(external/entityx external/json)
+include_directories(external/entityx external/json external/moodycamel)
 
 include_directories(src)
 
-target_link_libraries(${PROJECT_NAME} entityx mongoose)
+target_link_libraries(${PROJECT_NAME} entityx mongoose pthread)

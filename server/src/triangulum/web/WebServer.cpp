@@ -1,18 +1,31 @@
+
 #include "WebServer.h"
 #include "nlohmann/json.hpp"
 
+#include "triangulum/component/PlayerInfo.h"
+
 static mg_serve_http_opts s_http_server_opts;
+
+using namespace moodycamel;
 
 using json = nlohmann::json;
 
 namespace triangulum {
 namespace web {
 
-WebServer::WebServer()
-: m_mgr()
+using namespace component;
+
+WebServer::WebServer(ReaderWriterQueue<component::PlayerInfo>& player_info_queue,
+                     ReaderWriterQueue<int>& input_queue,
+                     ReaderWriterQueue<int>& output_queue)
+: m_player_info_queue(player_info_queue)
+, m_input_queue(input_queue)
+, m_output_queue(output_queue)
+, m_mgr()
 , m_connection()
 , m_opts()
 {
+
 }
 
 WebServer::~WebServer()
@@ -20,28 +33,47 @@ WebServer::~WebServer()
    mg_mgr_free(&m_mgr);
 }
 
-void WebServer::init()
+void WebServer::run()
 {
    mg_mgr_init(&m_mgr, NULL);
 
-   m_connection = mg_bind(&m_mgr, "8080", event_handler);
+   Callback<void(mg_connection*, int, void*)>::func = std::bind(&WebServer::event_handler,
+                                                                this, std::placeholders::_1,
+                                                                std::placeholders::_2,
+                                                                std::placeholders::_3);
+
+   callback_t func = static_cast<callback_t>(Callback<void(mg_connection*, int, void*)>::callback);
+
+   m_connection = mg_bind(&m_mgr, "8080", func);
 
    mg_set_protocol_http_websocket(m_connection);
 
    s_http_server_opts.document_root = "../../client/";
 
    s_http_server_opts.enable_directory_listing = "yes";
+
+   while (1)
+   {
+      process_input();
+      process_output();
+   }
 }
 
-void WebServer::process()
+void WebServer::process_input()
 {
-   mg_mgr_poll(&m_mgr, 50);
+   mg_mgr_poll(&m_mgr, 10);
+}
+
+void WebServer::process_output()
+{
 }
 
 void WebServer::event_handler(mg_connection *nc, int ev, void *ev_data)
 {
    switch (ev) {
    case MG_EV_WEBSOCKET_HANDSHAKE_DONE: {
+         static int cntr = 0;
+
          json j;
 
          j["msg"] = "Welcome!";
@@ -52,19 +84,33 @@ void WebServer::event_handler(mg_connection *nc, int ev, void *ev_data)
                                  WEBSOCKET_OP_TEXT,
                                  welcome_msg.c_str(),
                                  welcome_msg.size());
+
+         m_input_queue.try_enqueue(cntr++);
+
          break;
       }
    case MG_EV_WEBSOCKET_FRAME: {
         // Something are a little bit off here... but almost?
          struct websocket_message* wm = (struct websocket_message*) ev_data;
 
-         const char* data = (const char*) wm->data;
+         char buf[100];
 
-         std::cout << "Got string: " << data << "\n";
+         snprintf(buf, wm->size+1, "%s", (const char*) wm->data);
 
-         auto j = json::parse(data);
+         std::cout << "Got string: " << buf << "\n";
 
-         std::cout << "JSON size: " << j.size() << "\n";
+         auto j = json::parse(buf);
+
+         if (j["type"] == "login")
+         {
+            PlayerInfo player_info;
+
+            player_info.connection = nc;
+
+            player_info.name = j["name"];
+
+            m_player_info_queue.enqueue(player_info);
+         }
 
          break;
       }

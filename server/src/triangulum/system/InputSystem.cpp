@@ -6,7 +6,8 @@ using namespace entityx;
 namespace triangulum {
 namespace system {
 
-InputSystem::InputSystem()
+InputSystem::InputSystem(moodycamel::ReaderWriterQueue<int>& input_queue)
+: m_input_queue(input_queue)
 {
 }
 
@@ -14,7 +15,6 @@ void InputSystem::update(EntityManager& entities,
                          EventManager& events,
                          TimeDelta dt)
 {
-   std::cout << "Updated!\n";
 }
 
 } // namespace system

@@ -1,14 +1,20 @@
 
+#include <thread>
+
 #include "triangulum/Game.h"
+#include "triangulum/system/ConnectionSystem.h"
 #include "triangulum/system/InputSystem.h"
+#include "triangulum/web/WebServer.h"
 
 namespace triangulum {
 
 Game::Game()
-: m_eventManager()
-, m_entityManager(m_eventManager)
-, m_systemManager(m_entityManager, m_eventManager)
-, m_webServer()
+: m_event_manager()
+, m_entity_manager(m_event_manager)
+, m_system_manager(m_entity_manager, m_event_manager)
+, m_player_info_queue(10)
+, m_input_queue(10)
+, m_output_queue(100)
 {
 }
 
@@ -19,16 +25,19 @@ Game::~Game()
 void Game::init()
 {
    createSystems();
-
-   m_webServer.init();
 }
 
 void Game::run()
 {
+   web::WebServer server(m_player_info_queue,
+                         m_input_queue,
+                         m_output_queue);
+
+   std::thread server_thread(&web::WebServer::run, &server);
+
    while (1)
    {
-      m_webServer.process();
-      m_systemManager.update_all(10.0); // TODO: Fix time step
+      m_system_manager.update_all(10.0); // TODO: Fix time step
    }
 }
 
@@ -36,8 +45,9 @@ void Game::createSystems()
 {
    using namespace system;
 
-   m_systemManager.add<InputSystem>();
-   m_systemManager.configure();
+   m_system_manager.add<ConnectionSystem>(m_player_info_queue);
+   m_system_manager.add<InputSystem>(m_input_queue);
+   m_system_manager.configure();
 }
 
 } // namespace triangulum

@@ -5,7 +5,9 @@
 #include "entityx/Entity.h"
 #include "entityx/System.h"
 
-#include "triangulum/web/WebServer.h"
+#include "moodycamel/readerwriterqueue.h"
+
+#include "triangulum/component/PlayerInfo.h"
 
 namespace triangulum {
 
@@ -23,13 +25,17 @@ public:
 private:
    void createSystems();
 
-   entityx::EventManager m_eventManager;
+   entityx::EventManager m_event_manager;
 
-   entityx::EntityManager m_entityManager;
+   entityx::EntityManager m_entity_manager;
 
-   entityx::SystemManager m_systemManager;
+   entityx::SystemManager m_system_manager;
 
-   web::WebServer m_webServer;
+   moodycamel::ReaderWriterQueue<component::PlayerInfo> m_player_info_queue;
+
+   moodycamel::ReaderWriterQueue<int> m_input_queue;
+
+   moodycamel::ReaderWriterQueue<int> m_output_queue;
 };
 
 } // namespace triangulum
