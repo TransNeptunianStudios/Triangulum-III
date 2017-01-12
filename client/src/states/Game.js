@@ -5,15 +5,13 @@ import Player from '../player.js'
 import Handy from '../handy.js'
 
 export default class extends Phaser.State {
-  init(username) {
-    this.username = username;
-
-    //if username is occupied, return to main menu?
+  init(connection, id) {
+    this.connection = connection;
+    this.playerId = id;
   }
   preload() {}
   create() {
     console.log("Game create");
-
 
     // add brackground
     this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'starfield');
