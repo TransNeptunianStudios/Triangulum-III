@@ -14,12 +14,6 @@ export default class extends Phaser.State {
   create() {
     console.log("Game create");
 
-    // Open socket
-    this.socket = new WebSocket('ws://localhost:8080//');
-    this.socket.onopen = function() {
-      var login = {user : this.username, color : "#AA00BB"}; // cannot acces username from here
-      this.send(JSON.stringify(login));
-    };
 
     // add brackground
     this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'starfield');

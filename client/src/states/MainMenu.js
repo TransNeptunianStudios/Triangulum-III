@@ -23,7 +23,12 @@ export default class extends Phaser.State {
             fill: "#FFFFFF"
         })
 
-        var button = game.add.button(this.game.width/2, this.input.y +50, 'enterButton', this.startGame, this, 2, 1, 0);
+
+        // Open socket
+        this.socket = new WebSocket('ws://localhost:8080');
+        this.socket.onmessage = this.loginResponce;
+
+        var button = game.add.button(this.game.width/2, this.input.y +50, 'enterButton', this.loginAttempt, this, 2, 1, 0);
         button.anchor.set(0.5)
     }
 
@@ -31,7 +36,15 @@ export default class extends Phaser.State {
       this.input.update();
     }
 
-    startGame() {
-      this.state.start('Game', true, false, this.input.value)
+    loginAttempt() {
+      var login = {user : this.username, color : "#AA00BB"}; // cannot acces username from here
+      this.socket.send(JSON.stringify(login));
+    }
+
+    loginResponce(e) {
+      console.log('Server: ' + e.data);
+
+      if(true) // all is ok, come on in-responce from server
+        this.state.start('Game', true, false, this.input.value)
     }
 }
