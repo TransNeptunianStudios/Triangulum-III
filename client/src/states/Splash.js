@@ -8,9 +8,7 @@ export default class extends Phaser.State {
 
     create() {
         console.log("Splash create");
-
-        this.game.camera
-
+        
         this.logo = this.game.add.sprite(this.game.width/2, this.game.height/2, 'TNSlogo');
         this.logo.anchor.set(0.5);
         this.logo.alpha = 0;
@@ -25,6 +23,6 @@ export default class extends Phaser.State {
     }
 
     showMainMenu() {
-        this.state.start('MainMenu')
+        this.state.start('Game')
     }
 }

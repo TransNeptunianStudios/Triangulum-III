@@ -24,4 +24,12 @@ export default class Handy {
     };
     return check(a, b) && check(b, a);
   }
+
+  static getbitMask(listOfBool) {
+    var inputString = "";
+    for(var i in listOfBool)
+      inputString += listOfBool[i] ? "1" : "0";
+
+    return parseInt(inputString, 2);
+  }
 }
