@@ -6,8 +6,7 @@ using namespace entityx;
 namespace triangulum {
 namespace system {
 
-InputSystem::InputSystem(moodycamel::ReaderWriterQueue<int>& input_queue)
-: m_input_queue(input_queue)
+InputSystem::InputSystem()
 {
 }
 

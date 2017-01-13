@@ -4,10 +4,7 @@
 #include "entityx/Event.h"
 #include "entityx/Entity.h"
 #include "entityx/System.h"
-
-#include "moodycamel/readerwriterqueue.h"
-
-#include "triangulum/component/PlayerInfo.h"
+#include "triangulum/message/MessageManager.h"
 
 namespace triangulum {
 
@@ -31,11 +28,7 @@ private:
 
    entityx::SystemManager m_system_manager;
 
-   moodycamel::ReaderWriterQueue<component::PlayerInfo> m_player_info_queue;
-
-   moodycamel::ReaderWriterQueue<int> m_input_queue;
-
-   moodycamel::ReaderWriterQueue<int> m_output_queue;
+   message::MessageManager m_msg_manager;
 };
 
 } // namespace triangulum

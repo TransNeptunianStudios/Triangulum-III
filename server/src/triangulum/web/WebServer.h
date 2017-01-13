@@ -2,12 +2,8 @@
 #define _WEB_SERVER_H
 
 #include <functional>
-
 #include "mongoose.h"
-
-#include "moodycamel/readerwriterqueue.h"
-
-#include "triangulum/component/PlayerInfo.h"
+#include "triangulum/message/MessageManager.h"
 
 namespace triangulum {
 namespace web {
@@ -36,32 +32,29 @@ typedef void (*callback_t)(mg_connection*, int, void*);
 class WebServer
 {
 public:
-   WebServer(moodycamel::ReaderWriterQueue<component::PlayerInfo>& player_info_queue,
-             moodycamel::ReaderWriterQueue<int>& input_queue,
-             moodycamel::ReaderWriterQueue<int>& output_queue);
+   WebServer(message::MessageManager& msg_manager);
 
    ~WebServer();
 
-   void run();
-
-private:
    void process_input();
 
    void process_output();
 
+private:
    void event_handler(mg_connection* nc, int ev, void* ev_data);
 
-   moodycamel::ReaderWriterQueue<component::PlayerInfo>& m_player_info_queue;
-
-   moodycamel::ReaderWriterQueue<int>& m_input_queue;
-
-   moodycamel::ReaderWriterQueue<int>& m_output_queue;
+   message::MessageManager& m_msg_manager;
 
    mg_mgr m_mgr;
 
    mg_connection* m_connection;
 
-   mg_serve_http_opts m_opts;   
+   // TODO: Remove?
+   //mg_serve_http_opts m_opts;
+
+   static const size_t BUFFER_SIZE = 256;
+
+   char m_buffer[BUFFER_SIZE];
 };
 
 } // namesapce web

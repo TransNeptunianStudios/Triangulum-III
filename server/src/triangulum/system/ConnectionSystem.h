@@ -2,10 +2,7 @@
 #define _CONNECTION_SYSTEM_H
 
 #include "entityx/System.h"
-
-#include "moodycamel/readerwriterqueue.h"
-
-#include "triangulum/component/PlayerInfo.h"
+#include "triangulum/message/MessageManager.h"
 
 namespace triangulum {
 namespace system {
@@ -13,13 +10,14 @@ namespace system {
 class ConnectionSystem : public entityx::System<ConnectionSystem>
 {
 public:
-   ConnectionSystem(moodycamel::ReaderWriterQueue<component::PlayerInfo>& player_info_queue);
+   ConnectionSystem(message::MessageManager& m_msg_manager);
 
    void update(entityx::EntityManager &entities,
                entityx::EventManager &events,
                entityx::TimeDelta dt);
+
 private:
-   moodycamel::ReaderWriterQueue<component::PlayerInfo>& m_player_info_queue;
+   message::MessageManager& m_msg_manager;
 };
 
 } // namespace system

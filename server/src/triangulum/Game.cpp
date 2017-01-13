@@ -12,9 +12,7 @@ Game::Game()
 : m_event_manager()
 , m_entity_manager(m_event_manager)
 , m_system_manager(m_entity_manager, m_event_manager)
-, m_player_info_queue(10)
-, m_input_queue(10)
-, m_output_queue(100)
+, m_msg_manager()
 {
 }
 
@@ -29,15 +27,15 @@ void Game::init()
 
 void Game::run()
 {
-   web::WebServer server(m_player_info_queue,
-                         m_input_queue,
-                         m_output_queue);
-
-   std::thread server_thread(&web::WebServer::run, &server);
+   web::WebServer server(m_msg_manager);
 
    while (1)
    {
+      server.process_input();
+
       m_system_manager.update_all(10.0); // TODO: Fix time step
+
+      server.process_output();
    }
 }
 
@@ -45,8 +43,8 @@ void Game::createSystems()
 {
    using namespace system;
 
-   m_system_manager.add<ConnectionSystem>(m_player_info_queue);
-   m_system_manager.add<InputSystem>(m_input_queue);
+   m_system_manager.add<ConnectionSystem>(m_msg_manager);
+   m_system_manager.add<InputSystem>();
    m_system_manager.configure();
 }
 
