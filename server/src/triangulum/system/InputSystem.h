@@ -3,8 +3,6 @@
 
 #include "entityx/System.h"
 
-#include "moodycamel/readerwriterqueue.h"
-
 namespace triangulum {
 namespace system {
 

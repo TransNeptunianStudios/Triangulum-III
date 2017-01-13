@@ -26,7 +26,7 @@ add_subdirectory(external/entityx)
 
 add_subdirectory(external/mongoose)
 
-include_directories(external/entityx external/json external/moodycamel)
+include_directories(external/entityx external/json)
 
 include_directories(src)
 
