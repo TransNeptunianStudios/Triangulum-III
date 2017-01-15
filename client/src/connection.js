@@ -38,6 +38,6 @@ export default class Connection {
             "color": "#AA00BB"
         };
         this.loginCallback = callback;
-        this.socket.send(JSON.stringify(login));
+        this.socket.send(JSON.stringify(login))
     }
 }
