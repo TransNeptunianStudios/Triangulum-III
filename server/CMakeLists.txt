@@ -8,16 +8,18 @@ set(CMAKE_CXX_FLAGS "-g -Wall -std=c++14")
 
 set(SOURCE_FILES
     src/Main.cpp
+    src/triangulum/EntityFactory.cpp
+    src/triangulum/EntityFactory.h
     src/triangulum/Game.cpp
-    src/triangulum/component/PlayerInfo.cpp
-    src/triangulum/message/Message.h
-    src/triangulum/message/MessageManager.cpp
-    src/triangulum/message/MessageManager.h
-    src/triangulum/message/MessageMap.cpp
-    src/triangulum/message/MessageMap.h
+    src/triangulum/Game.h
+    src/triangulum/component/ClientInfo.cpp
+    src/triangulum/component/ClientInfo.h
+    src/triangulum/network/Connection.cpp
+    src/triangulum/network/Connection.h
+    src/triangulum/network/Server.cpp
+    src/triangulum/network/Server.h
     src/triangulum/system/ConnectionSystem.cpp
     src/triangulum/system/InputSystem.cpp
-    src/triangulum/web/WebServer.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
