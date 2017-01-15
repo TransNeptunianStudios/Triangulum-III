@@ -30,9 +30,13 @@ export default class extends Phaser.State {
         button.anchor.set(0.5)
     }
 
+    loginAttempt () {
+	this.connection.login(this.input.value, this.loginResponse);
+    }
+
     update() {
         this.input.update();
-    }
+    }    
 
     loginResponse(success, id) {
         if (success) // all is ok, come on in-responce from server
