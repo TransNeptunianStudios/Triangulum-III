@@ -31,12 +31,12 @@ export default class extends Phaser.State {
     }
 
     loginAttempt () {
-	this.connection.login(this.input.value, this.loginResponse);
+	     this.connection.login(this.input.value, this.loginResponse, this);
     }
 
     update() {
         this.input.update();
-    }    
+    }
 
     loginResponse(success, id) {
         if (success) // all is ok, come on in-responce from server
