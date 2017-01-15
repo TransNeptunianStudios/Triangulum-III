@@ -30,7 +30,8 @@ export default class Connection {
     }
 
     sendInputs(inputMask){
-      this.socket.send(JSON.stringify(inputMask));
+      var inputMsg = {"type" : "input", "input_mask" : InputMask}
+      this.socket.send(JSON.stringify(inputMsg));
     }
 
     login(username, callback, obj) {
