@@ -17,7 +17,7 @@ Response from login attempt, status can be "success" or "failure", id is a handl
 Send boolean input to the server as an 8 bit inputmask,
 Order: {thurst, reverse, strafe Left, strafe right, turn left, turn right, fire weapon, not used}. example when thrusting and firing: 10000010 binary = 130 decimal. Sending 130.
 ```sh
-{"type" : "input", "input_mask" : <INPUT MASK>}
+{"type" : "control", "input_mask" : <INPUT MASK>}
 ```
 
 #### Server Update Msg

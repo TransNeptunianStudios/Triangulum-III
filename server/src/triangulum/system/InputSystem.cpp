@@ -20,8 +20,9 @@ void InputSystem::update(EntityManager& entities,
    entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {
       Json msg;
 
-      if (client_info.connection->get_msg("control", msg))
+      if (client_info.connection != NULL && client_info.connection->get_msg("control", msg))
       {
+        std::cout << "GOT INPUT" << std::endl;
          // TODO: Update input
       }
    });
