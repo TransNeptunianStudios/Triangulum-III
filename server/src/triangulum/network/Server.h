@@ -2,11 +2,12 @@
 #define _WEB_SERVER_H
 
 #include <functional>
+#include <vector>
 #include "mongoose.h"
-#include "triangulum/message/MessageManager.h"
+#include "triangulum/network/Connection.h"
 
 namespace triangulum {
-namespace web {
+namespace network {
 
 //*****************************************************************************
 // Solution for passing a non-static member function as a C callback.
@@ -29,21 +30,25 @@ std::function<Ret(Params...)> Callback<Ret(Params...)>::func;
 typedef void (*callback_t)(mg_connection*, int, void*);
 //*****************************************************************************
 
-class WebServer
+class Server
 {
 public:
-   WebServer(message::MessageManager& msg_manager);
+   Server();
 
-   ~WebServer();
+   ~Server();
 
    void process_input();
 
-   void process_output();
+   void handle_pending_connections(std::function<bool(IConnection*)> do_accept);
 
 private:
    void event_handler(mg_connection* nc, int ev, void* ev_data);
 
-   message::MessageManager& m_msg_manager;
+   void remove_connection(mg_connection* nc);
+
+   std::vector<std::unique_ptr<Connection>>::iterator find_connection(mg_connection* nc);
+
+   std::vector<std::unique_ptr<Connection>> m_connection_list;
 
    mg_mgr m_mgr;
 
@@ -57,7 +62,7 @@ private:
    char m_buffer[BUFFER_SIZE];
 };
 
-} // namesapce web
+} // namesapce network
 } // namespace triangulum
 
 #endif

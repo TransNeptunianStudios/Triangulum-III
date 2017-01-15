@@ -4,7 +4,6 @@
 #include "entityx/Event.h"
 #include "entityx/Entity.h"
 #include "entityx/System.h"
-#include "triangulum/message/MessageManager.h"
 
 namespace triangulum {
 
@@ -27,8 +26,6 @@ private:
    entityx::EntityManager m_entity_manager;
 
    entityx::SystemManager m_system_manager;
-
-   message::MessageManager m_msg_manager;
 };
 
 } // namespace triangulum
