@@ -53,6 +53,5 @@ export default class extends Phaser.State {
             this.connection.sendInputs(inputMask);
 
         this.lastInput = inputMask;
-        console.log(inputMask)
     }
 }

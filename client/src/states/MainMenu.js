@@ -39,7 +39,7 @@ export default class extends Phaser.State {
     }
 
     loginResponse(success, id) {
-        if (success) // all is ok, come on in-responce from server
+        if (success == "success") 
             this.state.start('Game', true, false, this.connection, id)
         else
             console.log("Login failed");

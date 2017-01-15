@@ -22,9 +22,7 @@ export default class Connection {
         switch (response.type) {
             case "login_resp":
                 console.log("Got login responCe.")
-                this.parent.loginCallback.call( this.parent.loginCallbackContext,
-                                                response.status == "success",
-                                                response.id)
+                this.parent.loginCallback(response.status, response.id)
                 break;
             default:
                 console.log("Unknown server response.")
@@ -41,8 +39,7 @@ export default class Connection {
             "name": username,
             "color": "#AA00BB"
         };
-        this.loginCallback = callback;
-        this.loginCallbackContext = obj // How can I do this... but nice?
+        this.loginCallback = callback.bind(obj)
         this.socket.send(JSON.stringify(login))
     }
 }
