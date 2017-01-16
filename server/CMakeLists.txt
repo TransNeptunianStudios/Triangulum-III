@@ -24,12 +24,12 @@ set(SOURCE_FILES
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
+add_subdirectory(external/Box2D/Box2D)
 add_subdirectory(external/entityx)
-
 add_subdirectory(external/mongoose)
 
-include_directories(external/entityx external/json)
+include_directories(external/Box2D/Box2D external/entityx external/json)
 
 include_directories(src)
 
-target_link_libraries(${PROJECT_NAME} entityx mongoose pthread)
+target_link_libraries(${PROJECT_NAME} Box2D entityx mongoose pthread)

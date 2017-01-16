@@ -4,3 +4,6 @@
 [submodule "server/external/entityx"]
 	path = server/external/entityx
 	url = https://github.com/alecthomas/entityx
+[submodule "server/external/Box2D"]
+	path = server/external/Box2D
+	url = https://github.com/erincatto/Box2D

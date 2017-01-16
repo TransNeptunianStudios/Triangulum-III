@@ -1,6 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "Box2D/Dynamics/b2World.h"
 #include "entityx/Event.h"
 #include "entityx/Entity.h"
 #include "entityx/System.h"
@@ -26,6 +27,8 @@ private:
    entityx::EntityManager m_entity_manager;
 
    entityx::SystemManager m_system_manager;
+
+   b2World m_world;
 };
 
 } // namespace triangulum
