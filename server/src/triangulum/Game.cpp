@@ -1,6 +1,5 @@
 
-#include <thread>
-
+#include "Box2D/Common/b2Math.h"
 #include "triangulum/Game.h"
 #include "triangulum/system/ConnectionSystem.h"
 #include "triangulum/system/InputSystem.h"
@@ -11,6 +10,7 @@ Game::Game()
 : m_event_manager()
 , m_entity_manager(m_event_manager)
 , m_system_manager(m_entity_manager, m_event_manager)
+, m_world(b2Vec2(0.0f, 0.0f))
 {
 }
 
