@@ -22,7 +22,7 @@ void ConnectionSystem::update(EntityManager& entities,
 {
    m_server.process_input();
 
-   m_server.handle_pending_connections([this, &entities] (IConnection* connection) {
+   m_server.handle_pending_connections([this, &entities] (std::shared_ptr<IConnection> connection) {
 
       nlohmann::json msg;
 
@@ -61,6 +61,14 @@ void ConnectionSystem::update(EntityManager& entities,
 
       return true;
    });
+
+
+   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {
+      if (client_info.connection.expired())
+      {
+         entity.destroy();
+      }
+   });
 }
 
 bool ConnectionSystem::does_name_exist(EntityManager& entities,
@@ -81,7 +89,7 @@ bool ConnectionSystem::does_name_exist(EntityManager& entities,
    return false;
 }
 
-void ConnectionSystem::send_poistive_reply(IConnection* connection, uint64_t id)
+void ConnectionSystem::send_poistive_reply(std::shared_ptr<IConnection> connection, uint64_t id)
 {
    nlohmann::json resp_msg;
 
@@ -94,7 +102,7 @@ void ConnectionSystem::send_poistive_reply(IConnection* connection, uint64_t id)
    connection->send_msg(resp_msg);
 }
 
-void ConnectionSystem::send_negative_reply(IConnection *connection)
+void ConnectionSystem::send_negative_reply(std::shared_ptr<IConnection> connection)
 {
    nlohmann::json resp_msg;
 

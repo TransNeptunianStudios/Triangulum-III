@@ -5,7 +5,7 @@ namespace component {
 
 using namespace network;
 
-ClientInfo::ClientInfo(IConnection* connection_, const std::string& name_)
+ClientInfo::ClientInfo(std::weak_ptr<network::IConnection> connection_, const std::string& name_)
 : connection(connection_)
 , name(name_)
 {

@@ -17,13 +17,16 @@ void InputSystem::update(EntityManager& entities,
                          EventManager& events,
                          TimeDelta dt)
 {
-   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {
-      Json msg;
-
-      if (client_info.connection != NULL && client_info.connection->get_msg("control", msg))
+   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {      
+      if (auto connection = client_info.connection.lock())
       {
-        std::cout << "GOT INPUT" << std::endl;
-         // TODO: Update input
+         Json msg;
+
+         if (connection->get_msg("control", msg))
+         {
+            // TODO: Update input
+            std::cout << "GOT INPUT" << std::endl;
+         }
       }
    });
 }

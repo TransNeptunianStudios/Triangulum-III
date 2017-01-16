@@ -9,10 +9,10 @@ namespace component {
 
 struct ClientInfo : public entityx::Component<ClientInfo>
 {
-   ClientInfo(network::IConnection* connection_,
+   ClientInfo(std::weak_ptr<network::IConnection> connection_,
               const std::string& name_);
 
-   network::IConnection* connection;
+   std::weak_ptr<network::IConnection> connection;
 
    std::string name;
 };

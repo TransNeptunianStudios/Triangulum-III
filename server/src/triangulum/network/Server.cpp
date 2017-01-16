@@ -43,7 +43,7 @@ void Server::process_input()
    mg_mgr_poll(&m_mgr, 10);
 }
 
-void Server::handle_pending_connections(std::function<bool(IConnection*)> do_accept)
+void Server::handle_pending_connections(std::function<bool(std::shared_ptr<IConnection>)> do_accept)
 {
    for (auto& connection : m_connection_list)
    {
@@ -51,7 +51,7 @@ void Server::handle_pending_connections(std::function<bool(IConnection*)> do_acc
 
       if (!connection->is_accepted() && connection->peek_msg("login", dummy_msg))
       {
-         if (do_accept(connection.get()))
+         if (do_accept(connection))
          {
             connection->set_accepted(true);
          }
@@ -101,11 +101,11 @@ void Server::event_handler(mg_connection *nc, int ev, void *ev_data)
             }
             else
             {
-               auto connection(std::make_unique<Connection>(nc));
+               auto connection(std::make_shared<Connection>(nc));
 
                connection->set_msg(msg_type, msg);
 
-               m_connection_list.push_back(std::move(connection));
+               m_connection_list.push_back(connection);
             }
          }
          break;
@@ -136,12 +136,12 @@ void Server::remove_connection(mg_connection* nc)
    }
 }
 
-std::vector<std::unique_ptr<Connection>>::iterator Server::find_connection(mg_connection *nc)
+std::vector<std::shared_ptr<Connection>>::iterator Server::find_connection(mg_connection *nc)
 {
    // Find the connection
    return std::find_if(begin(m_connection_list),
                        end(m_connection_list),
-                       [=](const std::unique_ptr<Connection>& c) {
+                       [=](const std::shared_ptr<Connection>& c) {
                           return c->raw() == nc;
                        });
 

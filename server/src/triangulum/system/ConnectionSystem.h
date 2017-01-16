@@ -25,9 +25,9 @@ private:
    bool does_name_exist(entityx::EntityManager& entities,
                         const std::string& name);
 
-   void send_poistive_reply(network::IConnection* connection, uint64_t id);
+   void send_poistive_reply(std::shared_ptr<network::IConnection> connection, uint64_t id);
 
-   void send_negative_reply(network::IConnection* connection);
+   void send_negative_reply(std::shared_ptr<network::IConnection> connection);
 
    network::Server m_server;
 };

@@ -17,7 +17,7 @@ EntityFactory::~EntityFactory()
 }
 
 void EntityFactory::create_player(Entity entity,
-                                  IConnection* connection,
+                                  std::weak_ptr<network::IConnection> connection,
                                   const std::string& name)
 {
    entity.assign<ClientInfo>(connection, name);

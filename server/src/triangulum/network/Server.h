@@ -39,16 +39,16 @@ public:
 
    void process_input();
 
-   void handle_pending_connections(std::function<bool(IConnection*)> do_accept);
+   void handle_pending_connections(std::function<bool(std::shared_ptr<IConnection>)> do_accept);
 
 private:
    void event_handler(mg_connection* nc, int ev, void* ev_data);
 
    void remove_connection(mg_connection* nc);
 
-   std::vector<std::unique_ptr<Connection>>::iterator find_connection(mg_connection* nc);
+   std::vector<std::shared_ptr<Connection>>::iterator find_connection(mg_connection* nc);
 
-   std::vector<std::unique_ptr<Connection>> m_connection_list;
+   std::vector<std::shared_ptr<Connection>> m_connection_list;
 
    mg_mgr m_mgr;
 
