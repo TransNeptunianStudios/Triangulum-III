@@ -3,33 +3,10 @@
 
 #include "mongoose.h"
 #include "nlohmann/json.hpp"
+#include "triangulum/network/IConnection.h"
 
 namespace triangulum {
 namespace network {
-
-using Json = nlohmann::basic_json<std::map,
-                                       std::vector,
-                                       std::string,
-                                       bool,
-                                       std::int64_t,
-                                       std::uint64_t,
-                                       double,
-                                       std::allocator>;
-
-// Map message type (string) to json
-using MessageMap = std::map<std::string, Json>;
-
-class IConnection
-{
-public:
-   virtual ~IConnection() {}
-
-   virtual bool get_msg(const std::string& msg_type, Json& msg) = 0;
-
-   virtual bool peek_msg(const std::string& msg_type, Json& msg) = 0;
-
-   virtual void send_msg(const Json& json) = 0;
-};
 
 class Connection : public IConnection
 {
@@ -40,10 +17,6 @@ public:
 
    mg_connection* raw() const;
 
-   void set_accepted(bool is_accepted);
-
-   bool is_accepted() const;
-
    void set_msg(const std::string& msg_type, const Json& msg);
 
    bool get_msg(const std::string& msg_type, Json& msg);
@@ -52,12 +25,19 @@ public:
 
    void send_msg(const Json& json);
 
+   void set_accepted(bool is_accepted);
+
+   bool is_accepted() const;
+
 private:
    mg_connection* m_connection;
 
-   MessageMap m_msg_map;
-
    bool m_is_accepted;
+
+   // Map message type (string) to json
+   using MessageMap = std::map<std::string, Json>;
+
+   MessageMap m_msg_map;
 };
 
 } // namespace system

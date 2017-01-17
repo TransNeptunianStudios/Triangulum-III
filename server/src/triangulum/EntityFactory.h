@@ -17,8 +17,8 @@ public:
    ~EntityFactory();
 
    static void create_player(entityx::Entity entity,
-                             std::weak_ptr<network::IConnection> connection,
-                             const std::string& name);
+                             const std::string& name,
+                             const std::weak_ptr<network::IConnection>& connection);
 };
 
 } // namespace triangulum

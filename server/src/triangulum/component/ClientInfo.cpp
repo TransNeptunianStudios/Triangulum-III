@@ -3,11 +3,9 @@
 namespace triangulum {
 namespace component {
 
-using namespace network;
-
-ClientInfo::ClientInfo(std::weak_ptr<network::IConnection> connection_, const std::string& name_)
-: connection(connection_)
-, name(name_)
+ClientInfo::ClientInfo(const std::string& name_, const std::weak_ptr<network::IConnection>& connection_)
+: name(name_)
+, connection(connection_)
 {
 }
 

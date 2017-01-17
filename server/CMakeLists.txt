@@ -16,6 +16,10 @@ set(SOURCE_FILES
     src/triangulum/component/ClientInfo.h
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
+    src/triangulum/network/ConnectionManager.cpp
+    src/triangulum/network/ConnectionManager.h
+    src/triangulum/network/IConnection.h
+    src/triangulum/network/IConnectionManager.h
     src/triangulum/network/Server.cpp
     src/triangulum/network/Server.h
     src/triangulum/system/ConnectionSystem.cpp

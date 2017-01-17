@@ -1,7 +1,11 @@
 #include "triangulum/system/ConnectionSystem.h"
 
+#include "nlohmann/json.hpp"
+
 #include "triangulum/EntityFactory.h"
 #include "triangulum/component/ClientInfo.h"
+#include "triangulum/network/IConnection.h"
+#include "triangulum/network/IConnectionManager.h"
 
 using namespace entityx;
 
@@ -11,8 +15,8 @@ namespace system {
 using namespace component;
 using namespace network;
 
-ConnectionSystem::ConnectionSystem()
-: m_server()
+ConnectionSystem::ConnectionSystem(network::IConnectionManager& connection_mgr)
+: m_connection_mgr(connection_mgr)
 {
 }
 
@@ -20,9 +24,7 @@ void ConnectionSystem::update(EntityManager& entities,
                               EventManager& events,
                               TimeDelta dt)
 {
-   m_server.process_input();
-
-   m_server.handle_pending_connections([this, &entities] (std::shared_ptr<IConnection> connection) {
+   m_connection_mgr.accept_connections([this, &entities] (std::shared_ptr<IConnection> connection) {
 
       nlohmann::json msg;
 
@@ -53,21 +55,13 @@ void ConnectionSystem::update(EntityManager& entities,
 
       auto entity = entities.create();
 
-      EntityFactory::create_player(entity, connection, name);
+      EntityFactory::create_player(entity, name, connection);
 
       send_poistive_reply(connection, entity.id().id());
 
       std::cout << "New player created\n";
 
       return true;
-   });
-
-
-   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {
-      if (client_info.connection.expired())
-      {
-         entity.destroy();
-      }
    });
 }
 

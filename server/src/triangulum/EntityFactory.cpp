@@ -17,10 +17,10 @@ EntityFactory::~EntityFactory()
 }
 
 void EntityFactory::create_player(Entity entity,
-                                  std::weak_ptr<network::IConnection> connection,
-                                  const std::string& name)
+                                  const std::string& name,
+                                  const std::weak_ptr<IConnection>& connection)
 {
-   entity.assign<ClientInfo>(connection, name);
+   entity.assign<ClientInfo>(name, connection);
 }
 
 } // namespace triangulum

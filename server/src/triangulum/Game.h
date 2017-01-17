@@ -5,6 +5,7 @@
 #include "entityx/Event.h"
 #include "entityx/Entity.h"
 #include "entityx/System.h"
+#include "triangulum/network/Server.h"
 
 namespace triangulum {
 
@@ -29,6 +30,8 @@ private:
    entityx::SystemManager m_system_manager;
 
    b2World m_world;
+
+   network::Server m_server;
 };
 
 } // namespace triangulum

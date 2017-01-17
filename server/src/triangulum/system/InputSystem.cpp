@@ -1,5 +1,6 @@
 #include "triangulum/system/InputSystem.h"
 #include "triangulum/component/ClientInfo.h"
+#include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
 
@@ -17,15 +18,14 @@ void InputSystem::update(EntityManager& entities,
                          EventManager& events,
                          TimeDelta dt)
 {
-   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {      
+   entities.each<ClientInfo>([this](Entity entity, ClientInfo& client_info) {
       if (auto connection = client_info.connection.lock())
       {
          Json msg;
 
          if (connection->get_msg("control", msg))
          {
-            // TODO: Update input
-            std::cout << "GOT INPUT" << std::endl;
+            std::cout << "Got msg!\n";
          }
       }
    });

@@ -7,9 +7,9 @@ namespace triangulum {
 namespace network {
 
 Server::Server()
-: m_connection_list()
-, m_mgr()
+: m_mgr()
 , m_connection()
+, m_connection_mgr()
 , m_buffer()
 //, m_opts()
 {
@@ -43,20 +43,9 @@ void Server::process_input()
    mg_mgr_poll(&m_mgr, 10);
 }
 
-void Server::handle_pending_connections(std::function<bool(std::shared_ptr<IConnection>)> do_accept)
+ConnectionManager& Server::get_connection_mgr()
 {
-   for (auto& connection : m_connection_list)
-   {
-      nlohmann::json dummy_msg;
-
-      if (!connection->is_accepted() && connection->peek_msg("login", dummy_msg))
-      {
-         if (do_accept(connection))
-         {
-            connection->set_accepted(true);
-         }
-      }
-   }
+   return m_connection_mgr;
 }
 
 void Server::event_handler(mg_connection *nc, int ev, void *ev_data)
@@ -93,20 +82,7 @@ void Server::event_handler(mg_connection *nc, int ev, void *ev_data)
          {
             std::string msg_type = msg["type"];
 
-            auto it(find_connection(nc));
-
-            if (it != end(m_connection_list))
-            {
-               (*it)->set_msg(msg_type, msg);
-            }
-            else
-            {
-               auto connection(std::make_shared<Connection>(nc));
-
-               connection->set_msg(msg_type, msg);
-
-               m_connection_list.push_back(connection);
-            }
+            m_connection_mgr.set_incoming_msg(nc, msg_type, msg);
          }
          break;
       }
@@ -119,32 +95,11 @@ void Server::event_handler(mg_connection *nc, int ev, void *ev_data)
       {
          if (nc->flags & MG_F_IS_WEBSOCKET)
          {
-            remove_connection(nc);
+            m_connection_mgr.remove_connection(nc);
          }
          break;
       }
    }
-}
-
-void Server::remove_connection(mg_connection* nc)
-{
-   auto it(find_connection(nc));
-
-   if (it != end(m_connection_list))
-   {
-      m_connection_list.erase(it);
-   }
-}
-
-std::vector<std::shared_ptr<Connection>>::iterator Server::find_connection(mg_connection *nc)
-{
-   // Find the connection
-   return std::find_if(begin(m_connection_list),
-                       end(m_connection_list),
-                       [=](const std::shared_ptr<Connection>& c) {
-                          return c->raw() == nc;
-                       });
-
 }
 
 } // namespace network

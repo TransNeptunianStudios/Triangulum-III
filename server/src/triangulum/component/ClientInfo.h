@@ -2,19 +2,22 @@
 #define _CLIENT_INFO_H
 
 #include "entityx/Entity.h"
-#include "triangulum/network/Connection.h"
 
 namespace triangulum {
+
+namespace network {
+class IConnection;
+}
+
 namespace component {
 
 struct ClientInfo : public entityx::Component<ClientInfo>
 {
-   ClientInfo(std::weak_ptr<network::IConnection> connection_,
-              const std::string& name_);
-
-   std::weak_ptr<network::IConnection> connection;
+   ClientInfo(const std::string& name_, const std::weak_ptr<network::IConnection>& connection_);
 
    std::string name;
+
+   std::weak_ptr<network::IConnection> connection;
 };
 
 } // namespace component

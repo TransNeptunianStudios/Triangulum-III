@@ -2,9 +2,11 @@
 #define _WEB_SERVER_H
 
 #include <functional>
+#include <unordered_map>
 #include <vector>
 #include "mongoose.h"
 #include "triangulum/network/Connection.h"
+#include "triangulum/network/ConnectionManager.h"
 
 namespace triangulum {
 namespace network {
@@ -39,20 +41,16 @@ public:
 
    void process_input();
 
-   void handle_pending_connections(std::function<bool(std::shared_ptr<IConnection>)> do_accept);
+   ConnectionManager& get_connection_mgr();
 
 private:
-   void event_handler(mg_connection* nc, int ev, void* ev_data);
-
-   void remove_connection(mg_connection* nc);
-
-   std::vector<std::shared_ptr<Connection>>::iterator find_connection(mg_connection* nc);
-
-   std::vector<std::shared_ptr<Connection>> m_connection_list;
+   void event_handler(mg_connection *nc, int ev, void *ev_data);
 
    mg_mgr m_mgr;
 
    mg_connection* m_connection;
+
+   ConnectionManager m_connection_mgr;
 
    // TODO: Remove?
    //mg_serve_http_opts m_opts;
