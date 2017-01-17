@@ -51,8 +51,11 @@ void InputSystem::update(EntityManager& entities,
              // Shoot
              if(int(inputBits[6]- '0') != 0)
              {
-                std::cout << "Pew pew" << std::endl;
+                std::cout << "Pew pew\n";
              }
+
+             b2Vec2 pos = body.body->GetPosition();
+             std::cout << "Position: (" << pos.x << ", " << pos.y << ")\n";
          }
       }
    });

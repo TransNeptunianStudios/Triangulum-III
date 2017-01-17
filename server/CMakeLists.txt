@@ -26,6 +26,7 @@ set(SOURCE_FILES
     src/triangulum/network/Server.h
     src/triangulum/system/ConnectionSystem.cpp
     src/triangulum/system/InputSystem.cpp
+    src/triangulum/system/SimulationSystem.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

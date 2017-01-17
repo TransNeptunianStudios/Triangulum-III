@@ -34,10 +34,10 @@ export default class extends Phaser.State {
         var inputMask = Handy.getbitMask([
             this.cursors.up.isDown,
             this.cursors.down.isDown,
-            false, // strafe left
-            false, // strafe right
-            this.cursors.left.isDown,
+            this.cursors.left.isDown, // strafe left
             this.cursors.right.isDown,
+            false, // turn left
+            false, // turn left
             false, // Fire
             false]); // spare
 
