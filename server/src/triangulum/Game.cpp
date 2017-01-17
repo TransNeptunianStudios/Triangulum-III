@@ -12,7 +12,7 @@ Game::Game()
 , m_system_manager(m_entity_manager, m_event_manager)
 , m_world(b2Vec2(0.0f, 0.0f))
 , m_server()
-, m_entity_factory()
+, m_entity_factory(m_world)
 {
 }
 

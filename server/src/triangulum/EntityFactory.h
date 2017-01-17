@@ -3,6 +3,8 @@
 
 #include "entityx/Entity.h"
 
+class b2World;
+
 namespace triangulum {
 
 namespace network {
@@ -12,13 +14,16 @@ class IConnection;
 class EntityFactory
 {
 public:
-   EntityFactory();
+   EntityFactory(b2World& world);
 
    ~EntityFactory();
 
    void create_player(entityx::Entity entity,
                       const std::string& name,
                       const std::weak_ptr<network::IConnection>& connection);
+
+private:
+   b2World& m_world;
 };
 
 } // namespace triangulum
