@@ -4,8 +4,6 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
-#include "triangulum/component/Posture.h"
-#include "triangulum/component/Velocity.h"
 
 using namespace entityx;
 
@@ -33,15 +31,11 @@ void EntityFactory::create_player(Entity entity,
 
    body_def.type = b2_dynamicBody;
 
-   entity.assign<DynamicBody>(m_world.CreateBody(&body_def));
-
    float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/200));
-
    float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/200));
+   body_def.position.Set(x, y);
 
-   entity.assign<Posture>(x, y, 0);
-
-   entity.assign<Velocity>(0, 0, 0);
+   entity.assign<DynamicBody>(m_world.CreateBody(&body_def));
 }
 
 } // namespace triangulum

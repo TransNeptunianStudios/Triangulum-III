@@ -1,10 +1,10 @@
 #include "triangulum/system/InputSystem.h"
+#include "Box2D/Dynamics/b2Body.h"
 
 #include <bitset>
 
 #include "triangulum/component/ClientInfo.h"
-#include "triangulum/component/Posture.h"
-#include "triangulum/component/Velocity.h"
+#include "triangulum/component/DynamicBody.h"
 #include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
@@ -23,30 +23,32 @@ void InputSystem::update(EntityManager& entities,
                          EventManager& events,
                          TimeDelta dt)
 {
-   entities.each<ClientInfo, Velocity>([](
+   entities.each<ClientInfo, DynamicBody>([](
      Entity entity,
      ClientInfo& client_info,
-     Velocity& vel) {
+     DynamicBody& body) {
       if (auto connection = client_info.connection.lock())
       {
          Json msg;
 
          if (connection->get_msg("control", msg) ) //&& msg["input_mask"].is_integer())
          {
-            std::cout << "Got msg!\n";
-
              // thurst, reverse, strafe Left, strafe right, turn left, turn right, fire weapon, not used
              int inputMask = msg["input_mask"];
-             std::string inputBits = std::bitset< 8 >( inputMask ).to_string(); // string conversion
-             std::cout << "Got Input " << inputBits << " from " << client_info.name << std::endl;
+             std::string inputBits = std::bitset< 8 >( inputMask ).to_string();
 
+             // Move around regardless of orientation, wrong, but will suffice for now.
              float speed = 1;
-             vel.vx = (int(inputBits[3]- '0') * speed) - (int(inputBits[2]- '0') * speed);
-             vel.vy = (int(inputBits[0]- '0') * speed) - (int(inputBits[1]- '0') * speed);
+             int xDir = int(inputBits[3]- '0') - int(inputBits[2] - '0');
+             int yDir = int(inputBits[0]- '0') - int(inputBits[1] - '0');
+             body.body->ApplyForceToCenter( b2Vec2((float)xDir * speed, (float)yDir * speed), true);
 
+             // Rotate
              float rotSpeed = 1;
-             vel.vr = (int(inputBits[5]- '0') * rotSpeed) - (int(inputBits[4]- '0') * rotSpeed);
+             int rotDir = int(inputBits[5]- '0') - int(inputBits[4]- '0');
+             body.body->ApplyTorque( rotDir * rotSpeed , true);
 
+             // Shoot
              if(int(inputBits[6]- '0') != 0)
              {
                 std::cout << "Pew pew" << std::endl;

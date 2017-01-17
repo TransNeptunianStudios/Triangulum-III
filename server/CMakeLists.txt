@@ -16,10 +16,6 @@ set(SOURCE_FILES
     src/triangulum/component/ClientInfo.h
     src/triangulum/component/DynamicBody.cpp
     src/triangulum/component/DynamicBody.h
-    src/triangulum/component/Posture.cpp
-    src/triangulum/component/Posture.h
-    src/triangulum/component/Velocity.cpp
-    src/triangulum/component/Velocity.h
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
     src/triangulum/network/ConnectionManager.cpp
