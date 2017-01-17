@@ -5,6 +5,7 @@
 #include "entityx/Event.h"
 #include "entityx/Entity.h"
 #include "entityx/System.h"
+#include "triangulum/EntityFactory.h"
 #include "triangulum/network/Server.h"
 
 namespace triangulum {
@@ -32,6 +33,8 @@ private:
    b2World m_world;
 
    network::Server m_server;
+
+   EntityFactory m_entity_factory;
 };
 
 } // namespace triangulum

@@ -12,6 +12,7 @@ Game::Game()
 , m_system_manager(m_entity_manager, m_event_manager)
 , m_world(b2Vec2(0.0f, 0.0f))
 , m_server()
+, m_entity_factory()
 {
 }
 
@@ -38,7 +39,7 @@ void Game::createSystems()
 {
    using namespace system;
 
-   m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr());
+   m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(), m_entity_factory);
    m_system_manager.add<InputSystem>();
    m_system_manager.configure();
 }

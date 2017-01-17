@@ -2,6 +2,7 @@
 #define _CONNECTION_SYSTEM_H
 
 #include "entityx/System.h"
+#include "triangulum/EntityFactory.h"
 
 namespace triangulum {
 
@@ -15,7 +16,7 @@ namespace system {
 class ConnectionSystem : public entityx::System<ConnectionSystem>
 {
 public:
-   ConnectionSystem(network::IConnectionManager& connection_mgr);
+   ConnectionSystem(network::IConnectionManager& connection_mgr, EntityFactory& entity_factory);
 
    void update(entityx::EntityManager &entities,
                entityx::EventManager &events,
@@ -30,6 +31,8 @@ private:
    void send_negative_reply(std::shared_ptr<network::IConnection> connection);
 
    network::IConnectionManager& m_connection_mgr;
+
+   EntityFactory m_entity_factory;
 };
 
 } // namespace system

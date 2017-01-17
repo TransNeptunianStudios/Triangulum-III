@@ -15,8 +15,9 @@ namespace system {
 using namespace component;
 using namespace network;
 
-ConnectionSystem::ConnectionSystem(network::IConnectionManager& connection_mgr)
+ConnectionSystem::ConnectionSystem(network::IConnectionManager& connection_mgr, EntityFactory& entity_factory)
 : m_connection_mgr(connection_mgr)
+, m_entity_factory(entity_factory)
 {
 }
 
@@ -55,7 +56,7 @@ void ConnectionSystem::update(EntityManager& entities,
 
       auto entity = entities.create();
 
-      EntityFactory::create_player(entity, name, connection);
+      m_entity_factory.create_player(entity, name, connection);
 
       send_poistive_reply(connection, entity.id().id());
 
