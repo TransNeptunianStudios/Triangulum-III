@@ -10,6 +10,7 @@ Connection::Connection(mg_connection *nc)
 {
    // Incoming messages
    m_msg_map.insert(std::make_pair("login", Json()));
+   m_msg_map.insert(std::make_pair("control", Json()));
 
    // Outgoing messages
    m_msg_map.insert(std::make_pair("login_resp", Json()));

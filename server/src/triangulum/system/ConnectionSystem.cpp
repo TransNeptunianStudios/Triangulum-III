@@ -59,9 +59,17 @@ void ConnectionSystem::update(EntityManager& entities,
 
       send_poistive_reply(connection, entity.id().id());
 
-      std::cout << "New player created\n";
+      std::cout << "New player (" << name << ") created\n";
 
       return true;
+   });
+
+   entities.each<ClientInfo>([](Entity entity, ClientInfo& client_info) {
+      if (client_info.connection.expired())
+      {
+         std::cout << client_info.name << " disconnected\n";
+         entity.destroy();
+      }
    });
 }
 

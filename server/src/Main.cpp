@@ -7,6 +7,8 @@ int main(int argc, char* argv[])
 
    g.init();
 
+   std::cout << "Triangulum III server started" << std::endl;
+
    g.run();
 
    return 0;
