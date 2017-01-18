@@ -16,7 +16,7 @@ void SimulationSystem::update(EntityManager& entities,
                               EventManager& events,
                               TimeDelta dt)
 {
-  m_world.Step( dt, velocityIterations, positionIterations);
+  m_world.Step( dt, m_velocityIterations, m_positionIterations);
 }
 
 } // namespace system

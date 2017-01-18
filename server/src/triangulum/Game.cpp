@@ -4,6 +4,7 @@
 #include "triangulum/system/ConnectionSystem.h"
 #include "triangulum/system/InputSystem.h"
 #include "triangulum/system/SimulationSystem.h"
+#include "triangulum/system/OutputSystem.h"
 
 namespace triangulum {
 
@@ -43,6 +44,7 @@ void Game::createSystems()
    m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(), m_entity_factory);
    m_system_manager.add<InputSystem>();
    m_system_manager.add<SimulationSystem>(m_world);
+   m_system_manager.add<OutputSystem>();
    m_system_manager.configure();
 }
 

@@ -26,6 +26,7 @@ set(SOURCE_FILES
     src/triangulum/network/Server.h
     src/triangulum/system/ConnectionSystem.cpp
     src/triangulum/system/InputSystem.cpp
+    src/triangulum/system/OutputSystem.cpp
     src/triangulum/system/SimulationSystem.cpp
 )
 
