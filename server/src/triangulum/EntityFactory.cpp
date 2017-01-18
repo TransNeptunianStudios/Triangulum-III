@@ -35,7 +35,12 @@ void EntityFactory::create_player(Entity entity,
    float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/200));
    body_def.position.Set(x, y);
 
-   entity.assign<DynamicBody>(m_world.CreateBody(&body_def));
+   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b){
+      auto world = b->GetWorld();
+      world->DestroyBody(b);
+   });
+
+   entity.assign<DynamicBody>(std::move(body));
 }
 
 } // namespace triangulum

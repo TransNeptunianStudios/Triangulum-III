@@ -3,8 +3,8 @@
 namespace triangulum {
 namespace component {
 
-DynamicBody::DynamicBody(b2Body* body_)
-: body(body_)
+DynamicBody::DynamicBody(BodyPtr body_)
+   : body(std::move(body_))
 {
 }
 

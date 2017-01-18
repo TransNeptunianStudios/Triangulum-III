@@ -10,9 +10,11 @@ namespace component {
 
 struct DynamicBody : public entityx::Component<DynamicBody>
 {
-   DynamicBody(b2Body* body_);
+   using BodyPtr = std::unique_ptr<b2Body, std::function<void(b2Body*)>>;
 
-   b2Body* body;
+   DynamicBody(BodyPtr body_);
+
+   BodyPtr body;
 };
 
 } // namespace component
