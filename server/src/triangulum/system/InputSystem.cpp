@@ -41,12 +41,12 @@ void InputSystem::update(EntityManager& entities,
              float speed = 1;
              int xDir = int(inputBits[3]- '0') - int(inputBits[2] - '0');
              int yDir = int(inputBits[0]- '0') - int(inputBits[1] - '0');
-             body.body->ApplyForceToCenter( b2Vec2((float)xDir * speed, (float)yDir * speed), true);
+             body.ApplyForce( b2Vec2((float)xDir * speed, (float)yDir * speed));
 
              // Rotate
              float rotSpeed = 1;
              int rotDir = int(inputBits[5]- '0') - int(inputBits[4]- '0');
-             body.body->ApplyTorque( rotDir * rotSpeed , true);
+             body.ApplyTorque( rotDir * rotSpeed);
 
              // Shoot
              if(int(inputBits[6]- '0') != 0)
