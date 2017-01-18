@@ -17,6 +17,8 @@ public:
                entityx::TimeDelta dt);
 
    b2World& m_world;
+   int32 m_velocityIterations;   //how strongly to correct velocity
+   int32 m_positionIterations;   //how strongly to correct position
 };
 
 } // namespace system
