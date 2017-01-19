@@ -11,36 +11,36 @@ namespace network {
 class Connection : public IConnection
 {
 public:
-   Connection(mg_connection* nc);
+  Connection(mg_connection* nc);
 
-   ~Connection();
+  ~Connection();
 
-   mg_connection* raw() const;
+  mg_connection* raw() const;
 
-   void set_msg(const std::string& msg_type, const Json& msg);
+  void set_msg(const std::string& msg_type, const Json& msg);
 
-   bool get_msg(const std::string& msg_type, Json& msg);
+  bool get_msg(const std::string& msg_type, Json& msg);
 
-   bool peek_msg(const std::string& msg_type, Json& msg);
+  bool peek_msg(const std::string& msg_type, Json& msg);
 
-   void send_msg(const Json& json);
+  void send_msg(const Json& json);
 
-   void set_accepted(bool is_accepted);
+  void set_accepted(bool is_accepted);
 
-   bool is_accepted() const;
+  bool is_accepted() const;
 
 private:
-   mg_connection* m_connection;
+  mg_connection* m_connection;
 
-   bool m_is_accepted;
+  bool m_is_accepted;
 
-   // Map message type (string) to json
-   using MessageMap = std::map<std::string, Json>;
+  // Map message type (string) to json
+  using MessageMap = std::map<std::string, Json>;
 
-   MessageMap m_msg_map;
+  MessageMap m_msg_map;
 };
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef SIMULATION_SYSTEM_H
 #define SIMULATION_SYSTEM_H
 
-#include "entityx/System.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "entityx/System.h"
 
 namespace triangulum {
 namespace system {
@@ -10,18 +10,20 @@ namespace system {
 class SimulationSystem : public entityx::System<SimulationSystem>
 {
 public:
-   SimulationSystem(b2World& world);
+  SimulationSystem(b2World& world);
 
-   void update(entityx::EntityManager &entities,
-               entityx::EventManager &events,
-               entityx::TimeDelta dt);
+  void update(entityx::EntityManager& entities, entityx::EventManager& events,
+              entityx::TimeDelta dt);
 
-   b2World& m_world;
-   int32 m_velocityIterations;   //how strongly to correct velocity
-   int32 m_positionIterations;   //how strongly to correct position
+private:
+  b2World& m_world;
+
+  int32 m_velocityIterations;
+
+  int32 m_positionIterations;
 };
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum
 
 #endif

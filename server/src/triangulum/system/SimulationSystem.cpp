@@ -7,17 +7,16 @@ namespace system {
 
 SimulationSystem::SimulationSystem(b2World& world)
 : m_world(world)
-, m_velocityIterations(8)   //how strongly to correct velocity
-, m_positionIterations(3)   //how strongly to correct position
+, m_velocityIterations(8)  // how strongly to correct velocity
+, m_positionIterations(3)  // how strongly to correct position
 {
 }
 
-void SimulationSystem::update(EntityManager& entities,
-                              EventManager& events,
+void SimulationSystem::update(EntityManager& entities, EventManager& events,
                               TimeDelta dt)
 {
-  m_world.Step( dt, m_velocityIterations, m_positionIterations);
+  m_world.Step(dt, m_velocityIterations, m_positionIterations);
 }
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum

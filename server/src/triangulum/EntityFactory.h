@@ -9,23 +9,22 @@ namespace triangulum {
 
 namespace network {
 class IConnection;
-} // namesapce network
+}  // namesapce network
 
 class EntityFactory
 {
 public:
-   EntityFactory(b2World& world);
+  EntityFactory(b2World& world);
 
-   ~EntityFactory();
+  ~EntityFactory();
 
-   void create_player(entityx::Entity entity,
-                      const std::string& name,
-                      const std::weak_ptr<network::IConnection>& connection);
+  void create_player(entityx::Entity entity, const std::string& name,
+                     const std::weak_ptr<network::IConnection>& connection);
 
 private:
-   b2World& m_world;
+  b2World& m_world;
 };
 
-} // namespace triangulum
+}  // namespace triangulum
 
 #endif

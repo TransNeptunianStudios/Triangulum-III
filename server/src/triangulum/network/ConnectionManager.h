@@ -15,23 +15,25 @@ namespace network {
 class ConnectionManager : public IConnectionManager
 {
 public:
-   ConnectionManager();
+  ConnectionManager();
 
-   ~ConnectionManager();
+  ~ConnectionManager();
 
-   void set_incoming_msg(mg_connection* nc, const std::string& msg_type, const Json& msg);
+  void set_incoming_msg(mg_connection* nc, const std::string& msg_type,
+                        const Json& msg);
 
-   void remove_connection(mg_connection* nc);
+  void remove_connection(mg_connection* nc);
 
-   void accept_connections(std::function<bool(std::shared_ptr<IConnection>)> accept_function);
+  void accept_connections(
+  std::function<bool(std::shared_ptr<IConnection>)> accept_function);
 
 private:
-   using ConnectionMap = std::map<mg_connection*, std::shared_ptr<Connection>>;
+  using ConnectionMap = std::map<mg_connection*, std::shared_ptr<Connection>>;
 
-   ConnectionMap m_connections;
+  ConnectionMap m_connections;
 };
 
-} // namespace network
-} // namespace triangulum
+}  // namespace network
+}  // namespace triangulum
 
 #endif

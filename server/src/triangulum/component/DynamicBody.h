@@ -11,18 +11,18 @@ namespace component {
 
 struct DynamicBody : public entityx::Component<DynamicBody>
 {
-   using BodyPtr = std::unique_ptr<b2Body, std::function<void(b2Body*)>>;
+  using BodyPtr = std::unique_ptr<b2Body, std::function<void(b2Body*)>>;
 
-   DynamicBody(BodyPtr body_);
+  DynamicBody(BodyPtr body_);
 
-   void ApplyForce(b2Vec2 force); // Force applied to center
+  void apply_force(b2Vec2 force);  // Force applied to center
 
-   void ApplyTorque(float torque);
+  void apply_torque(float torque);
 
-   BodyPtr body;
+  BodyPtr body;
 };
 
-} // namespace component
-} // namespace triangulum
+}  // namespace component
+}  // namespace triangulum
 
 #endif

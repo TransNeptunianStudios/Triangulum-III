@@ -12,28 +12,23 @@ namespace system {
 using namespace component;
 using namespace network;
 
-OutputSystem::OutputSystem()
-{
-}
+OutputSystem::OutputSystem() {}
 
-void OutputSystem::update(EntityManager& entities,
-                         EventManager& events,
-                         TimeDelta dt)
+void OutputSystem::update(EntityManager& entities, EventManager& events,
+                          TimeDelta dt)
 {
-   entities.each<DynamicBody>([](
-     Entity entity,
-     DynamicBody& body) {
-				
-       /*if (auto connection = client_info.connection.lock())
+  entities.each<DynamicBody>([](Entity entity, DynamicBody& body) {
+    /*if (auto connection = client_info.connection.lock())
+   {
+      Json msg;
+
+      if (connection->get_msg("control", msg) ) //&&
+   msg["input_mask"].is_integer())
       {
-         Json msg;
-
-         if (connection->get_msg("control", msg) ) //&& msg["input_mask"].is_integer())
-         {
-         }      
-	 }*/
-   });
+      }
+      }*/
+  });
 }
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum

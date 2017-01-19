@@ -17,30 +17,27 @@ EntityFactory::EntityFactory(b2World& world)
 {
 }
 
-EntityFactory::~EntityFactory()
-{
-}
+EntityFactory::~EntityFactory() {}
 
-void EntityFactory::create_player(Entity entity,
-                                  const std::string& name,
+void EntityFactory::create_player(Entity entity, const std::string& name,
                                   const std::weak_ptr<IConnection>& connection)
 {
-   entity.assign<ClientInfo>(name, connection);
+  entity.assign<ClientInfo>(name, connection);
 
-   b2BodyDef body_def;
+  b2BodyDef body_def;
 
-   body_def.type = b2_dynamicBody;
+  body_def.type = b2_dynamicBody;
 
-   float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/200));
-   float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/200));
-   body_def.position.Set(x, y);
+  float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  body_def.position.Set(x, y);
 
-   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b){
-      auto world = b->GetWorld();
-      world->DestroyBody(b);
-   });
+  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
+    auto world = b->GetWorld();
+    world->DestroyBody(b);
+  });
 
-   entity.assign<DynamicBody>(std::move(body));
+  entity.assign<DynamicBody>(std::move(body));
 }
 
-} // namespace triangulum
+}  // namespace triangulum

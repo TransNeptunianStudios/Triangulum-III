@@ -18,12 +18,14 @@ template <typename T>
 struct Callback;
 
 template <typename Ret, typename... Params>
-struct Callback<Ret(Params...)> {
-   template <typename... Args>
-   static Ret callback(Args... args) {
-      func(args...);
-   }
-   static std::function<Ret(Params...)> func;
+struct Callback<Ret(Params...)>
+{
+  template <typename... Args>
+  static Ret callback(Args... args)
+  {
+    func(args...);
+  }
+  static std::function<Ret(Params...)> func;
 };
 
 template <typename Ret, typename... Params>
@@ -35,32 +37,32 @@ typedef void (*callback_t)(mg_connection*, int, void*);
 class Server
 {
 public:
-   Server();
+  Server();
 
-   ~Server();
+  ~Server();
 
-   void process_input();
+  void process_input();
 
-   ConnectionManager& get_connection_mgr();
+  ConnectionManager& get_connection_mgr();
 
 private:
-   void event_handler(mg_connection *nc, int ev, void *ev_data);
+  void event_handler(mg_connection* nc, int ev, void* ev_data);
 
-   mg_mgr m_mgr;
+  mg_mgr m_mgr;
 
-   mg_connection* m_connection;
+  mg_connection* m_connection;
 
-   ConnectionManager m_connection_mgr;
+  ConnectionManager m_connection_mgr;
 
-   // TODO: Remove?
-   //mg_serve_http_opts m_opts;
+  // TODO: Remove?
+  //mg_serve_http_opts m_opts;
 
-   static const size_t BUFFER_SIZE = 256;
+  static const size_t BUFFER_SIZE = 256;
 
-   char m_buffer[BUFFER_SIZE];
+  char m_buffer[BUFFER_SIZE];
 };
 
-} // namesapce network
-} // namespace triangulum
+}  // namesapce network
+}  // namespace triangulum
 
 #endif

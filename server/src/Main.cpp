@@ -3,13 +3,13 @@
 
 int main(int argc, char* argv[])
 {
-   triangulum::Game g;
+  triangulum::Game g;
 
-   g.init();
+  g.init();
 
-   std::cout << "Triangulum III server started" << std::endl;
+  std::cout << "Triangulum III server started" << std::endl;
 
-   g.run();
+  g.run();
 
-   return 0;
+  return 0;
 }

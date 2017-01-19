@@ -9,14 +9,13 @@ namespace system {
 class OutputSystem : public entityx::System<OutputSystem>
 {
 public:
-   OutputSystem();
+  OutputSystem();
 
-   void update(entityx::EntityManager &entities,
-               entityx::EventManager &events,
-               entityx::TimeDelta dt);
+  void update(entityx::EntityManager& entities, entityx::EventManager& events,
+              entityx::TimeDelta dt);
 };
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum
 
 #endif

@@ -9,12 +9,13 @@ class IConnection;
 class IConnectionManager
 {
 public:
-   virtual ~IConnectionManager() {}
+  virtual ~IConnectionManager() {}
 
-   virtual void accept_connections(std::function<bool(std::shared_ptr<IConnection>)> accept_function) = 0;
+  virtual void accept_connections(
+  std::function<bool(std::shared_ptr<IConnection>)> accept_function) = 0;
 };
 
-} // namespace system
-} // namespace triangulum
+}  // namespace system
+}  // namespace triangulum
 
 #endif
