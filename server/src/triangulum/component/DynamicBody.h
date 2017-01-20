@@ -5,6 +5,7 @@
 #include "entityx/Entity.h"
 
 class b2Body;
+class b2Vec;
 
 namespace triangulum {
 namespace component {
@@ -18,6 +19,8 @@ struct DynamicBody : public entityx::Component<DynamicBody>
   void apply_force(b2Vec2 force);  // Force applied to center
 
   void apply_torque(float torque);
+
+  const b2Vec2& get_position() const;
 
   BodyPtr body;
 };

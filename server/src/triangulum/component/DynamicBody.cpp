@@ -10,12 +10,17 @@ DynamicBody::DynamicBody(BodyPtr body_)
 
 void DynamicBody::apply_force(b2Vec2 force)
 {
-  this->body->ApplyForceToCenter(force, true);
+  body->ApplyForceToCenter(force, true);
 }
 
 void DynamicBody::apply_torque(float torque)
 {
-  this->body->ApplyTorque(torque, true);
+  body->ApplyTorque(torque, true);
+}
+
+const b2Vec2& DynamicBody::get_position() const
+{
+  return body->GetPosition();
 }
 
 }  // namespace component
