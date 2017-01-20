@@ -23,5 +23,14 @@ Order: {thurst, reverse, strafe Left, strafe right, turn left, turn right, fire 
 #### Server Update Msg
 Send list of all relevant objects current state.
 ```sh
-{"type" : "update", // TODO
+{"type" : "update",
+ "players" : [{"id": <PLAYER-ID>, color : <HEX-COLOR> , "x": <X-POS>, "y": <Y-POS>, "vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, 
+               "r":<ROTATION>, "vr" : <ROTATION VELOCITY},
+               {"id": <PLAYER-ID>, color : <HEX-COLOR> , "x": <X-POS>, "y": <Y-POS>, "vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, 
+               "r":<ROTATION>, "vr" : <ROTATION VELOCITY}],
+ "stuff" : [{"id": <ID>, "x": <X-POS>, "y": <Y-POS>, "vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, 
+               "r":<ROTATION>, "vr" : <ROTATION VELOCITY},
+               {"id": <ID>, "x": <X-POS>, "y": <Y-POS>, "vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, 
+               "r":<ROTATION>, "vr" : <ROTATION VELOCITY}]
+               }
 ```
