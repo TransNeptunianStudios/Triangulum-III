@@ -24,6 +24,12 @@ public:
 private:
   void createSystems();
 
+  void process_input();
+
+  void update(double dt);
+
+  void process_output();
+
   entityx::EventManager m_event_manager;
 
   entityx::EntityManager m_entity_manager;
