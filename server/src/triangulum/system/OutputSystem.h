@@ -4,18 +4,24 @@
 #include "entityx/System.h"
 
 namespace triangulum {
-namespace system {
 
-class OutputSystem : public entityx::System<OutputSystem>
-{
-public:
-  OutputSystem();
+  namespace network {
+    class IConnection;
+    class IConnectionManager;
+  }
 
-  void update(entityx::EntityManager& entities, entityx::EventManager& events,
-              entityx::TimeDelta dt);
-};
+  namespace system {
+  
+    class OutputSystem : public entityx::System<OutputSystem>
+    {
+    public:
+      OutputSystem();
 
-}  // namespace system
+      void update(entityx::EntityManager& entities, entityx::EventManager& events,
+		  entityx::TimeDelta dt);
+    };
+
+  }  // namespace system
 }  // namespace triangulum
 
 #endif
