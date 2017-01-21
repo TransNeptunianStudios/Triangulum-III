@@ -14,6 +14,8 @@ set(SOURCE_FILES
     src/triangulum/Game.h
     src/triangulum/component/ClientInfo.cpp
     src/triangulum/component/ClientInfo.h
+    src/triangulum/component/Visible.cpp
+    src/triangulum/component/Visible.h   
     src/triangulum/component/DynamicBody.cpp
     src/triangulum/component/DynamicBody.h
     src/triangulum/network/Connection.cpp

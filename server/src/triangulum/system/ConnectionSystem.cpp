@@ -57,7 +57,7 @@ void ConnectionSystem::update(EntityManager &entities, EventManager &events,
 
     auto entity = entities.create();
 
-    m_entity_factory.create_player(entity, name, connection);
+    m_entity_factory.create_player(entity, name, msg["color"], connection);
 
     send_poistive_reply(connection, entity.id().id());
 

@@ -18,7 +18,7 @@ public:
 
   ~EntityFactory();
 
-  void create_player(entityx::Entity entity, const std::string& name,
+  void create_player(entityx::Entity entity, const std::string& name, const std::string& color,
                      const std::weak_ptr<network::IConnection>& connection);
 
 private:

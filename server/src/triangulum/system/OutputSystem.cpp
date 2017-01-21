@@ -7,28 +7,20 @@
 using namespace entityx;
 
 namespace triangulum {
-namespace system {
+  namespace system {
 
-using namespace component;
-using namespace network;
+    using namespace component;
+    using namespace network;
 
-OutputSystem::OutputSystem() {}
+    OutputSystem::OutputSystem() {}
 
-void OutputSystem::update(EntityManager& entities, EventManager& events,
-                          TimeDelta dt)
-{
-  entities.each<DynamicBody>([](Entity entity, DynamicBody& body) {
-    /*if (auto connection = client_info.connection.lock())
-   {
-      Json msg;
+    void OutputSystem::update(EntityManager& entities, EventManager& events,
+			      TimeDelta dt)
+    {
+      entities.each<ClientInfo>([](Entity entity, ClientInfo& bodyClient) {
+	  // take everything with a dynamic body and put it in a list.
+	});
+    }
 
-      if (connection->get_msg("control", msg) ) //&&
-   msg["input_mask"].is_integer())
-      {
-      }
-      }*/
-  });
-}
-
-}  // namespace system
+  }  // namespace system
 }  // namespace triangulum
