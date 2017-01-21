@@ -1,9 +1,9 @@
 import Phaser from 'phaser'
 //@HACK: ensures Fabrique fron "phaser-input" gets exposed to window.
-require('phaser-input/build/phaser-input.js')
+import * as PhaserInput from '@orange-games/phaser-input/build/phaser-input.js'
 
 export default class extends Phaser.State {
-    init() {
+    init() {      
       this.game.add.plugin(Fabrique.Plugins.InputField);
       this.game.world.setBounds(0, 0, 2000, 2000)
     }
