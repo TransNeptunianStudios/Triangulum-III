@@ -51,11 +51,13 @@ void OutputSystem::update(EntityManager& entities, EventManager& events,
 
   resp_msg["objects"] = object_list;
 
-  entities.each<ClientInfo>([](Entity entity, ClientInfo& clientinfo) {
+   
+  
+  entities.each<ClientInfo>([&resp_msg](Entity entity, ClientInfo& clientinfo) {
     // send to all clients
     if (auto connection = clientinfo.connection.lock())
     {
-      //connection->send_msg(resp_msg); // Cannot send this often
+      connection->send_msg(resp_msg); // Cannot send this often
     }
   });
 }

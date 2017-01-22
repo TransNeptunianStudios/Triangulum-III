@@ -1,6 +1,6 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-import Player from '../player.js'
+import Entity from '../entity.js'
 
 import Handy from '../handy.js'
 
@@ -20,29 +20,41 @@ export default class extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 	// entities
-	this.entities = new Map();
-	
-        // player (remove the player class?)
-        this.player = new Player(this.game)
-        this.game.add.existing(this.player)
+	this.entities  = new Map();
+
+
 	
 	this.entities[this.playerId] = this.player
-	    
+	
         this.game.camera.follow(this.entities[this.playerId])
 
         //this.game.input.keyboard.addKeys({ 'fire': Phaser.Keyboard.SPACEBAR});
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.lastInput = 0;
 
-	this.connection.registerForUpdates();
+	this.connection.registerForUpdates(this.updateWorld, this);
     }
 
     updateWorld(response) {
-	console.log("Updating world.")
-	console.log(response)
+	//console.log("Updating world.")
 
 	// Uppdate all int
-	this.entities
+	for( var e in response.objects) {
+	    
+	    var serverEntity = response.objects[e]
+	    var clientEntity = this.entities[serverEntity.id]
+	    
+	    if(!clientEntity){
+		var newEntity = new Entity(this.game, serverEntity.sprite)
+   		this.entities[serverEntity.id] = newEntity
+		this.game.add.existing(newEntity)
+		clientEntity = newEntity
+	    }
+	    clientEntity.x = serverEntity.x
+   	    clientEntity.y = serverEntity.y
+	    clientEntity.body.velocity.x = serverEntity.vx
+	    clientEntity.body.velocity.y = serverEntity.vy	    	
+	}
     }
     
     update() {
