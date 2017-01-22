@@ -19,18 +19,36 @@ export default class extends Phaser.State {
         // simple Physics
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        // player
-        this.player = new Player(this.game);
-        this.game.add.existing(this.player);
-        this.game.camera.follow(this.player);
+	// entities
+	this.entities = new Map();
+	
+        // player (remove the player class?)
+        this.player = new Player(this.game)
+        this.game.add.existing(this.player)
+	
+	this.entities[this.playerId] = this.player
+	    
+        this.game.camera.follow(this.entities[this.playerId])
 
         //this.game.input.keyboard.addKeys({ 'fire': Phaser.Keyboard.SPACEBAR});
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.lastInput = 0;
+
+	this.connection.registerForUpdates();
     }
+
+    updateWorld(response) {
+	console.log("Updating world.")
+	console.log(response)
+
+	// Uppdate all int
+	this.entities
+    }
+    
     update() {
-        // get world updates from the server
-        //
+
+	// Collect inputs from the player
+	// This is big and ugly, ideas?
         var inputMask = Handy.getbitMask([
             this.cursors.up.isDown,
             this.cursors.down.isDown,

@@ -18,10 +18,7 @@ namespace triangulum {
 
     void OutputSystem::update(EntityManager& entities, EventManager& events,
 			      TimeDelta dt)
-    {
-      nlohmann::json resp_msg;
-      resp_msg["type"] = "update";
-      
+    {            
       entities.each<Visible, DynamicBody>([](Entity entity, Visible& visible, DynamicBody& body) {	  
 	 	
 	  /*      resp_msg[]["color"] = visible.color;
@@ -34,7 +31,12 @@ namespace triangulum {
       
       entities.each<ClientInfo>([](Entity entity, ClientInfo& clientinfo) {
 	  // send to all clients
-	  //clientinfo.connection->send_msg(resp_msg);
+	  if (auto connection = clientinfo.connection.lock())
+	    {
+	      nlohmann::json resp_msg;
+	      resp_msg["type"] = "update";
+	      //connection->send_msg(resp_msg); // Cannot send this often
+	    }
 	});
     }
   }  // namespace system
