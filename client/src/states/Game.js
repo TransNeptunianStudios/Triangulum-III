@@ -20,13 +20,7 @@ export default class extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 	// entities
-	this.entities  = new Map();
-
-
-	
-	this.entities[this.playerId] = this.player
-	
-        this.game.camera.follow(this.entities[this.playerId])
+	this.entities  = new Map();	
 
         //this.game.input.keyboard.addKeys({ 'fire': Phaser.Keyboard.SPACEBAR});
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -49,6 +43,9 @@ export default class extends Phaser.State {
    		this.entities[serverEntity.id] = newEntity
 		this.game.add.existing(newEntity)
 		clientEntity = newEntity
+
+		if(serverEntity.id == this.playerId)
+		    this.game.camera.follow(this.entities[this.playerId])
 	    }
 	    clientEntity.x = serverEntity.x
    	    clientEntity.y = serverEntity.y
