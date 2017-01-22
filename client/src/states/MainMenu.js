@@ -18,6 +18,8 @@ export default class extends Phaser.State {
         this.input = this.game.add.inputField(0, 0);
         this.input.x = this.game.width / 2 - this.input.width / 2
         this.input.y = this.game.height / 2 - this.input.height / 2 + 150
+	this.input.blockInput = false;
+	this.input.startFocus();
 
         this.game.add.text(this.input.x, this.input.y - 25, "Player name:", {
             font: "20px Arial",
@@ -25,13 +27,20 @@ export default class extends Phaser.State {
         })
 
         this.connection = new Connection('ws://localhost:8080');
+	this.attemptingLogin = false;
 
         var button = game.add.button(this.game.width / 2, this.input.y + 50, 'enterButton', this.loginAttempt, this, 2, 1, 0);
         button.anchor.set(0.5)
+
+        this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(this.loginAttempt, this);
+
     }
 
     loginAttempt () {
-	     this.connection.login(this.input.value, this.loginResponse, this);
+	if( ! this.attemptingLogin ) {
+	    this.attemptingLogin = true;
+	    this.connection.login(this.input.value, this.loginResponse, this);
+	}
     }
 
     update() {
@@ -39,8 +48,11 @@ export default class extends Phaser.State {
     }
 
     loginResponse(success, id) {
-        if (success == "success") 
+	this.attemptingLogin = false;
+        if (success == "success") {
+	    this.input.endFocus();
             this.state.start('Game', true, false, this.connection, id)
+	}
         else
             console.log("Login failed");
     }
