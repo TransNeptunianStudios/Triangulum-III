@@ -6,9 +6,15 @@
 #include "triangulum/system/OutputSystem.h"
 #include "triangulum/system/SimulationSystem.h"
 
+#include <thread>
+#include <chrono>
+
+
 namespace triangulum {
 
 using namespace system;
+using namespace std::chrono_literals;
+
 
 Game::Game()
 : m_event_manager()
@@ -50,7 +56,7 @@ void Game::run()
     lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
 
     process_input();
-
+    
     while (lag >= time_step_ns)
     {
       lag -= time_step_ns;
@@ -59,6 +65,8 @@ void Game::run()
     }
 
     process_output();
+
+    std::this_thread::sleep_for(0.1s);
   }
 }
 

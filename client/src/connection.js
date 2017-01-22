@@ -25,9 +25,9 @@ export default class Connection {
             this.parent.loginCallback(response.status, response.id)
             break;
 	case "update":
-            console.log("Got update.")
-	    if(this.updateCallback)
-		this.parent.this.updateCallback(response)
+            //console.log("Got update.")
+	    if(this.parent.updateCallback)
+		this.parent.updateCallback(response)
             break;
         default:
             console.log("Unknown server response.")
@@ -49,7 +49,7 @@ export default class Connection {
         this.socket.send(JSON.stringify(login))
     }
 
-    registerForUpdates(callback) {
-	this.updateCallback = callback;
+    registerForUpdates(callback, obj) {
+	this.updateCallback = callback.bind(obj)
     }
 }

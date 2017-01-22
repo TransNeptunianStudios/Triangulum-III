@@ -39,13 +39,13 @@ void InputSystem::update(EntityManager& entities, EventManager& events,
 
           // Move around regardless of orientation, wrong, but will suffice
           // for now.
-          float speed = 1;
+          float speed = 1000;
           int xDir = int(inputBits[3] - '0') - int(inputBits[2] - '0');
-          int yDir = int(inputBits[0] - '0') - int(inputBits[1] - '0');
+          int yDir = int(inputBits[1] - '0') - int(inputBits[0] - '0');
           body.apply_force(b2Vec2((float)xDir * speed, (float)yDir * speed));
 
           // Rotate
-          float rotSpeed = 1;
+          float rotSpeed = 1000;
           int rotDir = int(inputBits[5] - '0') - int(inputBits[4] - '0');
           body.apply_torque(rotDir * rotSpeed);
 
@@ -54,9 +54,6 @@ void InputSystem::update(EntityManager& entities, EventManager& events,
           {
             std::cout << "Pew pew\n";
           }
-
-          b2Vec2 pos = body.body->GetPosition();
-          std::cout << "Position: (" << pos.x << ", " << pos.y << ")\n";
         }
       }
     }

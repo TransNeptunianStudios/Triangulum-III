@@ -39,7 +39,7 @@ namespace triangulum {
       });
 
     entity.assign<DynamicBody>(std::move(body));
-    entity.assign<Visible>("Player");
+    entity.assign<Visible>("player");
   }
 
 }  // namespace triangulum
