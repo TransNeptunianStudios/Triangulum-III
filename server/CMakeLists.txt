@@ -20,6 +20,8 @@ set(SOURCE_FILES
     src/triangulum/component/DynamicBody.h
     src/triangulum/component/Weapon.cpp
     src/triangulum/component/Weapon.h
+    src/triangulum/component/Input.cpp
+    src/triangulum/component/Input.h
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
     src/triangulum/network/ConnectionManager.cpp
@@ -29,11 +31,17 @@ set(SOURCE_FILES
     src/triangulum/network/Server.cpp
     src/triangulum/network/Server.h
     src/triangulum/system/ConnectionSystem.cpp
-    src/triangulum/system/InputSystem.cpp
+    src/triangulum/system/ConnectionSystem.h
+    src/triangulum/system/ControlSystem.cpp
+    src/triangulum/system/ControlSystem.h
     src/triangulum/system/OutputSystem.cpp
+    src/triangulum/system/OutputSystem.h    
     src/triangulum/system/SimulationSystem.cpp
+    src/triangulum/system/SimulationSystem.h    
     src/triangulum/system/WeaponSystem.cpp
     src/triangulum/system/WeaponSystem.h
+    src/triangulum/system/ForceSystem.cpp
+    src/triangulum/system/ForceSystem.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

@@ -1,15 +1,15 @@
-#ifndef _INPUT_SYSTEM_H
-#define _INPUT_SYSTEM_H
+#ifndef _FORCE_SYSTEM_H
+#define _FORCE_SYSTEM_H
 
 #include "entityx/System.h"
 
 namespace triangulum {
 namespace system {
 
-class InputSystem : public entityx::System<InputSystem>
+class ForceSystem : public entityx::System<ForceSystem>
 {
 public:
-  InputSystem();
+  ForceSystem();
 
   void update(entityx::EntityManager& entities, entityx::EventManager& events,
               entityx::TimeDelta dt);

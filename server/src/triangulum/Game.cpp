@@ -2,9 +2,10 @@
 #include <chrono>
 #include "Box2D/Common/b2Math.h"
 #include "triangulum/system/ConnectionSystem.h"
-#include "triangulum/system/InputSystem.h"
+#include "triangulum/system/ControlSystem.h"
 #include "triangulum/system/OutputSystem.h"
 #include "triangulum/system/SimulationSystem.h"
+#include "triangulum/system/ForceSystem.h"
 
 #include <thread>
 #include <chrono>
@@ -66,7 +67,7 @@ void Game::run()
 
     process_output();
 
-    std::this_thread::sleep_for(0.1s);
+    std::this_thread::sleep_for(0.01s);
   }
 }
 
@@ -76,9 +77,10 @@ void Game::createSystems()
 
   m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(),
                                          m_entity_factory);
-  m_system_manager.add<InputSystem>();
+  m_system_manager.add<ControlSystem>();
   m_system_manager.add<SimulationSystem>(m_world);
   m_system_manager.add<OutputSystem>();
+  m_system_manager.add<ForceSystem>();
   m_system_manager.configure();
 }
 
@@ -88,11 +90,12 @@ void Game::process_input()
 
   m_system_manager.update<ConnectionSystem>(0.0);
 
-  m_system_manager.update<InputSystem>(0.0);
+  m_system_manager.update<ControlSystem>(0.0);
 }
 
 void Game::update(double dt)
 {
+  m_system_manager.update<ForceSystem>(0.0);
   m_system_manager.update<SimulationSystem>(dt);
 }
 

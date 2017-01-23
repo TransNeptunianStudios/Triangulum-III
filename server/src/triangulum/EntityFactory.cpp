@@ -5,6 +5,7 @@
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Visible.h"
+#include "triangulum/component/Input.h"
 
 using namespace entityx;
 
@@ -40,6 +41,7 @@ namespace triangulum {
 
     entity.assign<DynamicBody>(std::move(body));
     entity.assign<Visible>("player");
+    entity.assign<Input>();    
   }
 
 }  // namespace triangulum
