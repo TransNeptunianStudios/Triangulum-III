@@ -22,7 +22,8 @@ ConnectionSystem::ConnectionSystem(network::IConnectionManager &connection_mgr,
 {
 }
 
-void ConnectionSystem::update(EntityManager &entities, EventManager &events,
+void ConnectionSystem::update(EntityManager &entities,
+                              EventManager &events,
                               TimeDelta dt)
 {
   m_connection_mgr.accept_connections(
@@ -94,7 +95,8 @@ bool ConnectionSystem::does_name_exist(EntityManager &entities,
 }
 
 void ConnectionSystem::send_poistive_reply(
-std::shared_ptr<IConnection> connection, uint64_t id)
+std::shared_ptr<IConnection> connection,
+uint64_t id)
 {
   nlohmann::json resp_msg;
 

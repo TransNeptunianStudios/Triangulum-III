@@ -77,10 +77,15 @@ void Game::createSystems()
 
   m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(),
                                          m_entity_factory);
+
   m_system_manager.add<ControlSystem>();
-  m_system_manager.add<SimulationSystem>(m_world);
-  m_system_manager.add<OutputSystem>();
+
   m_system_manager.add<ForceSystem>();
+
+  m_system_manager.add<SimulationSystem>(m_world);
+
+  m_system_manager.add<OutputSystem>();
+
   m_system_manager.configure();
 }
 
@@ -89,8 +94,10 @@ void Game::process_input()
   m_server.process_input();
 
   m_system_manager.update<ConnectionSystem>(0.0);
-  m_system_manager.update<ForceSystem>(0.0);
+
   m_system_manager.update<ControlSystem>(0.0);
+
+  m_system_manager.update<ForceSystem>(0.0);
 }
 
 void Game::update(double dt)
