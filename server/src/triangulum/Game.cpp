@@ -89,13 +89,12 @@ void Game::process_input()
   m_server.process_input();
 
   m_system_manager.update<ConnectionSystem>(0.0);
-
+  m_system_manager.update<ForceSystem>(0.0);
   m_system_manager.update<ControlSystem>(0.0);
 }
 
 void Game::update(double dt)
-{
-  m_system_manager.update<ForceSystem>(0.0);
+{  
   m_system_manager.update<SimulationSystem>(dt);
 }
 
