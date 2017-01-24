@@ -22,8 +22,19 @@ export default class extends Phaser.State {
 	// entities
 	this.entities  = new Map();	
 
-        //this.game.input.keyboard.addKeys({ 'fire': Phaser.Keyboard.SPACEBAR});
-        this.cursors = this.game.input.keyboard.createCursorKeys();
+	// Set up our controls.
+	// TODO: HELP ME, it's horrible
+	this.Thrust1 = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+	this.Thrust2 = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+	this.Reverse1 = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+	this.Reverse2 = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+	this.StrafeLeft1 = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+	this.StrafeLeft2 = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+	this.StrafeRight1 = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+	this.StrafeRight2 = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+	this.RotLeft = this.game.input.keyboard.addKey(Phaser.Keyboard.Q);
+	this.RotRight = this.game.input.keyboard.addKey(Phaser.Keyboard.E);
+	this.Fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACE);
         this.lastInput = 0;
 
 	this.connection.registerForUpdates(this.updateWorld, this);
@@ -50,7 +61,9 @@ export default class extends Phaser.State {
 	    clientEntity.x = serverEntity.x
    	    clientEntity.y = serverEntity.y
 	    clientEntity.body.velocity.x = serverEntity.vx
-	    clientEntity.body.velocity.y = serverEntity.vy	    	
+	    clientEntity.body.velocity.y = serverEntity.vy
+	    clientEntity.body.rotation = serverEntity.r
+	    console.log("ROT: " + serverEntity.r);
 	}
     }
     
@@ -59,13 +72,13 @@ export default class extends Phaser.State {
 	// Collect inputs from the player
 	// This is big and ugly, ideas?
         var inputMask = Handy.getbitMask([
-            this.cursors.up.isDown,
-            this.cursors.down.isDown,
-            this.cursors.left.isDown, // strafe left
-            this.cursors.right.isDown,
-            false, // turn left
-            false, // turn left
-            false, // Fire
+            this.Thrust1.isDown || this.Thrust2.isDown,
+	    this.Reverse1.isDown || this.Reverse2.isDown,
+	    this.StrafeLeft1.isDown || this.StrafeLeft2.isDown,
+	    this.StrafeRight1.isDown || this.StrafeRight2.isDown,
+            this.RotLeft.isDown,
+            this.RotRight.isDown, 
+            this.Fire.isDown, // Fire
             false]); // spare
 
         // Only send if input changed

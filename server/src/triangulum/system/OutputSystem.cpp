@@ -41,6 +41,10 @@ void OutputSystem::update(EntityManager& entities, EventManager& events,
 
     object["vy"] = 0;
 
+    object["r"] = body.get_rotation();
+
+    object["vr"] = 0;
+
     object_list.push_back(object);
 
   });

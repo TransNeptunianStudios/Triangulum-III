@@ -8,6 +8,8 @@ namespace triangulum {
       , reverse(false)
       , strafe_left(false)
       , strafe_right(false)
+      , turn_left(false)
+      , turn_right(false)
       , fire(false)
       , spare(false)
     {

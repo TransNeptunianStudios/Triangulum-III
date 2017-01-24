@@ -22,6 +22,8 @@ void ForceSystem::update(EntityManager& entities, EventManager& events,
   entities.each<DynamicBody, Input>(
   [](Entity entity, DynamicBody& body, Input& input) {
     float speed = 100.0;
+
+    //float rotation = body.body->GetAngle();
     
     if(input.thrust)
       body.apply_force(b2Vec2(0.0, -speed));
@@ -31,10 +33,16 @@ void ForceSystem::update(EntityManager& entities, EventManager& events,
       body.apply_force(b2Vec2(-speed, 0.0));
     if(input.strafe_right)
       body.apply_force(b2Vec2(speed, 0.0));
-    if(input.turn_left)
+    if(input.turn_left){      
       body.apply_torque(-speed);
-    if(input.turn_right)
-      body.apply_torque(speed);    
+          std::cout << "Rotation: " << body.get_rotation() << std::endl;
+    }
+    if(input.turn_right){
+      body.apply_torque(speed);
+          std::cout << "Rotation: " << body.get_rotation() << std::endl;
+    }
+
+
   });
 }
 
