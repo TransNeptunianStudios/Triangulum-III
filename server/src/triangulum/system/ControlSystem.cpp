@@ -19,8 +19,9 @@ ControlSystem::ControlSystem()
 {
 }
 
-void ControlSystem::update(EntityManager& entities, EventManager& events,
-                         TimeDelta dt)
+void ControlSystem::update(EntityManager& entities,
+                           EventManager& events,
+                           TimeDelta dt)
 {
   entities.each<ClientInfo, Input>(
   [](Entity entity, ClientInfo& client_info, Input& input) {
@@ -37,14 +38,14 @@ void ControlSystem::update(EntityManager& entities, EventManager& events,
           int inputMask = msg["input_mask"];
           std::string inputBits = std::bitset<8>(inputMask).to_string();
 
-	  input.thrust        = inputBits[0] != '0';
-	  input.reverse       = inputBits[1] != '0';
-	  input.strafe_left   = inputBits[2] != '0';
-  	  input.strafe_right  = inputBits[3] != '0';
- 	  input.turn_left     = inputBits[4] != '0';
-   	  input.turn_right    = inputBits[5] != '0';
- 	  input.fire          = inputBits[6] != '0';
- 	  input.spare         = inputBits[7] != '0';
+          input.thrust = inputBits[0] != '0';
+          input.reverse = inputBits[1] != '0';
+          input.strafe_left = inputBits[2] != '0';
+          input.strafe_right = inputBits[3] != '0';
+          input.turn_left = inputBits[4] != '0';
+          input.turn_right = inputBits[5] != '0';
+          input.fire = inputBits[6] != '0';
+          input.spare = inputBits[7] != '0';
         }
       }
     }
