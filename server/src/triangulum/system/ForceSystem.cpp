@@ -4,6 +4,10 @@
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Input.h"
 
+#include <math.h>
+
+# define PI          3.141592653589793238462643383279502884L /* pi */
+
 using namespace entityx;
 
 namespace triangulum {
@@ -24,23 +28,28 @@ void ForceSystem::update(EntityManager& entities,
   [](Entity entity, DynamicBody& body, Input& input) {
 
     float speed = 100.0;
-
+    float r = body.get_rotation() * PI / 180.0;
+    
     if (input.thrust)
     {
-      body.apply_force(b2Vec2(0.0, -speed));
-    }
-    if (input.reverse)
-    {
-      body.apply_force(b2Vec2(0.0, speed));
-    }
-    if (input.strafe_left)
-    {
-      body.apply_force(b2Vec2(-speed, 0.0));
+      float tr = r - PI/2;
+      body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
     }
     if (input.strafe_right)
     {
-      body.apply_force(b2Vec2(speed, 0.0));
+      body.apply_force( b2Vec2(cos(r) * speed, sin(r) * speed) );
     }
+    if (input.reverse)
+    {
+      float tr = r + PI/2;
+      body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
+    }
+    if (input.strafe_left)
+    {
+      float tr = r + PI;
+      body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
+    }
+
     if (input.turn_left)
     {
       body.apply_torque(-speed);
