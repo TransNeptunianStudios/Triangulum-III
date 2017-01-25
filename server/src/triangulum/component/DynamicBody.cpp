@@ -23,7 +23,7 @@ const b2Vec2& DynamicBody::get_position() const
   return body->GetPosition();
 }
 
-const float DynamicBody::get_rotation() const
+float DynamicBody::get_rotation() const
 {
   return body->GetAngle();
 }

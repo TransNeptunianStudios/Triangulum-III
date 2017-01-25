@@ -17,7 +17,8 @@ OutputSystem::OutputSystem()
 {
 }
 
-void OutputSystem::update(EntityManager& entities, EventManager& events,
+void OutputSystem::update(EntityManager& entities,
+                          EventManager& events,
                           TimeDelta dt)
 {
   auto object_list = nlohmann::json::array();
@@ -55,13 +56,11 @@ void OutputSystem::update(EntityManager& entities, EventManager& events,
 
   resp_msg["objects"] = object_list;
 
-   
-  
   entities.each<ClientInfo>([&resp_msg](Entity entity, ClientInfo& clientinfo) {
     // send to all clients
     if (auto connection = clientinfo.connection.lock())
     {
-      connection->send_msg(resp_msg); // Cannot send this often
+      connection->send_msg(resp_msg);  // Cannot send this often
     }
   });
 }

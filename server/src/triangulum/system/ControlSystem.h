@@ -11,7 +11,8 @@ class ControlSystem : public entityx::System<ControlSystem>
 public:
   ControlSystem();
 
-  void update(entityx::EntityManager& entities, entityx::EventManager& events,
+  void update(entityx::EntityManager& entities,
+              entityx::EventManager& events,
               entityx::TimeDelta dt);
 };
 

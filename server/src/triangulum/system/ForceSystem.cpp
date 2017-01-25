@@ -25,29 +25,29 @@ void ForceSystem::update(EntityManager& entities,
 
     float speed = 100.0;
 
-
     if (input.thrust)
-      {
-	body.apply_force(b2Vec2(0.0, -speed));
-      }
+    {
+      body.apply_force(b2Vec2(0.0, -speed));
+    }
     if (input.reverse)
-      {
-	body.apply_force(b2Vec2(0.0, speed));
-      }
+    {
+      body.apply_force(b2Vec2(0.0, speed));
+    }
     if (input.strafe_left)
-      {
-	body.apply_force(b2Vec2(-speed, 0.0));
-      }
+    {
+      body.apply_force(b2Vec2(-speed, 0.0));
+    }
     if (input.strafe_right)
-      {
-	body.apply_force(b2Vec2(speed, 0.0));
-      }
-    if(input.turn_left)
-      {      
-	body.apply_torque(-speed);
-	std::cout << "Rotation: " << body.get_rotation() << std::endl;
-      }
-    if(input.turn_right){
+    {
+      body.apply_force(b2Vec2(speed, 0.0));
+    }
+    if (input.turn_left)
+    {
+      body.apply_torque(-speed);
+      std::cout << "Rotation: " << body.get_rotation() << std::endl;
+    }
+    if (input.turn_right)
+    {
       body.apply_torque(speed);
       std::cout << "Rotation: " << body.get_rotation() << std::endl;
     }

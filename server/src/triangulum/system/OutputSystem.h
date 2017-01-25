@@ -5,23 +5,24 @@
 
 namespace triangulum {
 
-  namespace network {
-    class IConnection;
-    class IConnectionManager;
-  }
+namespace network {
+class IConnection;
+class IConnectionManager;
+}
 
-  namespace system {
-  
-    class OutputSystem : public entityx::System<OutputSystem>
-    {
-    public:
-      OutputSystem();
+namespace system {
 
-      void update(entityx::EntityManager& entities, entityx::EventManager& events,
-		  entityx::TimeDelta dt);
-    };
+class OutputSystem : public entityx::System<OutputSystem>
+{
+public:
+  OutputSystem();
 
-  }  // namespace system
+  void update(entityx::EntityManager& entities,
+              entityx::EventManager& events,
+              entityx::TimeDelta dt);
+};
+
+}  // namespace system
 }  // namespace triangulum
 
 #endif

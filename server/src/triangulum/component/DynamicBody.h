@@ -21,7 +21,8 @@ struct DynamicBody : public entityx::Component<DynamicBody>
   void apply_torque(float torque);
 
   const b2Vec2& get_position() const;
-  const float get_rotation() const;
+
+  float get_rotation() const;
 
   BodyPtr body;
 };
