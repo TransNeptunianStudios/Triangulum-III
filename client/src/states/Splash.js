@@ -3,13 +3,12 @@ import Phaser from 'phaser'
 export default class extends Phaser.State {
     init() {}
 
-    preload() {
-    }
+    preload() {}
 
     create() {
         console.log("Splash create");
-        
-        this.logo = this.game.add.sprite(this.game.width/2, this.game.height/2, 'TNSlogo');
+
+        this.logo = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'TNSlogo');
         this.logo.anchor.set(0.5);
         this.logo.alpha = 0;
 

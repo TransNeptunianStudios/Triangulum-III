@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 export default class Entity extends Phaser.Sprite {
-    constructor(game, sprite) {
+  constructor(game, sprite) {
     super(game, 0, 0, sprite)
 
     this.game = game;
@@ -10,9 +10,8 @@ export default class Entity extends Phaser.Sprite {
     //this.animations.add('idle', [0, 1]);
 
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    this.body.collideWorldBounds = true;    
+    this.body.collideWorldBounds = true;
   }
 
-  update() {
-  }
+  update() {}
 }

@@ -20,23 +20,26 @@ export default class Connection {
     serverResponded(e) {
         var response = JSON.parse(e.data);
         switch (response.type) {
-        case "login_resp":
-            console.log("Got login responCe.")
-            this.parent.loginCallback(response.status, response.id)
-            break;
-	case "update":
-            //console.log("Got update.")
-	    if(this.parent.updateCallback)
-		this.parent.updateCallback(response)
-            break;
-        default:
-            console.log("Unknown server response.")
+            case "login_resp":
+                console.log("Got login responCe.")
+                this.parent.loginCallback(response.status, response.id)
+                break;
+            case "update":
+                //console.log("Got update.")
+                if (this.parent.updateCallback)
+                    this.parent.updateCallback(response)
+                break;
+            default:
+                console.log("Unknown server response.")
         }
     }
 
-    sendInputs(inputMask){
-	var inputMsg = {"type" : "control", "input_mask" : inputMask}
-	this.socket.send(JSON.stringify(inputMsg));
+    sendInputs(inputMask) {
+        var inputMsg = {
+            "type": "control",
+            "input_mask": inputMask
+        }
+        this.socket.send(JSON.stringify(inputMsg));
     }
 
     login(username, callback, obj) {
@@ -50,6 +53,6 @@ export default class Connection {
     }
 
     registerForUpdates(callback, obj) {
-	this.updateCallback = callback.bind(obj)
+        this.updateCallback = callback.bind(obj)
     }
 }

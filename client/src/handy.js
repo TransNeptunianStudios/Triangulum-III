@@ -1,5 +1,5 @@
 export default class Handy {
-  static equalJson (a, b) {
+  static equalJson(a, b) {
     function check(a, b) {
       for (var attr in a) {
         if (a.hasOwnProperty(attr) && b.hasOwnProperty(attr)) {
@@ -27,7 +27,7 @@ export default class Handy {
 
   static getbitMask(listOfBool) {
     var inputString = "";
-    for(var i in listOfBool)
+    for (var i in listOfBool)
       inputString += listOfBool[i] ? "1" : "0";
 
     return parseInt(inputString, 2);
