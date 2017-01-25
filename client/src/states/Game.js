@@ -62,7 +62,7 @@ export default class extends Phaser.State {
       clientEntity.y = serverEntity.y
       clientEntity.body.velocity.x = serverEntity.vx
       clientEntity.body.velocity.y = serverEntity.vy
-      clientEntity.body.rotation = serverEntity.r
+      clientEntity.angle = serverEntity.r
       console.log("ROT: " + serverEntity.r);
     }
   }

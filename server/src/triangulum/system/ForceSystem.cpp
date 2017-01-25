@@ -44,12 +44,10 @@ void ForceSystem::update(EntityManager& entities,
     if (input.turn_left)
     {
       body.apply_torque(-speed);
-      std::cout << "Rotation: " << body.get_rotation() << std::endl;
     }
     if (input.turn_right)
     {
       body.apply_torque(speed);
-      std::cout << "Rotation: " << body.get_rotation() << std::endl;
     }
 
   });
