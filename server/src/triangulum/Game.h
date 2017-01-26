@@ -21,6 +21,8 @@ public:
 
   void run();
 
+  const std::string m_version;
+
 private:
   void createSystems();
 

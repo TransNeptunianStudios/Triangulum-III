@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 
   g.init();
 
-  std::cout << "Triangulum III server started" << std::endl;
+  std::cout << "Triangulum III server (v. " <<  g.m_version << ") started" << std::endl;
 
   g.run();
 

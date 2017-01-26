@@ -18,7 +18,8 @@ using namespace std::chrono_literals;
 
 
 Game::Game()
-: m_event_manager()
+: m_version("0.1")
+, m_event_manager()
 , m_entity_manager(m_event_manager)
 , m_system_manager(m_entity_manager, m_event_manager)
 , m_world(b2Vec2(0.0f, 0.0f))
