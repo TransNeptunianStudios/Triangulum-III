@@ -34,7 +34,7 @@ export default class extends Phaser.State {
     this.StrafeRight2 = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     this.RotLeft = this.game.input.keyboard.addKey(Phaser.Keyboard.Q);
     this.RotRight = this.game.input.keyboard.addKey(Phaser.Keyboard.E);
-    this.Fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACE);
+    this.Fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.lastInput = 0;
 
     this.connection.registerForUpdates(this.updateWorld, this);

@@ -12,6 +12,7 @@ export default class extends Phaser.State {
     this.load.image('TNSlogo', './assets/images/TNS_logo.png');
     this.load.image('starfield', './assets/images/tileable-classic-nebula-space-patterns-3.jpg');
     this.load.image('enterButton', './assets/images/EnterButton.png');
+    this.load.image('basic_green_bullet', './assets/images/basic_green_shoot.png');
 
     this.load.spritesheet('player', './assets/images/ship.png', 32, 32, 13);
   }

@@ -9,6 +9,12 @@ namespace component {
 struct Weapon : public entityx::Component<Weapon>
 {
   Weapon();
+
+  double heat;
+
+  double cooldown_time;
+
+  double shoot_timer;
 };
 
 }  // namespace component

@@ -1,21 +1,21 @@
 #include "triangulum/Game.h"
+
 #include <chrono>
+#include <thread>
+
 #include "Box2D/Common/b2Math.h"
+
 #include "triangulum/system/ConnectionSystem.h"
 #include "triangulum/system/ControlSystem.h"
+#include "triangulum/system/ForceSystem.h"
 #include "triangulum/system/OutputSystem.h"
 #include "triangulum/system/SimulationSystem.h"
-#include "triangulum/system/ForceSystem.h"
-
-#include <thread>
-#include <chrono>
-
+#include "triangulum/system/WeaponSystem.h"
 
 namespace triangulum {
 
 using namespace system;
 using namespace std::chrono_literals;
-
 
 Game::Game()
 : m_event_manager()
@@ -57,7 +57,7 @@ void Game::run()
     lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
 
     process_input();
-    
+
     while (lag >= time_step_ns)
     {
       lag -= time_step_ns;
@@ -82,6 +82,8 @@ void Game::createSystems()
 
   m_system_manager.add<ForceSystem>();
 
+  m_system_manager.add<WeaponSystem>(m_entity_factory);
+
   m_system_manager.add<SimulationSystem>(m_world);
 
   m_system_manager.add<OutputSystem>();
@@ -101,7 +103,9 @@ void Game::process_input()
 }
 
 void Game::update(double dt)
-{  
+{
+  m_system_manager.update<WeaponSystem>(dt);
+
   m_system_manager.update<SimulationSystem>(dt);
 }
 

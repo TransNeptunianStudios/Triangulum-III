@@ -3,9 +3,9 @@
 
 #include "entityx/Entity.h"
 
-namespace triangulum{
+namespace triangulum {
 namespace component {
-  
+
 struct Visible : public entityx::Component<Visible>
 {
   Visible(const std::string& sprite);

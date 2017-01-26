@@ -12,6 +12,8 @@ set(SOURCE_FILES
     src/triangulum/EntityFactory.h
     src/triangulum/Game.cpp
     src/triangulum/Game.h
+    src/triangulum/component/Bullet.cpp
+    src/triangulum/component/Bullet.h
     src/triangulum/component/ClientInfo.cpp
     src/triangulum/component/ClientInfo.h
     src/triangulum/component/Visible.cpp

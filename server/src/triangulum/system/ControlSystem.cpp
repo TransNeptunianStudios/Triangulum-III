@@ -36,6 +36,7 @@ void ControlSystem::update(EntityManager& entities,
           // thurst, reverse, strafe Left, strafe right, turn left, turn
           // right, fire weapon, not used
           int inputMask = msg["input_mask"];
+
           std::string inputBits = std::bitset<8>(inputMask).to_string();
 
           input.thrust = inputBits[0] != '0';

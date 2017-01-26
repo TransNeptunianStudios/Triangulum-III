@@ -22,6 +22,8 @@ struct DynamicBody : public entityx::Component<DynamicBody>
 
   const b2Vec2& get_position() const;
 
+  const b2Vec2& get_linear_velocity() const;
+
   float get_rotation() const;
 
   BodyPtr body;

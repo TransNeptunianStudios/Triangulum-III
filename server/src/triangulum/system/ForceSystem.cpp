@@ -1,12 +1,11 @@
 #include "triangulum/system/ForceSystem.h"
+
+#include <math.h>
+
 #include "Box2D/Dynamics/b2Body.h"
 
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Input.h"
-
-#include <math.h>
-
-# define PI          3.141592653589793238462643383279502884L /* pi */
 
 using namespace entityx;
 
@@ -28,11 +27,11 @@ void ForceSystem::update(EntityManager& entities,
   [](Entity entity, DynamicBody& body, Input& input) {
 
     float speed = 100.0;
-    float r = body.get_rotation() * PI / 180.0;
+    float r = body.get_rotation() * M_PI / 180.0;
     
     if (input.thrust)
     {
-      float tr = r - PI/2;
+      float tr = r - M_PI_2;
       body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
     }
     if (input.strafe_right)
@@ -41,12 +40,12 @@ void ForceSystem::update(EntityManager& entities,
     }
     if (input.reverse)
     {
-      float tr = r + PI/2;
+      float tr = r + M_PI_2;
       body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
     }
     if (input.strafe_left)
     {
-      float tr = r + PI;
+      float tr = r + M_PI;
       body.apply_force( b2Vec2(cos(tr) * speed, sin(tr) * speed) );
     }
 

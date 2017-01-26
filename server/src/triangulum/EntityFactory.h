@@ -4,6 +4,7 @@
 #include "entityx/Entity.h"
 
 class b2World;
+struct b2Vec2;
 
 namespace triangulum {
 
@@ -18,8 +19,14 @@ public:
 
   ~EntityFactory();
 
-  void create_player(entityx::Entity entity, const std::string& name, const std::string& color,
+  void create_player(entityx::Entity entity,
+                     const std::string& name,
+                     const std::string& color,
                      const std::weak_ptr<network::IConnection>& connection);
+
+  void create_bullet(entityx::Entity entity,
+                     const b2Vec2& position,
+                     float angle);
 
 private:
   b2World& m_world;
