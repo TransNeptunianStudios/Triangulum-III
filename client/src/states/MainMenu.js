@@ -21,10 +21,16 @@ export default class extends Phaser.State {
         this.input.blockInput = false;
         this.input.startFocus();
 
-        this.game.add.text(this.input.x, this.input.y - 25, "Player name:", {
+        this.game.add.text(this.input.x, this.input.y - 25, "Player", {
             font: "20px Arial",
             fill: "#FFFFFF"
         })
+
+	this.versionText = this.game.add.text(this.game.width-10, this.game.height-20, "Version. 0.1", {
+	    font: "15px Arial",
+	    fill: "#FFFFFF"
+	});
+	this.versionText.anchor.set(1, 0);
 
         this.connection = new Connection('ws://localhost:8080');
         this.attemptingLogin = false;
