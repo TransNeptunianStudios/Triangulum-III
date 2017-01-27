@@ -28,7 +28,7 @@ Server::Server()
 
   mg_set_protocol_http_websocket(m_connection);
 
-  s_http_server_opts.document_root = "../../client/";
+  s_http_server_opts.document_root = "../../../client/";
 
   s_http_server_opts.enable_directory_listing = "yes";
 }

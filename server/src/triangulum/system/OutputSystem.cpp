@@ -56,6 +56,8 @@ void OutputSystem::update(EntityManager& entities,
 
   resp_msg["objects"] = object_list;
 
+  std::cout << resp_msg.dump(2);
+
   entities.each<ClientInfo>([&resp_msg](Entity entity, ClientInfo& clientinfo) {
     // send to all clients
     if (auto connection = clientinfo.connection.lock())

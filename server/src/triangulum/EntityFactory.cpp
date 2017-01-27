@@ -6,6 +6,7 @@
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
 
+#include "triangulum/component/Bullet.h"
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Input.h"
@@ -39,10 +40,16 @@ void EntityFactory::create_player(Entity entity,
   body_def.type = b2_dynamicBody;
 
   float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+
   float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
 
   body_def.position.Set(x, y);
-  body_def.angle = 0;
+
+  body_def.angle = 0.0;
+
+  body_def.linearDamping = 0.5f;
+
+  body_def.angularDamping = 0.5f;
 
   //shape definition
   b2PolygonShape polygonShape;
@@ -69,9 +76,13 @@ void EntityFactory::create_player(Entity entity,
 }
 
 void EntityFactory::create_bullet(Entity entity,
+                                  Entity::Id owner_id,
                                   const b2Vec2& position,
+                                  const b2Vec2& velocity,
                                   float angle)
 {
+  float bullet_speed = 100.0f + velocity.Length();
+
   // Create the Box2D body
   b2BodyDef body_def;
 
@@ -81,32 +92,36 @@ void EntityFactory::create_bullet(Entity entity,
 
   body_def.angle = angle;
 
-  body_def.linearVelocity.Set(0.0f, -100.0f);
+  float r = angle * M_PI / 180.0;
+
+  body_def.linearVelocity.Set(cos(r) * bullet_speed, sin(r) * bullet_speed);
 
   body_def.fixedRotation = true;
 
-  //shape definition
-  b2PolygonShape polygonShape;
-
-  polygonShape.SetAsBox(0.1, 0.1);
-
-  //fixture definition
-  b2FixtureDef fixture_def;
-
-  fixture_def.shape = &polygonShape;
-
-  fixture_def.density = 1;  // Solid
+  //body_def.bullet = true;
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
     auto world = b->GetWorld();
     world->DestroyBody(b);
   });
 
-  body->CreateFixture(&fixture_def);
+  //shape definition
+  //b2PolygonShape polygonShape;
 
+  //polygonShape.SetAsBox(0.1, 0.1);
+
+  //fixture definition
+  //b2FixtureDef fixture_def;
+
+  //fixture_def.shape = &polygonShape;
+
+  //fixture_def.density = 1;  // Solid
+
+  //body->CreateFixture(&fixture_def);
+
+  entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
   entity.assign<Visible>("basic_green_bullet");
-  entity.assign<Weapon>();
 }
 
 }  // namespace triangulum

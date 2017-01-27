@@ -25,7 +25,9 @@ public:
                      const std::weak_ptr<network::IConnection>& connection);
 
   void create_bullet(entityx::Entity entity,
+                     entityx::Entity::Id owner_id,
                      const b2Vec2& position,
+                     const b2Vec2& velocity,
                      float angle);
 
 private:
