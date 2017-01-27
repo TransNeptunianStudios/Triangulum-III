@@ -18,8 +18,11 @@ Server::Server()
   mg_mgr_init(&m_mgr, NULL);
 
   Callback<void(mg_connection*, int, void*)>::func =
-  std::bind(&Server::event_handler, this, std::placeholders::_1,
-            std::placeholders::_2, std::placeholders::_3);
+  std::bind(&Server::event_handler,
+            this,
+            std::placeholders::_1,
+            std::placeholders::_2,
+            std::placeholders::_3);
 
   callback_t func =
   static_cast<callback_t>(Callback<void(mg_connection*, int, void*)>::callback);
@@ -28,16 +31,25 @@ Server::Server()
 
   mg_set_protocol_http_websocket(m_connection);
 
-  s_http_server_opts.document_root = "../../client/";
+  s_http_server_opts.document_root = "../../../client/";
 
   s_http_server_opts.enable_directory_listing = "yes";
 }
 
-Server::~Server() { mg_mgr_free(&m_mgr); }
+Server::~Server()
+{
+  mg_mgr_free(&m_mgr);
+}
 
-void Server::process_input() { mg_mgr_poll(&m_mgr, 10); }
+void Server::process_input()
+{
+  mg_mgr_poll(&m_mgr, 10);
+}
 
-ConnectionManager& Server::get_connection_mgr() { return m_connection_mgr; }
+ConnectionManager& Server::get_connection_mgr()
+{
+  return m_connection_mgr;
+}
 
 void Server::event_handler(mg_connection* nc, int ev, void* ev_data)
 {
