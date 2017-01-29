@@ -26,7 +26,8 @@ void ForceSystem::update(EntityManager& entities,
   entities.each<DynamicBody, Input>(
   [](Entity entity, DynamicBody& body, Input& input) {
 
-    float speed = 100.0;
+    float speed = 7.5;
+    float rotSpeed = 50;
 
     float r = body.get_rotation() * M_PI / 180.0;
 
@@ -55,12 +56,12 @@ void ForceSystem::update(EntityManager& entities,
 
     if (input.turn_left)
     {
-      body.apply_torque(-speed);
+      body.apply_torque(-rotSpeed);
     }
 
     if (input.turn_right)
     {
-      body.apply_torque(speed);
+      body.apply_torque(rotSpeed);
     }
   });
 }

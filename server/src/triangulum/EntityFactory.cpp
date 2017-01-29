@@ -39,9 +39,9 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  float x = 2;//static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
 
-  float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  float y = 2;//static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
 
   body_def.position.Set(x, y);
 
@@ -53,7 +53,7 @@ void EntityFactory::create_player(Entity entity,
 
   //shape definition
   b2PolygonShape polygonShape;
-  polygonShape.SetAsBox(0.5, 1);  //a 1x2 rectangle
+  polygonShape.SetAsBox(0.5, 0.5);  //a 1x1 m rectangle
 
   //fixture definition
   b2FixtureDef myFixtureDef;
@@ -81,7 +81,7 @@ void EntityFactory::create_bullet(Entity entity,
                                   const b2Vec2& velocity,
                                   float angle)
 {
-  float bullet_speed = 100.0f + velocity.Length();
+  float bullet_speed = 20.0f + velocity.Length();
 
   // Create the Box2D body
   b2BodyDef body_def;

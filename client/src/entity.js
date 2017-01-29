@@ -8,9 +8,6 @@ export default class Entity extends Phaser.Sprite {
     this.anchor.setTo(0.5);
 
     //this.animations.add('idle', [0, 1]);
-
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    this.body.collideWorldBounds = true;
   }
 
   update() {}
