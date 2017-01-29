@@ -39,9 +39,9 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x = 2;//static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  float x = 10 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
-  float y = 2;//static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 200));
+  float y = 10 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
   body_def.position.Set(x, y);
 
@@ -81,24 +81,25 @@ void EntityFactory::create_bullet(Entity entity,
                                   const b2Vec2& velocity,
                                   float angle)
 {
-  float bullet_speed = 20.0f + velocity.Length();
+  float bullet_speed = 15.0f + velocity.Length();
 
   // Create the Box2D body
   b2BodyDef body_def;
 
   body_def.type = b2_dynamicBody;
 
-  body_def.position.Set(position.x, position.y);
+  float r = angle * M_PI / 180.0;
+  
+  body_def.position.Set(position.x + cos(r), position.y + sin(r) ); 
 
   body_def.angle = angle;
-
-  float r = angle * M_PI / 180.0;
 
   body_def.linearVelocity.Set(cos(r) * bullet_speed, sin(r) * bullet_speed);
 
   body_def.fixedRotation = true;
 
-  //body_def.bullet = true;
+  // what.... is this? Makes it doesnt collide with other bullets? 
+  body_def.bullet = true;
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
     auto world = b->GetWorld();
@@ -106,18 +107,18 @@ void EntityFactory::create_bullet(Entity entity,
   });
 
   //shape definition
-  //b2PolygonShape polygonShape;
+  b2PolygonShape polygonShape;
 
-  //polygonShape.SetAsBox(0.1, 0.1);
+  polygonShape.SetAsBox(0.1, 0.1);
 
   //fixture definition
-  //b2FixtureDef fixture_def;
+  b2FixtureDef fixture_def;
 
-  //fixture_def.shape = &polygonShape;
+  fixture_def.shape = &polygonShape;
 
-  //fixture_def.density = 1;  // Solid
+  fixture_def.density = 1;  // Solid
 
-  //body->CreateFixture(&fixture_def);
+  body->CreateFixture(&fixture_def);
 
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
