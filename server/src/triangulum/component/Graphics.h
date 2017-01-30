@@ -1,14 +1,14 @@
-#ifndef _VISIBLE_H
-#define _VISIBLE_H
+#ifndef _GRAPHICS_H
+#define _GRAPHICS_H
 
 #include "entityx/Entity.h"
 
 namespace triangulum {
 namespace component {
 
-struct Visible : public entityx::Component<Visible>
+struct Graphics : public entityx::Component<Graphics>
 {
-  Visible(const std::string& sprite);
+  Graphics(const std::string& sprite);
 
   std::string sprite;
   std::string color;

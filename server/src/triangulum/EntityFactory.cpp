@@ -10,7 +10,7 @@
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Input.h"
-#include "triangulum/component/Visible.h"
+#include "triangulum/component/Graphics.h"
 #include "triangulum/component/Weapon.h"
 
 using namespace entityx;
@@ -67,11 +67,13 @@ void EntityFactory::create_player(Entity entity,
 
   body->CreateFixture(&myFixtureDef);
 
+  body->SetUserData(&entity); // to retrive entity from body in collisions
+
   // Assign all components to entity
   entity.assign<ClientInfo>(name, connection);
   entity.assign<DynamicBody>(std::move(body));
   entity.assign<Input>();
-  entity.assign<Visible>("player");
+  entity.assign<Graphics>("player");
   entity.assign<Weapon>();
 }
 
@@ -119,10 +121,12 @@ void EntityFactory::create_bullet(Entity entity,
   fixture_def.density = 1;  // Solid
 
   body->CreateFixture(&fixture_def);
+  
+  body->SetUserData(&entity); // to retrive entity from body in collisions
 
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Visible>("basic_green_bullet");
+  entity.assign<Graphics>("basic_green_bullet");  
 }
 
 }  // namespace triangulum

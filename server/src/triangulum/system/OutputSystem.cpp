@@ -2,7 +2,7 @@
 
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
-#include "triangulum/component/Visible.h"
+#include "triangulum/component/Graphics.h"
 #include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
@@ -23,16 +23,16 @@ void OutputSystem::update(EntityManager& entities,
 {
   auto object_list = nlohmann::json::array();
 
-  entities.each<Visible, DynamicBody>(
-  [&object_list](Entity entity, Visible& visible, DynamicBody& body) {
+  entities.each<Graphics, DynamicBody>(
+  [&object_list](Entity entity, Graphics& graphics, DynamicBody& body) {
 
     nlohmann::json object;
 
     object["id"] = entity.id().id();
 
-    object["color"] = visible.color;
+    object["color"] = graphics.color;
 
-    object["sprite"] = visible.sprite;
+    object["sprite"] = graphics.sprite;
 
     object["x"] = body.get_position().x;
 

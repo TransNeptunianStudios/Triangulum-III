@@ -1,9 +1,9 @@
-#include "triangulum/component/Visible.h"
+#include "triangulum/component/Graphics.h"
 
 namespace triangulum {
 namespace component {
 
-Visible::Visible(const std::string& sprite)
+Graphics::Graphics(const std::string& sprite)
 : sprite(sprite)
 , color("#FFFFFF")
 {
