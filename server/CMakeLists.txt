@@ -24,6 +24,8 @@ set(SOURCE_FILES
     src/triangulum/component/Weapon.h
     src/triangulum/component/Input.cpp
     src/triangulum/component/Input.h
+    src/triangulum/component/Score.cpp
+    src/triangulum/component/Score.h    
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
     src/triangulum/network/ConnectionManager.cpp

@@ -12,6 +12,7 @@
 #include "triangulum/component/Input.h"
 #include "triangulum/component/Graphics.h"
 #include "triangulum/component/Weapon.h"
+#include "triangulum/component/Score.h"
 
 using namespace entityx;
 
@@ -35,6 +36,7 @@ void EntityFactory::create_player(Entity entity,
                                   const std::weak_ptr<IConnection>& connection)
 {
   // Create the Box2D body
+  // This whole thing MUST be put into dynamicBody some way? :S
   b2BodyDef body_def;
 
   body_def.type = b2_dynamicBody;
@@ -75,6 +77,7 @@ void EntityFactory::create_player(Entity entity,
   entity.assign<Input>();
   entity.assign<Graphics>("player");
   entity.assign<Weapon>();
+  entity.assign<Score>();
 }
 
 void EntityFactory::create_bullet(Entity entity,
