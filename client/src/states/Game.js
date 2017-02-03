@@ -56,19 +56,16 @@ export default class extends Phaser.State {
 		this.game.add.existing(newEntity)
 		clientEntity = newEntity
 
-		if (serverEntity.id == this.playerId){
-		    this.game.camera.follow(this.entities[this.playerId])
-		    this.score = serverEntity.score
-		}
+		if (serverEntity.id == this.playerId)
+		    this.game.camera.follow(this.entities[this.playerId])		
 	    }
 	    clientEntity.x = serverEntity.x * this.gameScale;
 	    clientEntity.y = serverEntity.y * this.gameScale;
 	    //clientEntity.body.velocity.x = serverEntity.vx
 	    //clientEntity.body.velocity.y = serverEntity.vy
 	    clientEntity.angle = serverEntity.r
-
-	    console.log(clientEntity.score)
-	}
+	    console.log(serverEntity.score)
+	}	
     }
 
     update() {
