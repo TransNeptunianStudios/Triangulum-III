@@ -8,6 +8,7 @@ export default class extends Phaser.State {
     init(connection, id) {
 	this.connection = connection;
 	this.playerId = id;
+	this.score = 0
 
 	// Client pixels per server meter
 	this.gameScale = 32
@@ -55,14 +56,18 @@ export default class extends Phaser.State {
 		this.game.add.existing(newEntity)
 		clientEntity = newEntity
 
-		if (serverEntity.id == this.playerId)
+		if (serverEntity.id == this.playerId){
 		    this.game.camera.follow(this.entities[this.playerId])
+		    this.score = serverEntity.score
+		}
 	    }
 	    clientEntity.x = serverEntity.x * this.gameScale;
 	    clientEntity.y = serverEntity.y * this.gameScale;
 	    //clientEntity.body.velocity.x = serverEntity.vx
 	    //clientEntity.body.velocity.y = serverEntity.vy
 	    clientEntity.angle = serverEntity.r
+
+	    console.log(clientEntity.score)
 	}
     }
 

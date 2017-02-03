@@ -3,6 +3,7 @@
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Graphics.h"
+#include "triangulum/component/Score.h"
 #include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
@@ -23,8 +24,8 @@ void OutputSystem::update(EntityManager& entities,
 {
   auto object_list = nlohmann::json::array();
 
-  entities.each<Graphics, DynamicBody>(
-  [&object_list](Entity entity, Graphics& graphics, DynamicBody& body) {
+  entities.each<Graphics, DynamicBody, Score>(
+				       [&object_list](Entity entity, Graphics& graphics, DynamicBody& body, Score score) {
 
     nlohmann::json object;
 
@@ -45,6 +46,8 @@ void OutputSystem::update(EntityManager& entities,
     object["r"] = body.get_rotation();
 
     object["vr"] = 0;
+
+    object["score"] = (int)score.score;
 
     object_list.push_back(object);
 
