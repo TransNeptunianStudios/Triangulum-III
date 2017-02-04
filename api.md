@@ -27,6 +27,6 @@ Send list of all relevant objects current state.
  "objects" : [{"id": <ID>, "sprite" : "<SPRITE>, "color" : <HEX-COLOR> , "x": <X-POS>, "y": <Y-POS>, 
 "vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, "r":<ROTATION>, "vr" : <ROTATION VELOCITY},
                {"id": <PLAYER-ID>, color : <HEX-COLOR> , "x": <X-POS>, "y": <Y-POS>, 
-"vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, "r":<ROTATION>, "vr" : <ROTATION VELOCITY}],
+"vx": <X-VELOCITY>, "vy": <Y-VELOCITY>, "r":<ROTATION>, "vr" : <ROTATION VELOCITY, "score" : <SCORE}}],
                }
 ```
