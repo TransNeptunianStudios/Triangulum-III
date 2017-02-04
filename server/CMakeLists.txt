@@ -12,6 +12,7 @@ set(SOURCE_FILES
     src/triangulum/EntityFactory.h
     src/triangulum/Game.cpp
     src/triangulum/Game.h
+    src/triangulum/SystemEvents.h
     src/triangulum/component/Bullet.cpp
     src/triangulum/component/Bullet.h
     src/triangulum/component/ClientInfo.cpp
@@ -46,6 +47,8 @@ set(SOURCE_FILES
     src/triangulum/system/WeaponSystem.h
     src/triangulum/system/ForceSystem.cpp
     src/triangulum/system/ForceSystem.h
+    src/triangulum/system/ScoreSystem.cpp
+    src/triangulum/system/ScoreSystem.h    
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

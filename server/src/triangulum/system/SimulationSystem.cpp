@@ -1,5 +1,4 @@
 #include "triangulum/system/SimulationSystem.h"
-#include "triangulum/component/Score.h"
 #include "triangulum/component/Input.h"
 
 using namespace entityx;
@@ -20,13 +19,7 @@ SimulationSystem::SimulationSystem(b2World& world)
 void SimulationSystem::update(EntityManager& entities,
 			      EventManager& events,
                               TimeDelta dt)
-{
-  // Why wont this work, is this update fucked up because of this is a listener as well?
-   entities.each<Score>(
-  [&dt](Entity entity, Score& score) {
-    score.score += dt;
-  });
-  
+{  
   m_world.Step(dt, m_velocityIterations, m_positionIterations);
 }
 

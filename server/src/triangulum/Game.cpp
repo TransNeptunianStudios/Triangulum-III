@@ -11,6 +11,7 @@
 #include "triangulum/system/OutputSystem.h"
 #include "triangulum/system/SimulationSystem.h"
 #include "triangulum/system/WeaponSystem.h"
+#include "triangulum/system/ScoreSystem.h"
 
 namespace triangulum {
 
@@ -89,6 +90,8 @@ void Game::createSystems()
 
   m_system_manager.add<OutputSystem>();
 
+  m_system_manager.add<ScoreSystem>();
+
   m_system_manager.configure();
 }
 
@@ -106,6 +109,8 @@ void Game::process_input()
 void Game::update(double dt)
 {
   m_system_manager.update<WeaponSystem>(dt);
+
+  m_system_manager.update<ScoreSystem>(dt);
 
   m_system_manager.update<SimulationSystem>(dt);
 }
