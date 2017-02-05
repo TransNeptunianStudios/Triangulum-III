@@ -51,7 +51,9 @@ export default class extends Phaser.State {
 	    var clientEntity = this.entities[serverEntity.id]
 
 	    if (!clientEntity) {
-		var newEntity = new Entity(this.game, serverEntity.sprite)
+		var newEntity = new Entity(this.game, serverEntity.sprite,
+					   serverEntity.width * this.gameScale,
+					   serverEntity.height * this.gameScale)
 		this.entities[serverEntity.id] = newEntity
 		this.game.add.existing(newEntity)
 		clientEntity = newEntity

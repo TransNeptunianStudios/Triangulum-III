@@ -3,9 +3,11 @@
 namespace triangulum {
 namespace component {
 
-Graphics::Graphics(const std::string& sprite)
+  Graphics::Graphics(const std::string& sprite, float width, float height)
 : sprite(sprite)
 , color("#FFFFFF")
+, width(width)
+, height(height)
 {
 }
 

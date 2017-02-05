@@ -132,7 +132,7 @@ void EntityFactory::create_bullet(Entity entity,
   entity.assign<Graphics>("basic_green_bullet");
 }
 
-void EntityFactory::create_simpleAsteroid(Entity entity,
+void EntityFactory::create_simple_asteroid(Entity entity,
                                   const b2Vec2& position,
                                   float size,
                                   float angle)
@@ -168,9 +168,45 @@ void EntityFactory::create_simpleAsteroid(Entity entity,
   body->SetUserData(&entity); // to retrive entity from body in collisions
 
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Graphics>("asteroid");
+  entity.assign<Graphics>("asteroid", size, size);
 
   std::cout << "Created asteroid" << std::endl;
+}
+
+  void EntityFactory::create_border_block(Entity entity,
+                                  const b2Vec2& position,
+					  float width,
+					  float height)
+{
+  // Create the Box2D body
+  b2BodyDef body_def;
+
+  body_def.type = b2_staticBody;
+  body_def.position.Set(position.x, position.y);
+
+  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
+    auto world = b->GetWorld();
+    world->DestroyBody(b);
+  });
+
+  //shape definition
+  b2PolygonShape polygonShape;
+
+  polygonShape.SetAsBox(width, height);
+
+  //fixture definition
+  b2FixtureDef fixture_def;
+  fixture_def.shape = &polygonShape;
+  fixture_def.density = 1;  // Solid
+
+  body->CreateFixture(&fixture_def);
+
+  body->SetUserData(&entity); // to retrive entity from body in collisions
+
+  entity.assign<DynamicBody>(std::move(body));
+  entity.assign<Graphics>("border", width, height);
+
+  std::cout << "Created border" << std::endl;
 }
 
 }  // namespace triangulum

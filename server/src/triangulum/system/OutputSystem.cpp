@@ -36,6 +36,10 @@ void OutputSystem::update(EntityManager& entities,
 
     object["sprite"] = graphics.sprite;
 
+    object["width"] = graphics.width;
+
+    object["height"] = graphics.height;
+
     object["x"] = body.get_position().x;
 
     object["y"] = body.get_position().y;
