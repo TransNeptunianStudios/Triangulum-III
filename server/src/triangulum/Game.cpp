@@ -13,6 +13,7 @@
 #include "triangulum/system/SimulationSystem.h"
 #include "triangulum/system/WeaponSystem.h"
 #include "triangulum/system/ScoreSystem.h"
+#include "triangulum/system/WorldSystem.h"
 
 namespace triangulum {
 
@@ -94,6 +95,8 @@ void Game::createSystems()
 
   m_system_manager.add<ScoreSystem>(m_event_manager);
 
+  m_system_manager.add<WorldSystem>(m_entity_factory, m_entity_manager, m_event_manager);
+
   m_system_manager.configure();
 }
 
@@ -113,6 +116,8 @@ void Game::update(double dt)
   m_system_manager.update<WeaponSystem>(dt);
 
   m_system_manager.update<ScoreSystem>(dt);
+
+  m_system_manager.update<WorldSystem>(dt);
 
   m_system_manager.update<SimulationSystem>(dt);
 }

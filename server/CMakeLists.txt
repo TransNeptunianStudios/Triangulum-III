@@ -18,7 +18,7 @@ set(SOURCE_FILES
     src/triangulum/component/ClientInfo.cpp
     src/triangulum/component/ClientInfo.h
     src/triangulum/component/Graphics.cpp
-    src/triangulum/component/Graphics.h   
+    src/triangulum/component/Graphics.h
     src/triangulum/component/DynamicBody.cpp
     src/triangulum/component/DynamicBody.h
     src/triangulum/component/Weapon.cpp
@@ -26,7 +26,7 @@ set(SOURCE_FILES
     src/triangulum/component/Input.cpp
     src/triangulum/component/Input.h
     src/triangulum/component/Score.cpp
-    src/triangulum/component/Score.h    
+    src/triangulum/component/Score.h
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
     src/triangulum/network/ConnectionManager.cpp
@@ -40,15 +40,17 @@ set(SOURCE_FILES
     src/triangulum/system/ControlSystem.cpp
     src/triangulum/system/ControlSystem.h
     src/triangulum/system/OutputSystem.cpp
-    src/triangulum/system/OutputSystem.h    
+    src/triangulum/system/OutputSystem.h
     src/triangulum/system/SimulationSystem.cpp
-    src/triangulum/system/SimulationSystem.h    
+    src/triangulum/system/SimulationSystem.h
     src/triangulum/system/WeaponSystem.cpp
     src/triangulum/system/WeaponSystem.h
     src/triangulum/system/ForceSystem.cpp
     src/triangulum/system/ForceSystem.h
     src/triangulum/system/ScoreSystem.cpp
-    src/triangulum/system/ScoreSystem.h    
+    src/triangulum/system/ScoreSystem.h
+    src/triangulum/system/WorldSystem.cpp
+    src/triangulum/system/WorldSystem.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
