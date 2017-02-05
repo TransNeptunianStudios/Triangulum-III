@@ -4,6 +4,7 @@
 #include <thread>
 
 #include "Box2D/Common/b2Math.h"
+#include "entityx/Entity.h"
 
 #include "triangulum/system/ConnectionSystem.h"
 #include "triangulum/system/ControlSystem.h"
@@ -17,6 +18,7 @@ namespace triangulum {
 
 using namespace system;
 using namespace std::chrono_literals;
+using namespace entityx;
 
 Game::Game()
 : m_version("0.1")

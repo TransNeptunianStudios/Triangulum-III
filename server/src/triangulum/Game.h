@@ -2,11 +2,15 @@
 #define _GAME_H
 
 #include "Box2D/Dynamics/b2World.h"
+
 #include "entityx/Entity.h"
 #include "entityx/Event.h"
 #include "entityx/System.h"
+
 #include "triangulum/EntityFactory.h"
 #include "triangulum/network/Server.h"
+
+struct b2Vec2;
 
 namespace triangulum {
 
@@ -25,6 +29,8 @@ public:
 
 private:
   void createSystems();
+
+  void createWorld(const b2Vec2& size);
 
   void process_input();
 

@@ -94,8 +94,8 @@ void EntityFactory::create_bullet(Entity entity,
   body_def.type = b2_dynamicBody;
 
   float r = angle * M_PI / 180.0;
-  
-  body_def.position.Set(position.x + cos(r), position.y + sin(r) ); 
+
+  body_def.position.Set(position.x + cos(r), position.y + sin(r) );
 
   body_def.angle = angle;
 
@@ -103,7 +103,7 @@ void EntityFactory::create_bullet(Entity entity,
 
   body_def.fixedRotation = true;
 
-  // what.... is this? Makes it doesnt collide with other bullets? 
+  // what.... is this? Makes it doesnt collide with other bullets?
   body_def.bullet = true;
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
@@ -124,12 +124,51 @@ void EntityFactory::create_bullet(Entity entity,
   fixture_def.density = 1;  // Solid
 
   body->CreateFixture(&fixture_def);
-  
+
   body->SetUserData(&entity); // to retrive entity from body in collisions
 
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Graphics>("basic_green_bullet");  
+  entity.assign<Graphics>("basic_green_bullet");
+}
+
+void EntityFactory::create_simpleAsteroid(Entity entity,
+                                  const b2Vec2& position,
+                                  float size,
+                                  float angle)
+{
+  // Create the Box2D body
+  b2BodyDef body_def;
+
+  body_def.type = b2_dynamicBody;
+
+  body_def.position.Set(position.x, position.y);
+
+  body_def.angle = angle;
+
+  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
+    auto world = b->GetWorld();
+    world->DestroyBody(b);
+  });
+
+  //shape definition
+  b2PolygonShape polygonShape;
+
+  polygonShape.SetAsBox(size, size);
+
+  //fixture definition
+  b2FixtureDef fixture_def;
+
+  fixture_def.shape = &polygonShape;
+
+  fixture_def.density = 1;  // Solid
+
+  body->CreateFixture(&fixture_def);
+
+  body->SetUserData(&entity); // to retrive entity from body in collisions
+
+  entity.assign<DynamicBody>(std::move(body));
+  entity.assign<Graphics>("asteroid");
 }
 
 }  // namespace triangulum

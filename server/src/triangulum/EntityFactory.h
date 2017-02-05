@@ -30,6 +30,11 @@ public:
                      const b2Vec2& velocity,
                      float angle);
 
+  void create_simpleAsteroid(entityx::Entity entity,
+		     const b2Vec2& position,
+                     float size,
+		     float angle);
+
 private:
   b2World& m_world;
 };
