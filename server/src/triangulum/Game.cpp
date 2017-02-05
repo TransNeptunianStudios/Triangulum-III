@@ -90,7 +90,7 @@ void Game::createSystems()
 
   m_system_manager.add<OutputSystem>();
 
-  m_system_manager.add<ScoreSystem>();
+  m_system_manager.add<ScoreSystem>(m_event_manager);
 
   m_system_manager.configure();
 }

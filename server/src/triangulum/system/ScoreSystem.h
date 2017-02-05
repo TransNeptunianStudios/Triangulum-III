@@ -2,15 +2,16 @@
 #define SCORE_SYSTEM_H
 
 #include "entityx/System.h"
+#include "entityx/Event.h"
 #include "triangulum/SystemEvents.h"
 
 namespace triangulum {
 namespace system {
 
-class ScoreSystem : public entityx::System<ScoreSystem>
+class ScoreSystem : public entityx::System<ScoreSystem>, public entityx::Receiver<ScoreEvent>
 {
 public:
-  ScoreSystem();
+  ScoreSystem(entityx::EventManager& eventManager);
 
   void update(entityx::EntityManager& entities, entityx::EventManager& events,
               entityx::TimeDelta dt);
@@ -18,6 +19,9 @@ public:
   void configure(entityx::EventManager &event_manager);
 
   void receive(const ScoreEvent &scoreUpdate);
+
+ private:
+  entityx::EventManager& m_eventManager;
 
 };
 

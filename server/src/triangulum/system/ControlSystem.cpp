@@ -28,9 +28,9 @@ void ControlSystem::update(EntityManager& entities,
     if (auto connection = client_info.connection.lock())
     {
       Json msg;
-
       if (connection->get_msg("control", msg))
       {
+
         if (msg["input_mask"].is_number_integer())
         {
           // thurst, reverse, strafe Left, strafe right, turn left, turn

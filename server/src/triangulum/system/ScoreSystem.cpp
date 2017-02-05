@@ -8,7 +8,8 @@ namespace triangulum {
 
     using namespace component;
   
-    ScoreSystem::ScoreSystem()
+    ScoreSystem::ScoreSystem(EventManager& eventManager)
+      : m_eventManager(eventManager)
     {  
     }
 
@@ -24,11 +25,11 @@ namespace triangulum {
     }
 
     void ScoreSystem::configure(entityx::EventManager &event_manager) {
-      //event_manager.subscribe<ScoreEvent>(*this);
+      event_manager.subscribe<ScoreEvent>(*this);
     }
 
     void ScoreSystem::receive(const ScoreEvent &scoreUpdate) {
-      //std::cout << "New score: " + scoreUpdate.score + scoreUpdate.scoreInfo << std::endl;
+      std::cout << "New score: " + scoreUpdate.score + scoreUpdate.scoreInfo << std::endl;
     }
 
   }  // namespace system
