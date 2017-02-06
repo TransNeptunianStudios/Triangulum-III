@@ -129,7 +129,7 @@ void EntityFactory::create_bullet(Entity entity,
 
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Graphics>("basic_green_bullet");
+  entity.assign<Graphics>("basic_green_bullet", 0.2, 0.2);
 }
 
 void EntityFactory::create_simple_asteroid(Entity entity,
@@ -154,7 +154,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   //shape definition
   b2PolygonShape polygonShape;
 
-  polygonShape.SetAsBox(size, size);
+  polygonShape.SetAsBox(size/2.0, size/2.0);
 
   //fixture definition
   b2FixtureDef fixture_def;
@@ -192,7 +192,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   //shape definition
   b2PolygonShape polygonShape;
 
-  polygonShape.SetAsBox(width, height);
+  polygonShape.SetAsBox(width/2.0, height/2.0);
 
   //fixture definition
   b2FixtureDef fixture_def;
