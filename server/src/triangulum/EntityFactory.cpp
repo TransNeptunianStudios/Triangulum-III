@@ -41,9 +41,9 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x = 3;//10 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float x = 5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
-  float y = 3;//10 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float y = 5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
   body_def.position.Set(x, y);
 
@@ -70,6 +70,7 @@ void EntityFactory::create_player(Entity entity,
   body->CreateFixture(&myFixtureDef);
 
   body->SetUserData(&entity); // to retrive entity from body in collisions
+
 
   // Assign all components to entity
   entity.assign<ClientInfo>(name, connection);

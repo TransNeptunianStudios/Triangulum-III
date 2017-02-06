@@ -19,8 +19,13 @@ void WorldSystem::createNewWorld(int sizeX, int sizeY)
 {
   std::cout << "CREATES NEW WORLD!" << std::endl;
 
-  // creates border walls
-  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(20, 0), 10, 2);
+  // creates border walls, top, bottom, left, right
+  auto t = 2; // border thickness
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2 + t, t/2), sizeX-2*t, t);
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2 + t, sizeY- t/2), sizeX-2*t, t);
+
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(t/2, t), t, sizeY-2*t);
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX -2*t, t/2), t, sizeY);
 
   // creates asteroids
   for(int i = 0; i < 50; ++i)  {

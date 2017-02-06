@@ -40,6 +40,9 @@ public:
 			   float width,
 			   float height);
 private:
+
+
+
   b2World& m_world;
 };
 
