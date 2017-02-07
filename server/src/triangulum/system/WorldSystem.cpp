@@ -19,20 +19,23 @@ void WorldSystem::createNewWorld(int sizeX, int sizeY)
 {
   std::cout << "CREATES NEW WORLD!" << std::endl;
 
-  // creates border walls, top, bottom, left, right
-  auto t = 2; // border thickness
-  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2 + t, t/2), sizeX-2*t, t);
-  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2 + t, sizeY- t/2), sizeX-2*t, t);
+  // creates border walls
+  auto t = 2; // border thickness (even or we have a problem)
+  
+  // horizional
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2, t/2)       , sizeX-2*t, t);
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX/2, sizeY- t/2), sizeX-2*t, t);
 
-  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(t/2, t), t, sizeY-2*t);
-  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX -2*t, t/2), t, sizeY);
+  //vertical
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(t/2, sizeY/2)      , t, sizeY-2*t);
+  m_entity_factory.create_border_block(m_entity_manager.create(), b2Vec2(sizeX-t/2, sizeY/2), t, sizeY-2*t);
 
   // creates asteroids
   for(int i = 0; i < 50; ++i)  {
     // should check for overlaps as well...
     auto entity = m_entity_manager.create();
-    float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeX));
-    float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeY));
+    float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeX-2*t));
+    float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeY-2*t));
     float r = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 360));
     float s = 0.5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX));
 

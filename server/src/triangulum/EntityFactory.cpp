@@ -41,15 +41,13 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x = 5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float x = 36;// + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
-  float y = 5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float y = 5;// + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
   body_def.position.Set(x, y);
 
   body_def.angle = 0.0;
-
-  body_def.linearDamping = 0.5f;
 
   body_def.angularDamping = 0.5f;
 
