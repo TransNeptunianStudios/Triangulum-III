@@ -50,6 +50,7 @@ void EntityFactory::create_player(Entity entity,
   body_def.angle = 0.0;
 
   body_def.angularDamping = 0.5f;
+  body_def.linearDamping = 0.5f;
 
   //shape definition
   b2PolygonShape polygonShape;
@@ -58,7 +59,8 @@ void EntityFactory::create_player(Entity entity,
   //fixture definition
   b2FixtureDef myFixtureDef;
   myFixtureDef.shape = &polygonShape;
-  myFixtureDef.density = 1;  // Solid
+  myFixtureDef.density = 0.5;  //pretty solid
+  myFixtureDef.restitution = 0.1f; 
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
     auto world = b->GetWorld();

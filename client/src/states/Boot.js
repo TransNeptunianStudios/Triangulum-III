@@ -5,7 +5,7 @@ import * as PhaserInput from '@orange-games/phaser-input/build/phaser-input.js'
 export default class extends Phaser.State {
   init() {
     this.game.add.plugin(Fabrique.Plugins.InputField);
-    this.game.world.setBounds(0, 0, 2000, 2000)
+    this.game.world.setBounds(0, 0, 1600, 1600) // Should come from the server in some way
   }
 
   preload() {

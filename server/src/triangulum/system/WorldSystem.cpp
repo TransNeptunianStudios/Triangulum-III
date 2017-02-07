@@ -12,7 +12,7 @@ namespace system {
 , m_entity_manager(entities)
 , m_eventManager(eventManager)
 {
-  createNewWorld(50, 50);
+  createNewWorld(50, 50); // where should this come from? 
 }
 
 void WorldSystem::createNewWorld(int sizeX, int sizeY)
@@ -34,8 +34,9 @@ void WorldSystem::createNewWorld(int sizeX, int sizeY)
   for(int i = 0; i < 50; ++i)  {
     // should check for overlaps as well...
     auto entity = m_entity_manager.create();
-    float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeX-2*t));
-    float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeY-2*t));
+
+    float x = 2*t + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (sizeX-4*t)));
+    float y = 2*t + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (sizeY-4*t)));
     float r = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 360));
     float s = 0.5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX));
 
