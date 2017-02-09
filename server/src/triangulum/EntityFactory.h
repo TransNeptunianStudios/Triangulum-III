@@ -35,10 +35,9 @@ public:
                      float size,
 		     float angle);
 
-  void create_border_block(entityx::Entity entity,
-		     const b2Vec2& position,
-			   float width,
-			   float height);
+  void create_border(entityx::Entity entity,
+		     const b2Vec2& from,
+		     const b2Vec2& to);
 private:
 
 

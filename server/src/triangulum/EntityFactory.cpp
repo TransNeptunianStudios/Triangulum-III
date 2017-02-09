@@ -1,6 +1,7 @@
 #include "triangulum/EntityFactory.h"
 #include <memory>
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
+#include "Box2D/Collision/Shapes/b2EdgeShape.h"
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Dynamics/b2Body.h"
 #include "Box2D/Dynamics/b2Fixture.h"
@@ -174,16 +175,15 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   std::cout << "Created asteroid" << std::endl;
 }
 
-  void EntityFactory::create_border_block(Entity entity,
-                                  const b2Vec2& position,
-					  float width,
-					  float height)
+  void EntityFactory::create_border(Entity entity,
+					  const b2Vec2& from,
+					  const b2Vec2& to)
 {
   // Create the Box2D body
   b2BodyDef body_def;
 
   body_def.type = b2_staticBody;
-  body_def.position.Set(position.x, position.y);
+  body_def.position.Set(0, 0);
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
     auto world = b->GetWorld();
@@ -191,13 +191,12 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   });
 
   //shape definition
-  b2PolygonShape polygonShape;
-
-  polygonShape.SetAsBox(width/2.0, height/2.0);
+  b2EdgeShape shape;
+  shape.Set(from, to);
 
   //fixture definition
   b2FixtureDef fixture_def;
-  fixture_def.shape = &polygonShape;
+  fixture_def.shape = &shape;
   fixture_def.density = 1;  // Solid
 
   body->CreateFixture(&fixture_def);
@@ -205,7 +204,6 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   body->SetUserData(&entity); // to retrive entity from body in collisions
 
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Graphics>("border", width, height);
 
   std::cout << "Created border" << std::endl;
 }
