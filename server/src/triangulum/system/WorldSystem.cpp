@@ -30,12 +30,12 @@ void WorldSystem::createNewWorld(int sizeX, int sizeY)
     // should check for overlaps as well...
     auto entity = m_entity_manager.create();
 
-    float x = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeX));
-    float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / sizeY));
-    float r = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 360));
-    float s = 0.5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX));
+    float d = 0.5 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX));
+    float x = d+ static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (sizeX - 2 * d)));
+    float y = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (sizeY - 2 * d)));
+    float v = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 360));
 
-    m_entity_factory.create_simple_asteroid(entity, b2Vec2(x, y), s, r);
+    m_entity_factory.create_simple_asteroid(entity, b2Vec2(x, y), d, v);
   }
 }
 

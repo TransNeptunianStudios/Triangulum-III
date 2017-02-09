@@ -2,6 +2,8 @@
 #include <memory>
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Collision/Shapes/b2EdgeShape.h"
+#include "Box2D/Collision/Shapes/b2CircleShape.h"
+
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Dynamics/b2Body.h"
 #include "Box2D/Dynamics/b2Fixture.h"
@@ -136,7 +138,7 @@ void EntityFactory::create_bullet(Entity entity,
 
 void EntityFactory::create_simple_asteroid(Entity entity,
                                   const b2Vec2& position,
-                                  float size,
+                                  float diameter,
                                   float angle)
 {
   // Create the Box2D body
@@ -154,14 +156,14 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   });
 
   //shape definition
-  b2PolygonShape polygonShape;
-
-  polygonShape.SetAsBox(size/2.0, size/2.0);
+  b2CircleShape circleShape;
+  circleShape.m_p.Set(0, 0); //position, relative to body position
+  circleShape.m_radius = diameter/2; //radius
 
   //fixture definition
   b2FixtureDef fixture_def;
 
-  fixture_def.shape = &polygonShape;
+  fixture_def.shape = &circleShape;
 
   fixture_def.density = 1;  // Solid
 
@@ -170,7 +172,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   body->SetUserData(&entity); // to retrive entity from body in collisions
 
   entity.assign<DynamicBody>(std::move(body));
-  entity.assign<Graphics>("asteroid", size, size);
+  entity.assign<Graphics>("asteroid", diameter, diameter);
 
   std::cout << "Created asteroid" << std::endl;
 }

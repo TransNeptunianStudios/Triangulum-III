@@ -32,7 +32,7 @@ public:
 
   void create_simple_asteroid(entityx::Entity entity,
 		     const b2Vec2& position,
-                     float size,
+                     float diameter,
 		     float angle);
 
   void create_border(entityx::Entity entity,
