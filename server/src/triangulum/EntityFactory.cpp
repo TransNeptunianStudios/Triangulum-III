@@ -63,7 +63,7 @@ void EntityFactory::create_player(Entity entity,
   b2FixtureDef myFixtureDef;
   myFixtureDef.shape = &polygonShape;
   myFixtureDef.density = 0.5;  //pretty solid
-  myFixtureDef.restitution = 0.1f; 
+  myFixtureDef.restitution = 0.2f; 
 
   DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
     auto world = b->GetWorld();
@@ -167,6 +167,8 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   fixture_def.density = 1;  // Solid
 
+  fixture_def.restitution = 0.1;  // not so bouncy
+
   body->CreateFixture(&fixture_def);
 
   body->SetUserData(&entity); // to retrive entity from body in collisions
@@ -200,6 +202,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   b2FixtureDef fixture_def;
   fixture_def.shape = &shape;
   fixture_def.density = 1;  // Solid
+  fixture_def.restitution = 0.0f; 
 
   body->CreateFixture(&fixture_def);
 
