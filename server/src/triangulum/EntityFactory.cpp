@@ -65,7 +65,7 @@ void EntityFactory::create_player(Entity entity,
   b2FixtureDef myFixtureDef;
   myFixtureDef.shape = &polygonShape;
   myFixtureDef.density = 0.5;  //pretty solid
-  myFixtureDef.restitution = 0.1f;
+  myFixtureDef.restitution = 0.2f; 
 
   auto body(create_body_ptr(&body_def));
 
@@ -159,6 +159,8 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   fixture_def.density = 1;  // Solid
 
+  fixture_def.restitution = 0.1;  // not so bouncy
+
   body->CreateFixture(&fixture_def);
 
   body->SetUserData(&entity);  // to retrive entity from body in collisions
@@ -189,6 +191,7 @@ void EntityFactory::create_border(Entity entity,
   b2FixtureDef fixture_def;
   fixture_def.shape = &shape;
   fixture_def.density = 1;  // Solid
+  fixture_def.restitution = 0.0f; 
 
   body->CreateFixture(&fixture_def);
 
