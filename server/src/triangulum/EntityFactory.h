@@ -3,6 +3,8 @@
 
 #include "entityx/Entity.h"
 
+#include "triangulum/component/DynamicBody.h"
+
 class b2World;
 struct b2Vec2;
 
@@ -31,16 +33,16 @@ public:
                      float angle);
 
   void create_simple_asteroid(entityx::Entity entity,
-		     const b2Vec2& position,
-                     float diameter,
-		     float angle);
+                              const b2Vec2& position,
+                              float diameter,
+                              float angle);
 
   void create_border(entityx::Entity entity,
-		     const b2Vec2& from,
-		     const b2Vec2& to);
+                     const b2Vec2& from,
+                     const b2Vec2& to);
+
 private:
-
-
+  component::DynamicBody::BodyPtr create_body_ptr(const b2BodyDef* def);
 
   b2World& m_world;
 };

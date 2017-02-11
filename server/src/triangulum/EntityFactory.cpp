@@ -1,8 +1,8 @@
 #include "triangulum/EntityFactory.h"
 #include <memory>
-#include "Box2D/Collision/Shapes/b2PolygonShape.h"
-#include "Box2D/Collision/Shapes/b2EdgeShape.h"
 #include "Box2D/Collision/Shapes/b2CircleShape.h"
+#include "Box2D/Collision/Shapes/b2EdgeShape.h"
+#include "Box2D/Collision/Shapes/b2PolygonShape.h"
 
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Dynamics/b2Body.h"
@@ -12,10 +12,10 @@
 #include "triangulum/component/Bullet.h"
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
-#include "triangulum/component/Input.h"
 #include "triangulum/component/Graphics.h"
-#include "triangulum/component/Weapon.h"
+#include "triangulum/component/Input.h"
 #include "triangulum/component/Score.h"
+#include "triangulum/component/Weapon.h"
 
 using namespace entityx;
 
@@ -44,9 +44,11 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x = 36;// + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float x =
+  36;  // + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
-  float y = 5;// + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float y =
+  5;  // + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
 
   body_def.position.Set(x, y);
 
@@ -63,17 +65,13 @@ void EntityFactory::create_player(Entity entity,
   b2FixtureDef myFixtureDef;
   myFixtureDef.shape = &polygonShape;
   myFixtureDef.density = 0.5;  //pretty solid
-  myFixtureDef.restitution = 0.1f; 
+  myFixtureDef.restitution = 0.1f;
 
-  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
-    auto world = b->GetWorld();
-    world->DestroyBody(b);
-  });
+  auto body(create_body_ptr(&body_def));
 
   body->CreateFixture(&myFixtureDef);
 
-  body->SetUserData(&entity); // to retrive entity from body in collisions
-
+  body->SetUserData(&entity);  // to retrive entity from body in collisions
 
   // Assign all components to entity
   entity.assign<ClientInfo>(name, connection);
@@ -99,7 +97,7 @@ void EntityFactory::create_bullet(Entity entity,
 
   float r = angle * M_PI / 180.0;
 
-  body_def.position.Set(position.x + cos(r), position.y + sin(r) );
+  body_def.position.Set(position.x + cos(r), position.y + sin(r));
 
   body_def.angle = angle;
 
@@ -110,10 +108,7 @@ void EntityFactory::create_bullet(Entity entity,
   // what.... is this? Makes it doesnt collide with other bullets?
   body_def.bullet = true;
 
-  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
-    auto world = b->GetWorld();
-    world->DestroyBody(b);
-  });
+  auto body(create_body_ptr(&body_def));
 
   //shape definition
   b2PolygonShape polygonShape;
@@ -129,7 +124,7 @@ void EntityFactory::create_bullet(Entity entity,
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity); // to retrive entity from body in collisions
+  body->SetUserData(&entity);  // to retrive entity from body in collisions
 
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
   entity.assign<DynamicBody>(std::move(body));
@@ -137,9 +132,9 @@ void EntityFactory::create_bullet(Entity entity,
 }
 
 void EntityFactory::create_simple_asteroid(Entity entity,
-                                  const b2Vec2& position,
-                                  float diameter,
-                                  float angle)
+                                           const b2Vec2& position,
+                                           float diameter,
+                                           float angle)
 {
   // Create the Box2D body
   b2BodyDef body_def;
@@ -150,15 +145,12 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   body_def.angle = angle;
 
-  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
-    auto world = b->GetWorld();
-    world->DestroyBody(b);
-  });
+  auto body(create_body_ptr(&body_def));
 
   //shape definition
   b2CircleShape circleShape;
-  circleShape.m_p.Set(0, 0); //position, relative to body position
-  circleShape.m_radius = diameter/2; //radius
+  circleShape.m_p.Set(0, 0);            //position, relative to body position
+  circleShape.m_radius = diameter / 2;  //radius
 
   //fixture definition
   b2FixtureDef fixture_def;
@@ -169,7 +161,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity); // to retrive entity from body in collisions
+  body->SetUserData(&entity);  // to retrive entity from body in collisions
 
   entity.assign<DynamicBody>(std::move(body));
   entity.assign<Graphics>("asteroid", diameter, diameter);
@@ -177,9 +169,9 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   std::cout << "Created asteroid" << std::endl;
 }
 
-  void EntityFactory::create_border(Entity entity,
-					  const b2Vec2& from,
-					  const b2Vec2& to)
+void EntityFactory::create_border(Entity entity,
+                                  const b2Vec2& from,
+                                  const b2Vec2& to)
 {
   // Create the Box2D body
   b2BodyDef body_def;
@@ -187,10 +179,7 @@ void EntityFactory::create_simple_asteroid(Entity entity,
   body_def.type = b2_staticBody;
   body_def.position.Set(0, 0);
 
-  DynamicBody::BodyPtr body(m_world.CreateBody(&body_def), [](b2Body* b) {
-    auto world = b->GetWorld();
-    world->DestroyBody(b);
-  });
+  auto body(create_body_ptr(&body_def));
 
   //shape definition
   b2EdgeShape shape;
@@ -203,11 +192,20 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity); // to retrive entity from body in collisions
+  body->SetUserData(&entity);  // to retrive entity from body in collisions
 
   entity.assign<DynamicBody>(std::move(body));
 
   std::cout << "Created border" << std::endl;
 }
 
+DynamicBody::BodyPtr EntityFactory::create_body_ptr(const b2BodyDef* def)
+{
+  DynamicBody::BodyPtr body(m_world.CreateBody(def), [](b2Body* b) {
+    auto world = b->GetWorld();
+    world->DestroyBody(b);
+  });
+
+  return body;
+}
 }  // namespace triangulum
