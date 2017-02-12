@@ -16,6 +16,7 @@
 #include "triangulum/component/Input.h"
 #include "triangulum/component/Score.h"
 #include "triangulum/component/Weapon.h"
+#include "triangulum/component/Health.h"
 
 using namespace entityx;
 
@@ -80,6 +81,7 @@ void EntityFactory::create_player(Entity entity,
   entity.assign<Graphics>("player");
   entity.assign<Weapon>();
   entity.assign<Score>();
+  entity.assign<Health>();  
 }
 
 void EntityFactory::create_bullet(Entity entity,

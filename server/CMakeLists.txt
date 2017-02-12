@@ -27,6 +27,8 @@ set(SOURCE_FILES
     src/triangulum/component/Input.h
     src/triangulum/component/Score.cpp
     src/triangulum/component/Score.h
+    src/triangulum/component/Health.cpp
+    src/triangulum/component/Health.h
     src/triangulum/network/Connection.cpp
     src/triangulum/network/Connection.h
     src/triangulum/network/ConnectionManager.cpp

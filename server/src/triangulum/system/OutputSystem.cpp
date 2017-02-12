@@ -4,6 +4,7 @@
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Graphics.h"
 #include "triangulum/component/Score.h"
+#include "triangulum/component/Health.h"
 #include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
@@ -55,6 +56,12 @@ void OutputSystem::update(EntityManager& entities,
     if (score) {
       object["score"] = (int)score->score;
     }
+
+    ComponentHandle<Health> health = entity.component<Health>();
+    if (health) {
+      object["health"] = (int)health->health;
+    }
+
     
     object_list.push_back(object);
 
