@@ -24,7 +24,6 @@ void OutputSystem::update(EntityManager& entities,
 {
   auto object_list = nlohmann::json::array();
 
-  // how do we send score if there is one?
   entities.each<Graphics, DynamicBody>(
 				       [&object_list](Entity entity, Graphics& graphics, DynamicBody& body) {
 
@@ -51,10 +50,12 @@ void OutputSystem::update(EntityManager& entities,
     object["r"] = body.get_rotation();
 
     object["vr"] = 0;
-
-    // Doesnt work with asteroids.. :S
-    //object["score"] = (int)score.score;
-
+    
+    ComponentHandle<Score> score = entity.component<Score>();
+    if (score) {
+      object["score"] = (int)score->score;
+    }
+    
     object_list.push_back(object);
 
   });
