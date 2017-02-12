@@ -39,6 +39,11 @@ export default class extends Phaser.State {
 	this.lastInput = 0;
 
 	this.connection.registerForUpdates(this.updateWorld, this);
+
+	var HUD = this.game.add.group()
+	HUD.fixedToCamera = true;
+	this.score = this.game.add.text(this.game.width/2, 40, 'No score recived', {font:'24px Arial', fill: '#FF0000', align: 'center'});
+	HUD.add(this.score);
     }
 
     updateWorld(response) {
@@ -58,15 +63,18 @@ export default class extends Phaser.State {
 		this.game.add.existing(newEntity)
 		clientEntity = newEntity
 
-		if (serverEntity.id == this.playerId)
+		if (serverEntity.id == this.playerId){
 		    this.game.camera.follow(this.entities[this.playerId])
+		    if ( serverEntity.score )
+			this.score.text = serverEntity.score
+		}
 	    }
 	    clientEntity.x = serverEntity.x * this.gameScale;
 	    clientEntity.y = serverEntity.y * this.gameScale;
 	    //clientEntity.body.velocity.x = serverEntity.vx
 	    //clientEntity.body.velocity.y = serverEntity.vy
 	    clientEntity.angle = serverEntity.r
-	    clientEntity.score = serverEntity.score
+
 
 	    //console.log(clientEntity.score)
 	}

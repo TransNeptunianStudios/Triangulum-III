@@ -61,7 +61,6 @@ void OutputSystem::update(EntityManager& entities,
     if (health) {
       object["health"] = (int)health->health;
     }
-
     
     object_list.push_back(object);
 
