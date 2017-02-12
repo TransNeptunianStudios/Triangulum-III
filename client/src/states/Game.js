@@ -42,7 +42,8 @@ export default class extends Phaser.State {
 
 	var HUD = this.game.add.group()
 	HUD.fixedToCamera = true;
-	this.score = this.game.add.text(this.game.width/2, 40, 'No score recived', {font:'24px Arial', fill: '#FF0000', align: 'center'});
+	this.score = this.game.add.text(this.game.width/2, 40, '0', {font:'24px Arial', fill: '#FF0000', align: 'center'});
+	this.score.anchor.setTo(0.5)
 	HUD.add(this.score);
     }
 
@@ -65,8 +66,6 @@ export default class extends Phaser.State {
 
 		if (serverEntity.id == this.playerId){
 		    this.game.camera.follow(this.entities[this.playerId])
-		    if ( serverEntity.score )
-			this.score.text = serverEntity.score
 		}
 	    }
 	    clientEntity.x = serverEntity.x * this.gameScale;
@@ -74,6 +73,9 @@ export default class extends Phaser.State {
 	    //clientEntity.body.velocity.x = serverEntity.vx
 	    //clientEntity.body.velocity.y = serverEntity.vy
 	    clientEntity.angle = serverEntity.r
+
+	    if ( serverEntity.score )
+		this.score.text = serverEntity.score
 
 
 	    //console.log(clientEntity.score)
