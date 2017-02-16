@@ -10,9 +10,9 @@
 #include "triangulum/system/ControlSystem.h"
 #include "triangulum/system/ForceSystem.h"
 #include "triangulum/system/OutputSystem.h"
+#include "triangulum/system/ScoreSystem.h"
 #include "triangulum/system/SimulationSystem.h"
 #include "triangulum/system/WeaponSystem.h"
-#include "triangulum/system/ScoreSystem.h"
 #include "triangulum/system/WorldSystem.h"
 
 namespace triangulum {
@@ -80,8 +80,7 @@ void Game::createSystems()
 {
   using namespace system;
 
-  m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(),
-                                         m_entity_factory);
+  m_system_manager.add<ConnectionSystem>(m_server.get_connection_mgr(), m_entity_factory);
 
   m_system_manager.add<ControlSystem>();
 
@@ -89,7 +88,7 @@ void Game::createSystems()
 
   m_system_manager.add<WeaponSystem>(m_entity_factory);
 
-  m_system_manager.add<SimulationSystem>(m_world);
+  m_system_manager.add<SimulationSystem>(m_entity_manager, m_world);
 
   m_system_manager.add<OutputSystem>();
 

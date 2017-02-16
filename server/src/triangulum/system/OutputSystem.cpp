@@ -3,8 +3,8 @@
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Graphics.h"
-#include "triangulum/component/Score.h"
 #include "triangulum/component/Health.h"
+#include "triangulum/component/Score.h"
 #include "triangulum/network/ConnectionManager.h"
 
 using namespace entityx;
@@ -26,7 +26,7 @@ void OutputSystem::update(EntityManager& entities,
   auto object_list = nlohmann::json::array();
 
   entities.each<Graphics, DynamicBody>(
-				       [&object_list](Entity entity, Graphics& graphics, DynamicBody& body) {
+  [&object_list](Entity entity, Graphics& graphics, DynamicBody& body) {
 
     nlohmann::json object;
 
@@ -51,17 +51,21 @@ void OutputSystem::update(EntityManager& entities,
     object["r"] = body.get_rotation();
 
     object["vr"] = 0;
-    
+
     ComponentHandle<Score> score = entity.component<Score>();
-    if (score) {
+
+    if (score)
+    {
       object["score"] = (int)score->score;
     }
 
     ComponentHandle<Health> health = entity.component<Health>();
-    if (health) {
+
+    if (health)
+    {
       object["health"] = (int)health->health;
     }
-    
+
     object_list.push_back(object);
 
   });
@@ -72,14 +76,14 @@ void OutputSystem::update(EntityManager& entities,
 
   resp_msg["objects"] = object_list;
 
-  //std::cout << resp_msg.dump(2);
-
   entities.each<ClientInfo>([&resp_msg](Entity entity, ClientInfo& clientinfo) {
+
     // send to all clients
     if (auto connection = clientinfo.connection.lock())
     {
       connection->send_msg(resp_msg);  // Cannot send this often
     }
+
   });
 }
 }  // namespace system

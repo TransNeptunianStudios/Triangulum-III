@@ -4,7 +4,12 @@ namespace triangulum {
 namespace component {
 
 Health::Health()
-  : health(100.0)
+: health(100.0)
+{
+}
+
+Health::Health(float health_)
+: health(health_)
 {
 }
 

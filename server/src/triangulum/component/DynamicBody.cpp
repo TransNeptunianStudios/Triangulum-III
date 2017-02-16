@@ -3,9 +3,11 @@
 namespace triangulum {
 namespace component {
 
-DynamicBody::DynamicBody(BodyPtr body_)
+DynamicBody::DynamicBody(BodyPtr body_, entityx::Entity::Id id_)
 : body(std::move(body_))
+, id(id_)
 {
+  body->SetUserData(&id);
 }
 
 void DynamicBody::apply_force(b2Vec2 force)

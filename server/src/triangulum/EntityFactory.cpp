@@ -10,6 +10,7 @@
 #include "Box2D/Dynamics/b2World.h"
 
 #include "triangulum/component/Bullet.h"
+#include "triangulum/component/Damage.h"
 #include "triangulum/component/ClientInfo.h"
 #include "triangulum/component/DynamicBody.h"
 #include "triangulum/component/Graphics.h"
@@ -45,43 +46,52 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.type = b2_dynamicBody;
 
-  float x =
-  36;  // + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float x = 36;
 
-  float y =
-  5;  // + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 20));
+  float y = 5;
 
   body_def.position.Set(x, y);
 
   body_def.angle = 0.0;
 
   body_def.angularDamping = 0.5f;
+
   body_def.linearDamping = 0.5f;
 
   //shape definition
   b2PolygonShape polygonShape;
+
   polygonShape.SetAsBox(0.5, 0.5);  //a 1x1 m rectangle
 
   //fixture definition
   b2FixtureDef myFixtureDef;
+
   myFixtureDef.shape = &polygonShape;
+
   myFixtureDef.density = 0.5;  //pretty solid
-  myFixtureDef.restitution = 0.2f; 
+
+  myFixtureDef.restitution = 0.2f;
 
   auto body(create_body_ptr(&body_def));
 
   body->CreateFixture(&myFixtureDef);
 
-  body->SetUserData(&entity);  // to retrive entity from body in collisions
-
   // Assign all components to entity
   entity.assign<ClientInfo>(name, connection);
-  entity.assign<DynamicBody>(std::move(body));
+
   entity.assign<Input>();
+
   entity.assign<Graphics>("player");
+
   entity.assign<Weapon>();
+
   entity.assign<Score>();
-  entity.assign<Health>();  
+
+  entity.assign<Health>(1000.0);
+
+  entity.assign<Damage>(1.0);
+
+  entity.assign<DynamicBody>(std::move(body), entity.id());
 }
 
 void EntityFactory::create_bullet(Entity entity,
@@ -126,11 +136,15 @@ void EntityFactory::create_bullet(Entity entity,
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity);  // to retrive entity from body in collisions
-
   entity.assign<Bullet>(owner_id, 5.0, 10.0);
-  entity.assign<DynamicBody>(std::move(body));
+
+  entity.assign<Health>(1.0);
+
+  entity.assign<Damage>(1.0);
+
   entity.assign<Graphics>("basic_green_bullet", 0.2, 0.2);
+
+  entity.assign<DynamicBody>(std::move(body), entity.id());
 }
 
 void EntityFactory::create_simple_asteroid(Entity entity,
@@ -151,7 +165,9 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   //shape definition
   b2CircleShape circleShape;
+
   circleShape.m_p.Set(0, 0);            //position, relative to body position
+
   circleShape.m_radius = diameter / 2;  //radius
 
   //fixture definition
@@ -165,12 +181,13 @@ void EntityFactory::create_simple_asteroid(Entity entity,
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity);  // to retrive entity from body in collisions
-
-  entity.assign<DynamicBody>(std::move(body));
   entity.assign<Graphics>("asteroid", diameter, diameter);
 
-  std::cout << "Created asteroid" << std::endl;
+  entity.assign<Health>(5.0);
+
+  entity.assign<Damage>(1.0);
+
+  entity.assign<DynamicBody>(std::move(body), entity.id());
 }
 
 void EntityFactory::create_border(Entity entity,
@@ -181,27 +198,28 @@ void EntityFactory::create_border(Entity entity,
   b2BodyDef body_def;
 
   body_def.type = b2_staticBody;
+
   body_def.position.Set(0, 0);
 
   auto body(create_body_ptr(&body_def));
 
   //shape definition
   b2EdgeShape shape;
+
   shape.Set(from, to);
 
   //fixture definition
   b2FixtureDef fixture_def;
+
   fixture_def.shape = &shape;
+
   fixture_def.density = 1;  // Solid
-  fixture_def.restitution = 0.0f; 
+
+  fixture_def.restitution = 0.0f;
 
   body->CreateFixture(&fixture_def);
 
-  body->SetUserData(&entity);  // to retrive entity from body in collisions
-
-  entity.assign<DynamicBody>(std::move(body));
-
-  std::cout << "Created border" << std::endl;
+  entity.assign<DynamicBody>(std::move(body), entity.id());
 }
 
 DynamicBody::BodyPtr EntityFactory::create_body_ptr(const b2BodyDef* def)

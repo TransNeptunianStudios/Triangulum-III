@@ -17,10 +17,12 @@ set(SOURCE_FILES
     src/triangulum/component/Bullet.h
     src/triangulum/component/ClientInfo.cpp
     src/triangulum/component/ClientInfo.h
-    src/triangulum/component/Graphics.cpp
-    src/triangulum/component/Graphics.h
+    src/triangulum/component/Damage.cpp
+    src/triangulum/component/Damage.h
     src/triangulum/component/DynamicBody.cpp
     src/triangulum/component/DynamicBody.h
+    src/triangulum/component/Graphics.cpp
+    src/triangulum/component/Graphics.h
     src/triangulum/component/Weapon.cpp
     src/triangulum/component/Weapon.h
     src/triangulum/component/Input.cpp

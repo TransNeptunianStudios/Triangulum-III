@@ -7,19 +7,23 @@
 namespace triangulum {
 namespace system {
 
-class SimulationSystem : public entityx::System<SimulationSystem>, public b2ContactListener
+class SimulationSystem : public entityx::System<SimulationSystem>,
+                         public b2ContactListener
 {
 public:
-  SimulationSystem(b2World& world);
+  SimulationSystem(entityx::EntityManager& entity_manager, b2World& world);
 
-  void update(entityx::EntityManager& entities, entityx::EventManager& events,
+  void update(entityx::EntityManager& entities,
+              entityx::EventManager& events,
               entityx::TimeDelta dt);
 
   void BeginContact(b2Contact* contact);
-  
+
   void EndContact(b2Contact* contact);
 
 private:
+  entityx::EntityManager& m_entity_manager;
+
   b2World& m_world;
 
   int32 m_velocityIterations;

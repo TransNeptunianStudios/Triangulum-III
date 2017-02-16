@@ -14,7 +14,7 @@ struct DynamicBody : public entityx::Component<DynamicBody>
 {
   using BodyPtr = std::unique_ptr<b2Body, std::function<void(b2Body*)>>;
 
-  DynamicBody(BodyPtr body_);
+  DynamicBody(BodyPtr body_, entityx::Entity::Id id_);
 
   void apply_force(b2Vec2 force);  // Force applied to center
 
@@ -27,6 +27,8 @@ struct DynamicBody : public entityx::Component<DynamicBody>
   float get_rotation() const;
 
   BodyPtr body;
+
+  entityx::Entity::Id id;
 };
 
 }  // namespace component
