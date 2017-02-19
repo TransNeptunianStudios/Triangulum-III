@@ -72,7 +72,7 @@ void Game::run()
 
     process_output();
 
-    std::this_thread::sleep_for(0.01s);
+    //std::this_thread::sleep_for(0.01s);
   }
 }
 

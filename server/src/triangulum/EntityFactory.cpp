@@ -57,6 +57,7 @@ void EntityFactory::create_player(Entity entity,
   body_def.angularDamping = 0.5f;
 
   body_def.linearDamping = 0.5f;
+  body_def.angularDamping = 0.75f;
 
   //shape definition
   b2PolygonShape polygonShape;
