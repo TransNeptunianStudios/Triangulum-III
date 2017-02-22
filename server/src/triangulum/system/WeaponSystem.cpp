@@ -39,14 +39,13 @@ void WeaponSystem::update(entityx::EntityManager& entities,
 
     if (input.fire && weapon.shoot_timer <= 0.0)
     {
-      std::cout << "PANG!";
       m_entity_factory.create_bullet(entities.create(),
                                      entity.id(),
                                      body.get_position(),
                                      body.get_linear_velocity(),
                                      body.get_rotation());
 
-      weapon.shoot_timer = 1.0;
+      weapon.shoot_timer = 0.5;
     }
   });
 }

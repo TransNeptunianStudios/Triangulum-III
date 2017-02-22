@@ -20,6 +20,9 @@ public:
   void update(entityx::EntityManager& entities,
               entityx::EventManager& events,
               entityx::TimeDelta dt);
+
+private:
+  int m_next_send;
 };
 
 }  // namespace system
