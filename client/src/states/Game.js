@@ -72,7 +72,7 @@ export default class extends Phaser.State {
 	    }
 	    else{
 		clientEntity.sync(serverEntity, this.gameScale)
-		if ( serverEntity.score )
+		if ( serverEntity.score && e == this.playerId )
 		    this.score.text = serverEntity.score
 	    }
 	    clientEntity.updated = true
@@ -85,7 +85,7 @@ export default class extends Phaser.State {
 		this.entities[e].destroy()
 		delete this.entities[e]
 
-		if ( e == this.player.id ){
+		if ( e == this.playerId ){
 		    this.connection.disconnect()
 		    this.state.start('MainMenu')
 		}
