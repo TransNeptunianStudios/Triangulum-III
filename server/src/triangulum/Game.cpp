@@ -30,7 +30,7 @@ Game::Game()
 , m_server()
 , m_entity_factory(m_world)
 {
-}
+ }
 
 Game::~Game()
 {
@@ -71,8 +71,6 @@ void Game::run()
     }
 
     process_output();
-
-    //std::this_thread::sleep_for(0.01s);
   }
 }
 

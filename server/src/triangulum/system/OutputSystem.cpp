@@ -16,6 +16,7 @@ using namespace component;
 using namespace network;
 
 OutputSystem::OutputSystem()
+: m_next_send(0)
 {
 }
 
@@ -23,6 +24,14 @@ void OutputSystem::update(EntityManager& entities,
                           EventManager& events,
                           TimeDelta dt)
 {
+  if (m_next_send < 5)
+  {
+    m_next_send += 1;
+    return;
+  }
+
+  m_next_send = 0;
+
   auto object_list = nlohmann::json::array();
 
   entities.each<Graphics, DynamicBody>(

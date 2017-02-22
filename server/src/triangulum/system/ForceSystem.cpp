@@ -26,8 +26,8 @@ void ForceSystem::update(EntityManager& entities,
   entities.each<DynamicBody, Input>(
   [](Entity entity, DynamicBody& body, Input& input) {
 
-    float force = 0.1;
-    float rotForce = 40;
+    float force = 2.0f;
+    float rotForce = 40.0f;
 
     float r = body.get_rotation() * M_PI / 180.0;
 
