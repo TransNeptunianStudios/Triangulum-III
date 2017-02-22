@@ -54,10 +54,9 @@ void EntityFactory::create_player(Entity entity,
 
   body_def.angle = 0.0;
 
-  body_def.angularDamping = 0.5f;
-
   body_def.linearDamping = 0.5f;
-  body_def.angularDamping = 0.75f;
+
+  body_def.angularDamping = 1.0f;
 
   //shape definition
   b2PolygonShape polygonShape;
@@ -71,7 +70,7 @@ void EntityFactory::create_player(Entity entity,
 
   myFixtureDef.density = 0.5;  //pretty solid
 
-  myFixtureDef.restitution = 0.2f;
+  myFixtureDef.restitution = 0.1f;
 
   auto body(create_body_ptr(&body_def));
 
@@ -88,7 +87,7 @@ void EntityFactory::create_player(Entity entity,
 
   entity.assign<Score>();
 
-  entity.assign<Health>(1000.0);
+  entity.assign<Health>(5.0);
 
   entity.assign<Damage>(1.0);
 
