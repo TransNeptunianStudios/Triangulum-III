@@ -47,38 +47,46 @@ export default class extends Phaser.State {
 	HUD.add(this.score);
     }
 
+    add_to_world(server_object) {
+	var newEntity = new Entity(this.game, server_object.sprite,
+				   server_object.width * this.gameScale,
+				   server_object.height * this.gameScale)
+	this.entities[server_object.id] = newEntity
+	this.game.add.existing(newEntity)
+
+	if (server_object.id == this.playerId){
+	    this.game.camera.follow(this.entities[this.playerId])
+	}
+	return newEntity
+    }
+
     updateWorld(response) {
 	//console.log("Updating world.")
-
-	// Uppdate all int
 	for (var e in response.objects) {
 
 	    var serverEntity = response.objects[e]
 	    var clientEntity = this.entities[serverEntity.id]
 
 	    if (!clientEntity) {
-		var newEntity = new Entity(this.game, serverEntity.sprite,
-					   serverEntity.width * this.gameScale,
-					   serverEntity.height * this.gameScale)
-		this.entities[serverEntity.id] = newEntity
-		this.game.add.existing(newEntity)
-		clientEntity = newEntity
-
-		if (serverEntity.id == this.playerId){
-		    this.game.camera.follow(this.entities[this.playerId])
-		}
+		clientEntity = this.add_to_world(serverEntity)
 	    }
-	    clientEntity.x = serverEntity.x * this.gameScale;
-	    clientEntity.y = serverEntity.y * this.gameScale;
-	    //clientEntity.body.velocity.x = serverEntity.vx
-	    //clientEntity.body.velocity.y = serverEntity.vy
-	    clientEntity.angle = serverEntity.r
+	    else{
+		clientEntity.sync(serverEntity, this.gameScale)
+		if ( serverEntity.score )
+		    this.score.text = serverEntity.score
+	    }
+	    clientEntity.updated = true
+	}
 
-	    if ( serverEntity.score )
-		this.score.text = serverEntity.score
-
-
-	    //console.log(clientEntity.score)
+	// Clean up
+	for ( var e in this.entities) {
+	    if(!this.entities[e].updated){
+		console.log("trying to remove obj " + e)
+		this.entities[e].destroy()
+		delete this.entities[e]
+	    }
+	    else
+		this.entities[e].updated = false
 	}
     }
 

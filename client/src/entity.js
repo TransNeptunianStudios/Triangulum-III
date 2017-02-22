@@ -7,5 +7,12 @@ export default class Entity extends Phaser.Sprite {
 	this.scale.setTo(dwidth / this.width, dheight / this.height)
     }
 
-    update() {}
+    sync( server_object, game_scale) {
+	this.x = server_object.x * game_scale
+	this.y = server_object.y * game_scale
+	this.angle = server_object.r
+
+	//clientEntity.body.velocity.x = serverEntity.vx
+	//clientEntity.body.velocity.y = serverEntity.vy
+    }
 }
