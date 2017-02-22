@@ -81,9 +81,14 @@ export default class extends Phaser.State {
 	// Clean up
 	for ( var e in this.entities) {
 	    if(!this.entities[e].updated){
-		console.log("trying to remove obj " + e)
+		//console.log("trying to remove obj " + e)
 		this.entities[e].destroy()
 		delete this.entities[e]
+
+		if ( e == this.player.id ){
+		    this.connection.disconnect()
+		    this.state.start('MainMenu')
+		}
 	    }
 	    else
 		this.entities[e].updated = false

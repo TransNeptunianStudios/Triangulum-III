@@ -55,4 +55,9 @@ export default class Connection {
     registerForUpdates(callback, obj) {
         this.updateCallback = callback.bind(obj)
     }
+
+    disconnect() {
+	this.socket.onclose = function () {}; // disable onclose handler first
+	this.socket.close()
+    }
 }

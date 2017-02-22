@@ -32,7 +32,7 @@ export default class extends Phaser.State {
 	});
 	this.versionText.anchor.set(1, 0);
 
-        this.connection = new Connection('ws://localhost:8080');
+        this.connection = new Connection('ws://10.66.66.52:8080');
         this.attemptingLogin = false;
 
         var button = game.add.button(this.game.width / 2, this.input.y + 50, 'enterButton', this.loginAttempt, this, 2, 1, 0);
